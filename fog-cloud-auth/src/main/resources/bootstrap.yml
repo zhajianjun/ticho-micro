@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: AuthServer
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:1511ticho.}
+      server-addr: ${NACOS_HOST:www.ticho.top:8848}
+      discovery:
+        namespace: ${NACOS_NAMESPACE:4580072d-c09e-4fa4-8a39-f32fc4a64030}
+      config:
+        namespace: ${NACOS_NAMESPACE:4580072d-c09e-4fa4-8a39-f32fc4a64030}

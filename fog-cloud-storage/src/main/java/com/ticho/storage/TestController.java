@@ -1,9 +1,8 @@
 package com.ticho.storage;
 
+import com.ticho.feign.auth.service.AuthServerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,17 +17,11 @@ import org.springframework.web.client.RestTemplate;
 @RefreshScope
 public class TestController {
 
-    //@Bean
-    //@LoadBalanced
-    //RestTemplate restTemplate() {
-    //    return new RestTemplate();
-    //}
-
-    //@Autowired
-    //private RestTemplate restTemplate;
+    @Autowired
+    private AuthServerService authServerService;
 
     @GetMapping("test")
     public String service1() {
-        return new RestTemplate().getForObject("http://localhost:8010/test", String.class);
+        return authServerService.test();
     }
 }

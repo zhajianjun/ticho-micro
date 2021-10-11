@@ -5,4 +5,4 @@ spring:
     base-url: http://www.ticho.top:9411/
   sleuth:
     sampler:
-      probability: 0.1
+      probability: 1

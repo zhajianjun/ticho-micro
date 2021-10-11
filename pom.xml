@@ -11,6 +11,7 @@
     <modules>
         <module>fog-cloud-auth</module>
         <module>fog-cloud-storage</module>
+        <module>fog-cloud-fegin</module>
     </modules>
 
     <name>fog-cloud</name>

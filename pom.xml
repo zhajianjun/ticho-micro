@@ -12,6 +12,7 @@
         <module>fog-cloud-auth</module>
         <module>fog-cloud-storage</module>
         <module>fog-cloud-fegin</module>
+        <module>fog-cloud-zipkin</module>
     </modules>
 
     <name>fog-cloud</name>

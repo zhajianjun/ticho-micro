@@ -10,3 +10,12 @@ spring:
     sampler:
       # 抽样系数，默认0.1
       probability: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

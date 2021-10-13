@@ -45,15 +45,17 @@
         </dependency>
 
         <!-- admin 管理服务端 -->
+
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>2.5.2</version>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui</artifactId>
+            <version>2.5.2</version>
         </dependency>
-
 
     </dependencies>
 

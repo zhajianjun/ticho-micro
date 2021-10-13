@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author AdoroTutto
  * @date 2021-10-11 23:33
  */
-@FeignClient("AuthServer")
+@FeignClient("AuthService")
 public interface AuthServerService {
 
     /**

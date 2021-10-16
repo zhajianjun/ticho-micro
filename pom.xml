@@ -9,11 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>fog-cloud-auth-service</module>
-        <module>fog-cloud-storage-service</module>
-        <module>fog-cloud-fegin-api</module>
-        <module>fog-cloud-admin-server</module>
-        <module>fog-cloud-core</module>
+        <module>fog-cloud-uaa-app</module>
+        <module>fog-cloud-storage-app</module>
+        <module>fog-cloud-admin-app</module>
     </modules>
 
     <name>fog-cloud</name>

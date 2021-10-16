@@ -12,6 +12,7 @@
         <module>fog-cloud-uaa-app</module>
         <module>fog-cloud-storage-app</module>
         <module>fog-cloud-admin-app</module>
+        <module>fog-cloud-core</module>
     </modules>
 
     <name>fog-cloud</name>
@@ -23,6 +24,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spring-cloud.version>2020.0.4</spring-cloud.version>
+        <spring-cloud-context.version>3.0.4</spring-cloud-context.version>
         <spring-boot-starter-parent.version>2.5.5</spring-boot-starter-parent.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
 
@@ -31,6 +33,7 @@
         <swagger.version>2.10.5</swagger.version>
         <swagger.models.version>1.6.2</swagger.models.version>
         <lombok.version>1.18.20</lombok.version>
+        <fog-cloud.version>1.0-SNAPSHOT</fog-cloud.version>
     </properties>
 
     <!-- 统一版本管理 -->
@@ -64,6 +67,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-context</artifactId>
+                <version>${spring-cloud-context.version}</version>
+            </dependency>
+
             <!-- hutool全能工具包 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -71,7 +80,7 @@
                 <version>${hutool-all.version}</version>
             </dependency>
 
-            <!-- Swagger -->
+            <!-- swagger start -->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -82,6 +91,13 @@
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger.models.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-annotations</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -97,11 +113,24 @@
                 <artifactId>knife4j-spring-ui</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+            <!-- swagger end -->
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ticho</groupId>
+                <artifactId>fog-cloud-feign</artifactId>
+                <version>${fog-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ticho</groupId>
+                <artifactId>fog-cloud-mvc</artifactId>
+                <version>${fog-cloud.version}</version>
             </dependency>
         </dependencies>
 

@@ -3,20 +3,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.ticho</groupId>
         <artifactId>fog-cloud</artifactId>
+        <groupId>com.ticho</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>fog-cloud-core</artifactId>
+    <packaging>pom</packaging>
     <modules>
-        <module>fog-cloud-uaa</module>
-        <module>fog-cloud-uaa-api</module>
+        <module>fog-cloud-feign</module>
+        <module>fog-cloud-mvc</module>
     </modules>
 
-    <artifactId>fog-cloud-uaa-app</artifactId>
-    <groupId>com.ticho.uaa</groupId>
-    <version>1.0-SNAPSHOT</version>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
+    <dependencies>
 
+    </dependencies>
+
+    <build>
+    </build>
 </project>

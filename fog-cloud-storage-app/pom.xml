@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>fog-cloud-storage</module>
+        <module>fog-cloud-storage-api</module>
     </modules>
 
     <parent>

@@ -1,5 +1,3 @@
-server:
-  port: 8010
 spring:
   zipkin:
     base-url: http://www.ticho.top:9411/

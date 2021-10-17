@@ -46,6 +46,12 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- 配置有提示 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

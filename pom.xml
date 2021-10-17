@@ -34,6 +34,8 @@
         <swagger.models.version>1.6.2</swagger.models.version>
         <lombok.version>1.18.20</lombok.version>
         <fog-cloud.version>1.0-SNAPSHOT</fog-cloud.version>
+        <minio.version>8.1.0</minio.version>
+        <guava.version>29.0-jre</guava.version>
     </properties>
 
     <!-- 统一版本管理 -->
@@ -131,6 +133,26 @@
                 <groupId>com.ticho</groupId>
                 <artifactId>fog-cloud-mvc</artifactId>
                 <version>${fog-cloud.version}</version>
+            </dependency>
+
+            <!--  minio配置  -->
+            <!-- https://mvnrepository.com/artifact/io.minio/minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>guava</artifactId>
+                        <groupId>com.google.guava</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
 

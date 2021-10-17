@@ -26,7 +26,7 @@ public enum BaseResultCode implements Serializable, IResultCode {
     /**
      * 状态码
      */
-    private final Integer code;
+    private final int code;
     /**
      *状态信息
      */

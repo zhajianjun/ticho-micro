@@ -6,6 +6,7 @@ package com.ticho.mvc.enums;
  * @date 2021-10-16 20:24
  */
 public interface IResultCode {
+
     /**
      * 返回码
      *

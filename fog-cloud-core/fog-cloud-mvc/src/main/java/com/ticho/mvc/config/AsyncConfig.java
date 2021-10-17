@@ -1,5 +1,6 @@
 package com.ticho.mvc.config;
 
+import com.ticho.mvc.MvcConstant;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -22,7 +23,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 2021-10-17 10:56
  */
 @Configuration
-@ConfigurationProperties(prefix = "async")
+@ConfigurationProperties(prefix = MvcConstant.ASYNC_PREFIX)
 @Data
 @EnableAsync(proxyTargetClass = true)
 @Slf4j
@@ -80,6 +81,11 @@ public class AsyncConfig implements AsyncConfigurer {
         return taskExecutor;
     }
 
+    /**
+    * 异步线程执行失败异常处理
+     *
+    * @return AsyncUncaughtExceptionHandler
+    */
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (Throwable ex, Method method, Object... params) -> {

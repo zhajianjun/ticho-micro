@@ -18,12 +18,6 @@
             <artifactId>fog-cloud-mvc</artifactId>
         </dependency>
 
-        <!-- test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-
         <!-- nacos服务的注册和发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

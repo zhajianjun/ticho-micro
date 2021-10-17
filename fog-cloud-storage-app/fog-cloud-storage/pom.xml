@@ -19,14 +19,8 @@
 
         <!-- web依赖 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>com.ticho</groupId>
+            <artifactId>fog-cloud-mvc</artifactId>
         </dependency>
 
         <!-- nacos服务的注册和发现 -->
@@ -47,7 +41,7 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
-        <!-- 链路追踪 -->
+        <!-- 链路追踪 start -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
@@ -57,7 +51,9 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
+        <!-- 链路追踪 end -->
 
+        <!-- 健康检查 spring cloud admin 接入需要 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator-autoconfigure</artifactId>

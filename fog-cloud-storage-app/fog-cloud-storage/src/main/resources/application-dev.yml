@@ -19,3 +19,9 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
+logging:
+  level:
+    root: INFO
+    com.alibaba: ERROR
+    com.ticho: DEBUG

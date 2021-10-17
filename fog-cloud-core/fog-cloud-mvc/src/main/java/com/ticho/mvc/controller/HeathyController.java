@@ -25,20 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 @View
 public class HeathyController {
 
-    @Value("${spring.application.name}")
+    @Value("${spring.application.name:application}")
     private String applicationName;
 
     @Value("${server.port}")
     private String port;
 
-    @Value("${health:health}")
-    private String health;
+    @Value("${health:healthy}")
+    private String healthy;
 
 
     @ApiOperation(value = "健康检查", notes = "健康检查", position = 10)
     @GetMapping
-    public String health() {
-        return String.format("【应用名：%s。端口：%s。健康配置参数内容：%s】", applicationName, port, health);
+    public String healthy() {
+        return String.format("【应用名：%s。端口：%s。健康配置参数内容：%s】", applicationName, port, healthy);
     }
 
 }

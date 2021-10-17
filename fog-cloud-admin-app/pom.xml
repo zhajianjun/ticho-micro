@@ -13,12 +13,6 @@
 
     <dependencies>
 
-        <!-- web依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <!-- nacos服务的注册和发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

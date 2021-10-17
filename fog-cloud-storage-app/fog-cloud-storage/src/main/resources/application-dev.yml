@@ -25,3 +25,5 @@ logging:
     root: INFO
     com.alibaba: ERROR
     com.ticho: DEBUG
+    org.mybatis.spring.mapper: ERROR
+    com.baomidou.mybatisplus.core.injector: ERROR

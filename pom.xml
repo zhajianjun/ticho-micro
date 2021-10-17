@@ -36,6 +36,8 @@
         <fog-cloud.version>1.0-SNAPSHOT</fog-cloud.version>
         <minio.version>8.1.0</minio.version>
         <guava.version>29.0-jre</guava.version>
+        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <pagehelper-spring-boot-starter.version>1.2.10</pagehelper-spring-boot-starter.version>
     </properties>
 
     <!-- 统一版本管理 -->
@@ -135,6 +137,12 @@
                 <version>${fog-cloud.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.ticho</groupId>
+                <artifactId>fog-cloud-datasource</artifactId>
+                <version>${fog-cloud.version}</version>
+            </dependency>
+
             <!--  minio配置  -->
             <!-- https://mvnrepository.com/artifact/io.minio/minio -->
             <dependency>
@@ -154,6 +162,52 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+            <!-- mybatis plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- druid 数据源 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.2.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
+                <!--使用spring boot2整合 pagehelper-spring-boot-starter必须排除一下依赖
+                    因为pagehelper-spring-boot-starter也已经在pom依赖了mybatis与mybatis-spring
+                    所以会与mybatis-plus-boot-starter中的mybatis与mybatis-spring发生冲突
+                -->
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis-spring</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
         </dependencies>
 
     </dependencyManagement>

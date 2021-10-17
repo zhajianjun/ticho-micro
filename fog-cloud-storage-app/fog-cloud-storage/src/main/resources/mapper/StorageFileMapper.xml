@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ticho.storage.mapper.StorageFileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="StorageFile_map" type="com.ticho.storage.entity.StorageFile">
+        <result column="id" property="id"/>
+        <result column="bucket_id" property="bucketId"/>
+        <result column="`name`" property="name"/>
+        <result column="`type`" property="type"/>
+        <result column="size" property="size"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="StorageFile_sql">
+    id, bucket_id, `name`, `type`, size, remark, create_by, update_by, create_time, update_time, is_deleted
+    </sql>
+
+    <select id="selectList" resultMap="StorageFile_map">
+        SELECT
+        <include refid="StorageFile_sql"/>
+        FROM storage_file
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="bucketId!=null">and bucket_id=#{bucketId}</if>
+            <if test="name!=null">and `name`=#{name}</if>
+            <if test="type!=null">and `type`=#{type}</if>
+            <if test="size!=null">and size=#{size}</if>
+            <if test="remark!=null">and remark=#{remark}</if>
+            <if test="createBy!=null">and create_by=#{createBy}</if>
+            <if test="updateBy!=null">and update_by=#{updateBy}</if>
+            <if test="createTime!=null">and create_time=#{createTime}</if>
+            <if test="updateTime!=null">and update_time=#{updateTime}</if>
+            <if test="isDeleted!=null">and is_deleted=#{isDeleted}</if>
+        </where>
+    </select>
+</mapper>

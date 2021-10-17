@@ -76,6 +76,13 @@
             <artifactId>guava</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>fog-cloud-datasource</artifactId>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>

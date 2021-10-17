@@ -4,5 +4,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.ticho.mvc.controller.HeathyController,\
   com.ticho.mvc.event.ApiApplicationRunner,\
   com.ticho.mvc.event.BaseApplicationReadyEvent,\
-  com.ticho.mvc.config.AsyncConfig
+  com.ticho.mvc.config.AsyncConfig,\
+  com.ticho.mvc.view.CustomerErrorController
 

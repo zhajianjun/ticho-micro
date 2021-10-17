@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RefreshScope
 @RestController
-@RequestMapping("health")
+@RequestMapping("healthy")
 @Api(tags = "健康检查")
 @ApiSort(Ordered.HIGHEST_PRECEDENCE)
 @View

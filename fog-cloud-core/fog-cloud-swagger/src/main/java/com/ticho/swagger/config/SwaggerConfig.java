@@ -33,7 +33,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2WebMvc
-@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
     @Value("${spring.application.name:fog-cloud-demo}")
     private String applicationName;

@@ -81,7 +81,10 @@
             <artifactId>fog-cloud-datasource</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>fog-cloud-swagger</artifactId>
+        </dependency>
 
     </dependencies>
 

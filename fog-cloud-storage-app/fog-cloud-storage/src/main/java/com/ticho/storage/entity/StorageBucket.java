@@ -1,16 +1,17 @@
 package com.ticho.storage.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 文件桶
@@ -20,7 +21,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "文件桶")
+@ApiModel(value = "文件桶", description = "文件桶")
 @TableName("storage_bucket")
 public class StorageBucket extends Model<StorageBucket> implements Serializable {
     private static final long serialVersionUID = 1L;

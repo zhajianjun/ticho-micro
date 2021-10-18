@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "文件表")
+@ApiModel(value = "文件表", description = "文件表")
 @TableName("storage_file")
 public class StorageFile extends Model<StorageFile> implements Serializable {
     private static final long serialVersionUID = 1L;

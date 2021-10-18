@@ -25,8 +25,8 @@ import static springfox.documentation.swagger.schema.ApiModelProperties.findApiM
  * @date 2021-10-18 13:10
  */
 @Component
-public class SwaggerModelPropertySortPlugin implements ModelPropertyBuilderPlugin {
-    private static final Logger log = LoggerFactory.getLogger(SwaggerModelPropertySortPlugin.class);
+public class DefaultModelPropertySortPlugin implements ModelPropertyBuilderPlugin {
+    private static final Logger log = LoggerFactory.getLogger(DefaultModelPropertySortPlugin.class);
 
     @SuppressWarnings("NullableProblems")
     @Override

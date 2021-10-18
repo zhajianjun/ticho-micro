@@ -13,6 +13,7 @@
         <module>fog-cloud-storage-app</module>
         <module>fog-cloud-admin-app</module>
         <module>fog-cloud-core</module>
+        <module>fog-cloud-gateway-app</module>
     </modules>
 
     <name>fog-cloud</name>
@@ -140,6 +141,12 @@
             <dependency>
                 <groupId>com.ticho</groupId>
                 <artifactId>fog-cloud-datasource</artifactId>
+                <version>${fog-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ticho</groupId>
+                <artifactId>fog-cloud-swagger</artifactId>
                 <version>${fog-cloud.version}</version>
             </dependency>
 

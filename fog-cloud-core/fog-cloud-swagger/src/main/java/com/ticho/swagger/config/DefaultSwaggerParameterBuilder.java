@@ -34,13 +34,13 @@ import static springfox.documentation.swagger.common.SwaggerPluginSupport.SWAGGE
  */
 @Primary
 @Component
-public class CustomSwaggerParameterBuilder implements ExpandedParameterBuilderPlugin {
+public class DefaultSwaggerParameterBuilder implements ExpandedParameterBuilderPlugin {
 
     private final DescriptionResolver descriptions;
     private final EnumTypeDeterminer enumTypeDeterminer;
 
     @Autowired
-    public CustomSwaggerParameterBuilder(DescriptionResolver descriptions, EnumTypeDeterminer enumTypeDeterminer) {
+    public DefaultSwaggerParameterBuilder(DescriptionResolver descriptions, EnumTypeDeterminer enumTypeDeterminer) {
         this.descriptions = descriptions;
         this.enumTypeDeterminer = enumTypeDeterminer;
     }

@@ -15,6 +15,7 @@
         <module>fog-cloud-feign</module>
         <module>fog-cloud-mvc</module>
         <module>fog-cloud-datasource</module>
+        <module>fog-cloud-swagger</module>
     </modules>
 
     <dependencies>

@@ -1,6 +1,6 @@
 package com.ticho.storage.util;
 
-import com.ticho.mvc.exception.ServiceException;
+import com.ticho.core.mvc.exception.ServiceException;
 import com.ticho.storage.prop.MinioProperty;
 import com.ticho.storage.view.MinioResultCode;
 import io.minio.*;

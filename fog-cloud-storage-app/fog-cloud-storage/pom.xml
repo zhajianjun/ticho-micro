@@ -20,45 +20,13 @@
         <!-- web依赖 -->
         <dependency>
             <groupId>com.ticho</groupId>
-            <artifactId>fog-cloud-mvc</artifactId>
-        </dependency>
-
-        <!-- nacos服务的注册和发现 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <!-- nacos配置中心 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
-        <!-- 需要引入该jar才能使bootstrap配置文件生效 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
-        <!-- 链路追踪 start -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+            <artifactId>fog-starter-mvc</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <groupId>com.ticho</groupId>
+            <artifactId>fog-starter-cloud</artifactId>
         </dependency>
-        <!-- 链路追踪 end -->
-
-        <!-- 健康检查 spring cloud admin 接入需要 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator-autoconfigure</artifactId>
-        </dependency>
-
 
         <dependency>
             <groupId>io.minio</groupId>
@@ -78,16 +46,29 @@
 
         <dependency>
             <groupId>com.ticho</groupId>
-            <artifactId>fog-cloud-datasource</artifactId>
+            <artifactId>fog-starter-datasource</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.ticho</groupId>
-            <artifactId>fog-cloud-swagger</artifactId>
+            <artifactId>fog-starter-swagger</artifactId>
         </dependency>
 
     </dependencies>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -1,6 +1,6 @@
 package com.ticho.uaa;
 
-import com.ticho.swagger.annotation.EnableFogSwaggerSortConfig;
+import com.ticho.core.swagger.annotation.EnableFogSwaggerSortConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

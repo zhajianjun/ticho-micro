@@ -128,26 +128,32 @@
 
             <dependency>
                 <groupId>com.ticho</groupId>
-                <artifactId>fog-cloud-feign</artifactId>
+                <artifactId>fog-starter-feign</artifactId>
                 <version>${fog-cloud.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ticho</groupId>
-                <artifactId>fog-cloud-mvc</artifactId>
+                <artifactId>fog-starter-mvc</artifactId>
                 <version>${fog-cloud.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ticho</groupId>
-                <artifactId>fog-cloud-datasource</artifactId>
+                <artifactId>fog-starter-datasource</artifactId>
                 <version>${fog-cloud.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ticho</groupId>
-                <artifactId>fog-cloud-swagger</artifactId>
+                <artifactId>fog-starter-swagger</artifactId>
                 <version>${fog-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ticho</groupId>
+                <artifactId>fog-starter-cloud</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <!--  minio配置  -->

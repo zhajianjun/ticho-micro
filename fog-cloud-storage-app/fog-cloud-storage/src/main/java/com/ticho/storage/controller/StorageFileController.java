@@ -1,7 +1,7 @@
 package com.ticho.storage.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.ticho.mvc.annotation.View;
+import com.ticho.core.mvc.annotation.View;
 import com.ticho.storage.entity.StorageFile;
 import com.ticho.storage.service.StorageFileService;
 import io.swagger.annotations.Api;

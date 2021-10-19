@@ -15,7 +15,7 @@
 
         <dependency>
             <groupId>com.ticho</groupId>
-            <artifactId>fog-cloud-feign</artifactId>
+            <artifactId>fog-starter-feign</artifactId>
         </dependency>
 
     </dependencies>

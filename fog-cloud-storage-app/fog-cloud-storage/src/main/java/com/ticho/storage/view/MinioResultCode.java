@@ -1,6 +1,6 @@
 package com.ticho.storage.view;
 
-import com.ticho.mvc.enums.IResultCode;
+import com.ticho.core.mvc.enums.IResultCode;
 
 import java.io.Serializable;
 

@@ -1,5 +1,6 @@
 spring:
   main:
+    # 重复名称的bean会被后面的覆盖
     allow-bean-definition-overriding: true
   cloud:
     nacos:
@@ -10,4 +11,22 @@ spring:
         namespace: ${nacos_namespace:4580072d-c09e-4fa4-8a39-f32fc4a64030}
       config:
         namespace: ${nacos_namespace:4580072d-c09e-4fa4-8a39-f32fc4a64030}
-        file-extension: yml
+        file-extension: yaml
+  zipkin:
+    base-url: http://www.ticho.top:9411
+    sender:
+      # activemq,rabbit,kafka,web
+      type: web
+  sleuth:
+    sampler:
+      # 抽样系数，默认0.1
+      probability: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

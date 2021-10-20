@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
  * @date 2021-10-17 23:41
  */
 @Configuration
-@PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:fog-starter-datasource.yml")
+@PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:fog-cloud-datasource.yml")
 public class DataSourceConfig {
 
     // @formatter:off

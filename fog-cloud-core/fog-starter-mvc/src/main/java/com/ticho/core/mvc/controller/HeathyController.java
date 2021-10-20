@@ -31,7 +31,7 @@ public class HeathyController {
     @Value("${server.port}")
     private String port;
 
-    @Value("${health:healthy}")
+    @Value("${healthy:healthy}")
     private String healthy;
 
 

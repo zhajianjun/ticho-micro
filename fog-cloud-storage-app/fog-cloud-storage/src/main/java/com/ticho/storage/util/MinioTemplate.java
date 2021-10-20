@@ -9,7 +9,6 @@ import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import lombok.Data;
-import lombok.SneakyThrows;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -307,7 +306,6 @@ public class MinioTemplate implements InitializingBean {
      * @param timeUnit 时间单位
      * @return String
      */
-    @SneakyThrows
     public String getObjectUrl(String bucketName, String objectName, Integer expires, TimeUnit timeUnit) {
         try {
             if(Objects.isNull(expires)){

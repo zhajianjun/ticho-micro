@@ -1,17 +1,7 @@
 server:
   port: 8010
 spring:
+  application:
+    name: @artifactId@
   profiles:
     active: dev
-  application:
-    name: UaaApplication
-  cloud:
-    nacos:
-      username: ${nacos_username:nacos}
-      password: ${nacos_password:1511ticho.}
-      server-addr: ${nacos_host:www.ticho.top:8848}
-      discovery:
-        namespace: ${nacos_namespace:4580072d-c09e-4fa4-8a39-f32fc4a64030}
-      config:
-        namespace: ${nacos_namespace:4580072d-c09e-4fa4-8a39-f32fc4a64030}
-        file-extension: yml

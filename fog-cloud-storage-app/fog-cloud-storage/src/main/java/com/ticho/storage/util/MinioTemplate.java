@@ -42,7 +42,7 @@ public class MinioTemplate implements InitializingBean {
     @Autowired
     private MinioProperty minioProperty;
 
-    public MinioClient client;
+    private MinioClient client;
 
     @Override
     public void afterPropertiesSet() {

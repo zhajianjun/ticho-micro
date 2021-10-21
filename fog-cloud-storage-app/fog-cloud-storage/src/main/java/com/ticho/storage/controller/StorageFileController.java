@@ -1,7 +1,6 @@
 package com.ticho.storage.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.ticho.core.mvc.annotation.View;
+import com.ticho.core.datasource.view.PageResult;
 import com.ticho.storage.entity.StorageFile;
 import com.ticho.storage.service.StorageFileService;
 import io.swagger.annotations.Api;
@@ -26,12 +25,11 @@ import java.util.List;
  * 文件表 控制器
  *
  * @author AdoroTutto
- * @date 2021-10-17 23:59
+ * @date 2021-10-21 23:47
  */
 @RestController
-@RequestMapping("storageFile")
+@RequestMapping("StorageFile")
 @Api(tags = "文件表")
-@View
 public class StorageFileController {
     @Autowired
     private StorageFileService storageFileService;
@@ -71,7 +69,7 @@ public class StorageFileController {
 
     @ApiOperation(value = "分页查询文件表列表", position = 60)
     @GetMapping("page")
-    public PageInfo<StorageFile> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,StorageFile storageFile) {
+    public PageResult<StorageFile> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,StorageFile storageFile) {
         return storageFileService.page(pageNum, pageSize, storageFile);
     }
 }

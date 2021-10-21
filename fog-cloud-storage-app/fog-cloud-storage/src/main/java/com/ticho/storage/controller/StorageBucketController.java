@@ -1,7 +1,8 @@
 package com.ticho.storage.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.ticho.core.datasource.view.PageResult;
 import com.ticho.core.mvc.annotation.View;
+import com.ticho.core.mvc.view.Result;
 import com.ticho.storage.entity.StorageBucket;
 import com.ticho.storage.service.StorageBucketService;
 import io.swagger.annotations.Api;
@@ -26,10 +27,10 @@ import java.util.List;
  * 文件桶 控制器
  *
  * @author AdoroTutto
- * @date 2021-10-17 23:59
+ * @date 2021-10-21 23:47
  */
 @RestController
-@RequestMapping("storageBucket")
+@RequestMapping("StorageBucket")
 @Api(tags = "文件桶")
 @View
 public class StorageBucketController {
@@ -42,7 +43,6 @@ public class StorageBucketController {
         storageBucketService.save(storageBucket);
         return storageBucket;
     }
-
     @ApiOperation(value = "根据id删除文件桶", position = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping("{id}")
@@ -71,7 +71,13 @@ public class StorageBucketController {
 
     @ApiOperation(value = "分页查询文件桶列表", position = 60)
     @GetMapping("page")
-    public PageInfo<StorageBucket> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,StorageBucket storageBucket) {
+    public PageResult<StorageBucket> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,StorageBucket storageBucket) {
         return storageBucketService.page(pageNum, pageSize, storageBucket);
+    }
+
+    @ApiOperation(value = "init", position = 70)
+    @GetMapping("init")
+    public void init() {
+        storageBucketService.init();
     }
 }

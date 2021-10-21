@@ -72,7 +72,6 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> of(int code, String msg) {
-        Result<T> result = new Result<>();
         return new Result<>(code, msg);
     }
 

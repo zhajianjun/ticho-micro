@@ -10,7 +10,7 @@ import java.util.List;
  * 文件表 mapper
  *
  * @author AdoroTutto
- * @date 2021-10-17 19:48
+ * @date 2021-10-21 23:47
  */
 @Repository
 public interface StorageFileMapper extends BaseMapper<StorageFile> {

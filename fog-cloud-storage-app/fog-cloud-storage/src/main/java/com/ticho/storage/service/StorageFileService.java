@@ -1,7 +1,7 @@
 package com.ticho.storage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
+import com.ticho.core.datasource.view.PageResult;
 import com.ticho.storage.entity.StorageFile;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * 文件表 服务接口
  *
  * @author AdoroTutto
- * @date 2021-10-17 23:59
+ * @date 2021-10-21 23:47
  */
 public interface StorageFileService extends IService<StorageFile> {
     /**
@@ -29,7 +29,7 @@ public interface StorageFileService extends IService<StorageFile> {
      * @param storageFile 条件
      * @return PageInfo<StorageFile> 文件表 列表
      */
-    PageInfo<StorageFile> page(int pageNum, int pageSize, StorageFile storageFile);
+    PageResult<StorageFile> page(int pageNum, int pageSize, StorageFile storageFile);
 
 }
 

@@ -1,5 +1,6 @@
 package com.ticho.core.mvc.view;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ticho.core.mvc.enums.IResultCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +27,7 @@ public class Result<T> implements Serializable {
     private String msg;
 
     @ApiModelProperty(value = "业务数据", position = 30)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     @ApiModelProperty(value = "时间戳", required = true, position = 40)

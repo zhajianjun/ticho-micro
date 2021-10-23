@@ -108,7 +108,6 @@ public class BaseResponseHandle implements ResponseBodyAdvice<Object> {
             ServiceException serviceException = (ServiceException) ex;
             result = Result.of(serviceException.getCode(), serviceException.getMsg());
             res.setStatus(HttpStatus.OK.value());
-            result.setData(req.getRequestURI());
             log.warn("catch error\t{}\n{}", ex.getMessage(), result.getMsg(), ex);
             return result;
         } else {
@@ -116,7 +115,6 @@ public class BaseResponseHandle implements ResponseBodyAdvice<Object> {
             result = Result.of(HttpResultCode.FAILED);
             res.setStatus(result.getCode());
         }
-        result.setData(req.getRequestURI());
         log.error("catch error\t{}\n{}", ex.getMessage(), result.getMsg(), ex);
         return result;
     }

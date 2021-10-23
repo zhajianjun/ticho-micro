@@ -19,10 +19,11 @@ public enum BaseResultCode implements Serializable, IResultCode {
      */
     SUCCESS(0, "执行成功"),
 
+    PARAM_ERROR(1000, "参数异常"),
+
     FAIL(-1, "执行失败");
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 状态码
      */
@@ -36,6 +37,8 @@ public enum BaseResultCode implements Serializable, IResultCode {
         this.code = code;
         this.msg = msg;
     }
+
+
 
     @Override
     public int getCode() {

@@ -17,9 +17,9 @@ public enum MinioResultCode implements Serializable, IResultCode {
     /**
      *
      */
-    BUCKET_IS_NOT_NULL(10001, "文件桶不能为空"),
-
     BUCKET_IS_NOT_EMPTY(10001, "文件桶不为空"),
+
+    BUCKET_IS_ALREAD_EXISITS(10001, "文件桶已存在"),
 
     CREATE_BUCKET_ERROR(10002, "创建文件桶失败"),
 
@@ -33,21 +33,9 @@ public enum MinioResultCode implements Serializable, IResultCode {
 
     DELETE_OBJECT_ERROR(10006, "删除文件失败"),
 
-    OBJECT_IS_NOT_NULL(10007, "文件不能为空"),
-
     SELECT_OBJECT_URL_ERROR(10008, "查询文件外链失败"),
 
-    SELECT_OBJECT_ERROR(10008, "查询文件失败"),
-
-    OBJECT_ALREAD_EXISTED(10010, "文件已存在"),
-
-    OBJECT_NOT_EXIST(10010, "文件不存在"),
-
-    OBJECT_PATH_ERROR(10011, "文件路径异常"),
-
-    DATA_SYNC_ERROR(10012, "文件信息同步异常"),
-
-    PREFIX_ERROR(10013, "前置路径不能为空");
+    SELECT_OBJECT_ERROR(10008, "查询文件失败");
 
     private static final long serialVersionUID = 1L;
 

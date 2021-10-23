@@ -275,21 +275,21 @@ public class MinioTemplate implements InitializingBean {
      * 获取文件外链
      * @param bucketName bucketName
      * @param objectName 文件名称
-     * @param expires 过期时间 <=7天，默认30分钟
+     * @param expiry 过期时间 <=7天，默认30分钟，单位：秒
      * @return String
      */
-    public String getObjectUrl(String bucketName, String objectName, Integer expires) {
+    public String getObjectUrl(String bucketName, String objectName, Integer expiry) {
         try {
             TimeUnit timeUnit = TimeUnit.SECONDS;
-            if(Objects.isNull(expires)){
-                expires = 30;
+            if(Objects.isNull(expiry)){
+                expiry = 30;
                 timeUnit = TimeUnit.MINUTES;
             }
             GetPresignedObjectUrlArgs urlArgs = GetPresignedObjectUrlArgs.builder()
                  .method(Method.GET)
                  .bucket(bucketName)
                  .object(objectName)
-                 .expiry(expires, timeUnit)
+                 .expiry(expiry, timeUnit)
                  .build();
             return client.getPresignedObjectUrl(urlArgs);
         } catch (Exception e) {

@@ -42,11 +42,6 @@
 
         <dependency>
             <groupId>com.ticho</groupId>
-            <artifactId>fog-starter-datasource</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho</groupId>
             <artifactId>fog-starter-swagger</artifactId>
         </dependency>
 

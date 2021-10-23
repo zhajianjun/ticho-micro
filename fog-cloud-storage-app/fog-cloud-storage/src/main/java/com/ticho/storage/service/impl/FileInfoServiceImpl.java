@@ -88,7 +88,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfoDTO.setStorageId(objectName);
         fileInfoDTO.setFileName(fileName);
         fileInfoDTO.setContentType(file.getContentType());
-        fileInfoDTO.setSize(file.getSize());
+        fileInfoDTO.setSize(file.getSize() / 1000);
         fileInfoDTO.setRemark(remark);
         fileInfoDTO.setBucket(bucketName);
         return fileInfoDTO;

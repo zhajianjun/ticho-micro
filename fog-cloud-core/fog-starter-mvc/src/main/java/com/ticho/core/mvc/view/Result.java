@@ -58,21 +58,6 @@ public class Result<T> implements Serializable {
         this.time = System.currentTimeMillis();
     }
 
-    public Result<T> code(int code) {
-        this.code = code;
-        return this;
-    }
-
-    public Result<T> msg(String msg) {
-        this.msg = msg;
-        return this;
-    }
-
-    public Result<T> data(T data) {
-        this.data = data;
-        return this;
-    }
-
     public static <T> Result<T> of(int code, String msg) {
         return new Result<>(code, msg);
     }
@@ -115,5 +100,20 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> condition(boolean flag) {
         return flag ? ok() : fail();
+    }
+
+    public Result<T> code(int code) {
+        this.code = code;
+        return this;
+    }
+
+    public Result<T> msg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+
+    public Result<T> data(T data) {
+        this.data = data;
+        return this;
     }
 }

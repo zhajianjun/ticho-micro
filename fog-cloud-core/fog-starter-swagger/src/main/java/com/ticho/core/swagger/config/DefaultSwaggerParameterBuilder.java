@@ -59,22 +59,37 @@ public class DefaultSwaggerParameterBuilder implements ExpandedParameterBuilderP
     }
 
     private void fromApiParam(ParameterExpansionContext context, ApiParam apiParam) {
+        // @formatter:off
         String allowableProperty = apiParam.allowableValues();
-        AllowableValues allowable = allowableValues(Optional.ofNullable(allowableProperty), context.getFieldType().getErasedType());
-
-        maybeSetParameterName(context, apiParam.name()).description(descriptions.resolve(apiParam.value())).defaultValue(apiParam.defaultValue()).required(apiParam.required())
-                .allowMultiple(apiParam.allowMultiple()).allowableValues(allowable).parameterAccess(apiParam.access()).hidden(apiParam.hidden()).scalarExample(apiParam.example())
-                .complexExamples(Examples.examples(apiParam.examples())).order(SWAGGER_PLUGIN_ORDER).build();
+        AllowableValues allowable = allowableValues(Optional.of(allowableProperty), context.getFieldType().getErasedType());
+        maybeSetParameterName(context, apiParam.name())
+            .description(descriptions.resolve(apiParam.value()))
+            .defaultValue(apiParam.defaultValue())
+            .required(apiParam.required())
+            .allowMultiple(apiParam.allowMultiple())
+            .allowableValues(allowable)
+            .parameterAccess(apiParam.access())
+            .hidden(apiParam.hidden())
+            .scalarExample(apiParam.example())
+            .complexExamples(Examples.examples(apiParam.examples()))
+            .order(SWAGGER_PLUGIN_ORDER).build();
+        // @formatter:on
     }
 
     private void fromApiModelProperty(ParameterExpansionContext context, ApiModelProperty apiModelProperty) {
+        // @formatter:off
         String allowableProperty = apiModelProperty.allowableValues();
-        AllowableValues allowable = allowableValues(Optional.ofNullable(allowableProperty), context.getFieldType().getErasedType());
-
-        maybeSetParameterName(context, apiModelProperty.name()).description(descriptions.resolve(apiModelProperty.value())).required(apiModelProperty.required()).allowableValues(allowable)
-                .parameterAccess(apiModelProperty.access()).hidden(apiModelProperty.hidden()).scalarExample(apiModelProperty.example())
-                //源码这里是: SWAGGER_PLUGIN_ORDER，需要修正
-                .order(apiModelProperty.position()).build();
+        AllowableValues allowable = allowableValues(Optional.of(allowableProperty), context.getFieldType().getErasedType());
+        maybeSetParameterName(context, apiModelProperty.name())
+            .description(descriptions.resolve(apiModelProperty.value()))
+            .required(apiModelProperty.required())
+            .allowableValues(allowable)
+            .parameterAccess(apiModelProperty.access())
+            .hidden(apiModelProperty.hidden())
+            .scalarExample(apiModelProperty.example())
+            //源码这里是: SWAGGER_PLUGIN_ORDER，需要修正
+            .order(apiModelProperty.position()).build();
+        // @formatter:on
     }
 
     private ParameterBuilder maybeSetParameterName(ParameterExpansionContext context, String parameterName) {

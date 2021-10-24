@@ -65,7 +65,8 @@ public class FileInfoServiceImpl implements FileInfoService {
         MultipartFile file = fileInfoReqDTO.getFile();
         String originalFilename = file.getOriginalFilename();
         DataSize fileSize = minioProperty.getFileSize();
-        Assert.isTrue(file.getSize() <= fileSize.toBytes(), MinioResultCode.FILE_SIZE_TO_LARGER, "文件大小不能超出"+ fileSize.toMegabytes()+"MB");
+        Assert.isTrue(file.getSize() <= fileSize.toBytes(), MinioResultCode.FILE_SIZE_TO_LARGER,
+                "文件大小不能超出" + fileSize.toMegabytes() + "MB");
         // 后缀名 .png
         String extName = StrUtil.DOT + FileNameUtil.extName(originalFilename);
         String objectName = SnowFlakeUtil.generateStrId() + extName;
@@ -107,6 +108,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public void download(String bucketName, String storageId) {
+        // @formatter:off
         Assert.isNotBlank(storageId, BaseResultCode.PARAM_ERROR, "资源id不能为空");
         bucketName = getBucketName(bucketName);
         GetObjectResponse in = minioTemplate.getObject(bucketName, storageId);
@@ -122,6 +124,7 @@ public class FileInfoServiceImpl implements FileInfoService {
             log.error("文件下载失败，{}", e.getMessage(), e);
             throw new ServiceException(MinioResultCode.DOWNLOAD_ERROR);
         }
+        // @formatter:on
     }
 
     @Override

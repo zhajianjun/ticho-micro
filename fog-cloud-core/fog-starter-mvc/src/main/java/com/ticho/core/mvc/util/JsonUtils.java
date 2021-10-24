@@ -30,6 +30,22 @@ public class JsonUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String EMPTY = "";
 
+    static {
+        // 反序列化 默认遇到未知属性去时会抛一个JsonMappingException,所以关闭
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        /* 这个特性决定parser是否将允许使用非双引号属性名字， （这种形式在Javascript中被允许，但是JSON标准说明书中没有）。
+         * 注意：由于JSON标准上需要为属性名称使用双引号，所以这也是一个非标准特性，默认是false的。
+         * 同样，需要设置JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES为true，打开该特性。
+         */
+        MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        /*
+         * 这个特性决定parser是否将允许使用非双引号属性名字， （这种形式在Javascript中被允许，但是JSON标准说明书中没有）。
+         * 注意：由于JSON标准上需要为属性名称使用双引号，所以这也是一个非标准特性，默认是false的。
+         * 同样，需要设置JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES为true，打开该特性。
+         */
+        MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
     /**
      * Object 转换 json格式的String
@@ -38,7 +54,7 @@ public class JsonUtils {
      */
     public static String toJsonString(Object obj) {
         try {
-            if(obj instanceof String) {
+            if (obj instanceof String) {
                 return obj.toString();
             }
             return Objects.nonNull(obj) ? MAPPER.writeValueAsString(obj) : EMPTY;
@@ -182,22 +198,5 @@ public class JsonUtils {
             }
         }
         return resultList;
-    }
-
-    static {
-        // 反序列化 默认遇到未知属性去时会抛一个JsonMappingException,所以关闭
-        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        /* 这个特性决定parser是否将允许使用非双引号属性名字， （这种形式在Javascript中被允许，但是JSON标准说明书中没有）。
-         * 注意：由于JSON标准上需要为属性名称使用双引号，所以这也是一个非标准特性，默认是false的。
-         * 同样，需要设置JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES为true，打开该特性。
-         */
-        MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        /*
-         * 这个特性决定parser是否将允许使用非双引号属性名字， （这种形式在Javascript中被允许，但是JSON标准说明书中没有）。
-         * 注意：由于JSON标准上需要为属性名称使用双引号，所以这也是一个非标准特性，默认是false的。
-         * 同样，需要设置JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES为true，打开该特性。
-         */
-        MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 }

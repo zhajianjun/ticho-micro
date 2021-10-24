@@ -22,13 +22,11 @@ import java.util.Optional;
 @RestController
 public class SwaggerHandler {
 
+    private final SwaggerResourcesProvider swaggerResources;
     @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;
-
     @Autowired(required = false)
     private UiConfiguration uiConfiguration;
-
-    private final SwaggerResourcesProvider swaggerResources;
 
     @Autowired
     public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {
@@ -38,14 +36,16 @@ public class SwaggerHandler {
 
     @GetMapping("/swagger-resources/configuration/security")
     public Mono<ResponseEntity<SecurityConfiguration>> securityConfiguration() {
-        SecurityConfiguration securityConfiguration = Optional.ofNullable(this.securityConfiguration).orElseGet(() -> SecurityConfigurationBuilder.builder().build());
+        SecurityConfiguration securityConfiguration = Optional.ofNullable(this.securityConfiguration)
+                .orElseGet(() -> SecurityConfigurationBuilder.builder().build());
         ResponseEntity<SecurityConfiguration> responseEntity = new ResponseEntity<>(securityConfiguration, HttpStatus.OK);
         return Mono.just(responseEntity);
     }
 
     @GetMapping("/swagger-resources/configuration/ui")
     public Mono<ResponseEntity<UiConfiguration>> uiConfiguration() {
-        UiConfiguration configuration = Optional.ofNullable(this.uiConfiguration).orElseGet(() -> UiConfigurationBuilder.builder().build());
+        UiConfiguration configuration = Optional.ofNullable(this.uiConfiguration)
+                .orElseGet(() -> UiConfigurationBuilder.builder().build());
         ResponseEntity<UiConfiguration> data = new ResponseEntity<>(configuration, HttpStatus.OK);
         return Mono.just(data);
     }

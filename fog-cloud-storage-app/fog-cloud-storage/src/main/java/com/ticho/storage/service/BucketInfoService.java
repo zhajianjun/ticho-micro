@@ -21,14 +21,14 @@ public interface BucketInfoService {
 
     /**
      * 创建文件桶
-     * 
+     *
      * @param bucketName 文件桶名称
      */
     void createBucket(String bucketName);
 
     /**
      * 删除文件桶
-     * 
+     *
      * @param bucketName 文件桶名称
      * @param delAllFile 是否删除所有文件
      */
@@ -36,7 +36,7 @@ public interface BucketInfoService {
 
     /**
      * 获取所有的文件桶
-     * 
+     *
      * @return List<BucketInfoDTO>
      */
     List<BucketInfoDTO> listBuckets();

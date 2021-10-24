@@ -28,6 +28,27 @@ import static springfox.documentation.swagger.schema.ApiModelProperties.findApiM
 public class DefaultModelPropertySortPlugin implements ModelPropertyBuilderPlugin {
     private static final Logger log = LoggerFactory.getLogger(DefaultModelPropertySortPlugin.class);
 
+    public static int indexOf(Object[] array, Object objectToFind) {
+        if (array != null) {
+            int i;
+            if (objectToFind == null) {
+                for (i = 0; i < array.length; ++i) {
+                    if (array[i] == null) {
+                        return i;
+                    }
+                }
+            } else {
+                for (i = 0; i < array.length; ++i) {
+                    if (objectToFind.equals(array[i])) {
+                        return i;
+                    }
+                }
+            }
+
+        }
+        return -1;
+    }
+
     @SuppressWarnings("NullableProblems")
     @Override
     public boolean supports(DocumentationType delimiter) {
@@ -64,27 +85,5 @@ public class DefaultModelPropertySortPlugin implements ModelPropertyBuilderPlugi
                 context.getBuilder().position(indexOf);
             }
         }
-    }
-
-
-    public static int indexOf(Object[] array, Object objectToFind) {
-        if (array != null) {
-            int i;
-            if (objectToFind == null) {
-                for (i = 0; i < array.length; ++i) {
-                    if (array[i] == null) {
-                        return i;
-                    }
-                }
-            } else {
-                for (i = 0; i < array.length; ++i) {
-                    if (objectToFind.equals(array[i])) {
-                        return i;
-                    }
-                }
-            }
-
-        }
-        return -1;
     }
 }

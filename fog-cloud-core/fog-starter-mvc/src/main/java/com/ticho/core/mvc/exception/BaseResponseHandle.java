@@ -28,12 +28,10 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -52,7 +50,7 @@ public class BaseResponseHandle implements ResponseBodyAdvice<Object> {
      * 全局错误用于捕获不可预知的异常
      */
     @ExceptionHandler(Exception.class)
-    public Result<String> exception(Exception ex, HttpServletRequest req, HttpServletResponse res) {
+    public Result<String> exception(Exception ex, HttpServletResponse res) {
         Result<String> result;
         if (ex instanceof HttpRequestMethodNotSupportedException) {
             result = Result.of(HttpResultCode.METHOD_NOT_ALLOWED);
@@ -109,14 +107,14 @@ public class BaseResponseHandle implements ResponseBodyAdvice<Object> {
             ServiceException serviceException = (ServiceException) ex;
             result = Result.of(serviceException.getCode(), serviceException.getMsg());
             res.setStatus(HttpStatus.OK.value());
-            log.warn("catch error\t{}\n{}", ex.getMessage(), result.getMsg(), ex);
+            log.warn("catch error\t{}", ex.getMessage());
             return result;
         } else {
             // 未知异常
             result = Result.of(HttpResultCode.FAILED);
             res.setStatus(result.getCode());
         }
-        log.error("catch error\t{}\n{}", ex.getMessage(), result.getMsg(), ex);
+        log.error("catch error\t{}", ex.getMessage(), ex);
         return result;
     }
 

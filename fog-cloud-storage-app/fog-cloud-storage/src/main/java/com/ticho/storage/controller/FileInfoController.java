@@ -36,23 +36,13 @@ public class FileInfoController {
     @Autowired
     private FileInfoService fileInfoService;
 
-    @ApiOperation(value = "上传文件", position = 10)
+    @ApiOperation(value = "文件上传", position = 10)
     @PostMapping("upload")
     public FileInfoDTO upload(FileInfoReqDTO fileInfoReqDTO) {
         return fileInfoService.upload(fileInfoReqDTO);
     }
 
-    @ApiOperation(value = "根据id删除文件表", position = 20)
-    @ApiImplicitParams({
-        @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
-        @ApiImplicitParam(value = "资源id", name = "storageId", required = true)
-    })
-    @DeleteMapping
-    public void delete(String bucketName,String storageId) {
-        fileInfoService.delete(bucketName,storageId);
-    }
-
-    @ApiOperation(value = "根据资源id下载", position = 30, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ApiOperation(value = "文件下载", position = 20, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ApiImplicitParams({
         @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
         @ApiImplicitParam(value = "资源id", name = "storageId", required = true)
@@ -60,6 +50,16 @@ public class FileInfoController {
     @GetMapping("download")
     public void download(String bucketName,String storageId) {
         fileInfoService.download(bucketName,storageId);
+    }
+
+    @ApiOperation(value = "根据id删除文件", position = 30)
+    @ApiImplicitParams({
+        @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
+        @ApiImplicitParam(value = "资源id", name = "storageId", required = true)
+    })
+    @DeleteMapping
+    public void delete(String bucketName,String storageId) {
+        fileInfoService.delete(bucketName,storageId);
     }
 
     @ApiOperation(value = "根据资源id获取下载链接", position = 40)

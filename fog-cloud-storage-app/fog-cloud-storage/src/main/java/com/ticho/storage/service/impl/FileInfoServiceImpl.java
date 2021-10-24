@@ -10,6 +10,7 @@ import com.ticho.core.mvc.util.SnowFlakeUtil;
 import com.ticho.core.mvc.view.BaseResultCode;
 import com.ticho.storage.dto.FileInfoDTO;
 import com.ticho.storage.dto.FileInfoReqDTO;
+import com.ticho.storage.prop.MinioProperty;
 import com.ticho.storage.service.FileInfoService;
 import com.ticho.storage.util.MinioTemplate;
 import com.ticho.storage.view.MinioResultCode;
@@ -17,9 +18,9 @@ import io.minio.GetObjectResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -44,8 +45,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     public static final String REMARK_KEY = "remark";
 
 
-    @Value("${bucket:test}")
-    private String defaultBucket;
+    @Autowired
+    private MinioProperty minioProperty;
 
     //// @Autowired
     //// private BucketInfoService bucketInfoService;
@@ -63,6 +64,8 @@ public class FileInfoServiceImpl implements FileInfoService {
         String remark = fileInfoReqDTO.getRemark();
         MultipartFile file = fileInfoReqDTO.getFile();
         String originalFilename = file.getOriginalFilename();
+        DataSize fileSize = minioProperty.getFileSize();
+        Assert.isTrue(file.getSize() <= fileSize.toBytes(), MinioResultCode.FILE_SIZE_TO_LARGER, "文件大小不能超出"+ fileSize.toMegabytes()+"MB");
         // 后缀名 .png
         String extName = StrUtil.DOT + FileNameUtil.extName(originalFilename);
         String objectName = SnowFlakeUtil.generateStrId() + extName;
@@ -88,7 +91,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfoDTO.setStorageId(objectName);
         fileInfoDTO.setFileName(fileName);
         fileInfoDTO.setContentType(file.getContentType());
-        fileInfoDTO.setSize(file.getSize() / 1000);
+        fileInfoDTO.setSize(file.getSize() + "B");
         fileInfoDTO.setRemark(remark);
         fileInfoDTO.setBucket(bucketName);
         return fileInfoDTO;
@@ -133,7 +136,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 
     private String getBucketName(String bucketName) {
-        return StrUtil.isBlank(bucketName) ? bucketName.trim() : defaultBucket;
+        return StrUtil.isBlank(bucketName) ? bucketName.trim() : minioProperty.getDefaultBucket();
     }
 
     /**
@@ -155,7 +158,7 @@ public class FileInfoServiceImpl implements FileInfoService {
             }
         }
         long size = Optional.ofNullable(headers.get("Content-Length")).map(Long::valueOf).orElse(0L) / 1000;
-        fileInfoDTO.setSize(size);
+        fileInfoDTO.setSize(size + "KB");
         fileInfoDTO.setContentType(headers.get("Content-Type"));
         return fileInfoDTO;
     }

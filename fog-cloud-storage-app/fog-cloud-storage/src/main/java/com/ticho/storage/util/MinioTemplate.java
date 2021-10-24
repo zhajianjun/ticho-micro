@@ -47,10 +47,10 @@ public class MinioTemplate implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         this.client = MinioClient
-                .builder()
-                .credentials(minioProperty.getAccessKey(), minioProperty.getSecretKey())
-                .endpoint(minioProperty.getEndpoint())
-                .build();
+            .builder()
+            .credentials(minioProperty.getAccessKey(), minioProperty.getSecretKey())
+            .endpoint(minioProperty.getEndpoint())
+            .build();
     }
 
     /**
@@ -192,6 +192,12 @@ public class MinioTemplate implements InitializingBean {
             return client.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
         } catch (Exception e) {
             log.error("下载文件异常，{}", e.getMessage(), e);
+            if (e instanceof ErrorResponseException) {
+                ErrorResponseException ex = (ErrorResponseException) e;
+                if (ex.errorResponse().code().equals("NoSuchKey")) {
+                    throw new ServiceException(MinioResultCode.FILE_NOT_EXISITS);
+                }
+            }
             throw new ServiceException(MinioResultCode.DOWNLOAD_ERROR);
         }
     }
@@ -215,6 +221,12 @@ public class MinioTemplate implements InitializingBean {
                 .build());
         } catch (Exception e) {
             log.error("下载文件异常，{}", e.getMessage(), e);
+            if (e instanceof ErrorResponseException) {
+                ErrorResponseException ex = (ErrorResponseException) e;
+                if (ex.errorResponse().code().equals("NoSuchKey")) {
+                    throw new ServiceException(MinioResultCode.FILE_NOT_EXISITS);
+                }
+            }
             throw new ServiceException(MinioResultCode.DOWNLOAD_ERROR);
         }
     }

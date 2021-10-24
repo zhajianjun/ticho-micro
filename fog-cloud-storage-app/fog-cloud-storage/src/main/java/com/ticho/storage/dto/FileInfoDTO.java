@@ -4,6 +4,7 @@ package com.ticho.storage.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.util.unit.DataSize;
 
 import java.io.Serializable;
 
@@ -27,8 +28,8 @@ public class FileInfoDTO implements Serializable {
     @ApiModelProperty(value = "文件类型", position = 30)
     private String contentType;
 
-    @ApiModelProperty(value = "文件大小。单位：KB。", position = 30)
-    private Long size;
+    @ApiModelProperty(value = "文件大小。", position = 30)
+    private String size;
 
     @ApiModelProperty(value = "备注", position = 40)
     private String remark;

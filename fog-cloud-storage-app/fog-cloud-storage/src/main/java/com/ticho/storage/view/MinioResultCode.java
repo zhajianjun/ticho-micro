@@ -31,6 +31,10 @@ public enum MinioResultCode implements Serializable, IResultCode {
 
     DOWNLOAD_ERROR(10005, "下载文件失败"),
 
+    FILE_NOT_EXISITS(10005, "文件不存在"),
+
+    FILE_SIZE_TO_LARGER(10005, "文件大小过大"),
+
     DELETE_OBJECT_ERROR(10006, "删除文件失败"),
 
     SELECT_OBJECT_URL_ERROR(10008, "查询文件外链失败"),

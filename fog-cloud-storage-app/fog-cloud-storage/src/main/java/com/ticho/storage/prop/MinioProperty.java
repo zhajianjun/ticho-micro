@@ -4,6 +4,7 @@ import com.ticho.storage.constant.MinioConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.util.unit.DataSize;
 
 /**
  * Miniio连接对象
@@ -34,11 +35,16 @@ public class MinioProperty {
     /**
      * 图片大小限制
      */
-    private Long imgSize;
+    private DataSize imgSize = DataSize.ofMegabytes(1L);
 
     /**
      * 文件大小限制
      */
-    private Long fileSize;
+    private DataSize fileSize = DataSize.ofMegabytes(1L);
+
+    /**
+     * 默认桶
+     */
+    private String defaultBucket = "test";
 
 }

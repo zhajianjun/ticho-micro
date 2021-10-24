@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = {"com.ticho"})
 @EnableFogSwaggerSortConfig
 public class UaaApplication {
     public static void main(String[] args) {

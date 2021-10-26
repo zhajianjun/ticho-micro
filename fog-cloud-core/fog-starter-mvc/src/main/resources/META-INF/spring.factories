@@ -5,5 +5,9 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.ticho.core.mvc.event.ApiApplicationRunner,\
   com.ticho.core.mvc.event.BaseApplicationReadyEvent,\
   com.ticho.core.mvc.config.AsyncConfig,\
-  com.ticho.core.mvc.view.CustomerErrorController
+  com.ticho.core.mvc.view.CustomerErrorController,\
+  com.ticho.core.mvc.config.JacksonCustomizerConfig,\
+  com.ticho.core.mvc.converter.DateConverter,\
+  com.ticho.core.mvc.converter.LocalDateConverter,\
+  com.ticho.core.mvc.converter.LocalDateTimeConverter
 

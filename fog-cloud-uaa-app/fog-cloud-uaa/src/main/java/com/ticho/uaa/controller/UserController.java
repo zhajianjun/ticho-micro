@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,12 @@ import java.io.Serializable;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer;
+
+    @Autowired
+    private Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder;
 
     @ApiOperation(value = "添加用户", position = 10)
     @PostMapping

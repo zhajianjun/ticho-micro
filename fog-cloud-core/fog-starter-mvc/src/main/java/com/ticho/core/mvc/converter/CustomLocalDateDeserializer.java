@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.datatype.jsr310.deser.JSR310DateTimeDeserializerBase;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -21,10 +22,11 @@ import java.time.format.DateTimeFormatter;
  * <p>
  *    主要处理 yyyy-MM-dd 转换 yyyy-MM-dd HH:mm:ss
  * </p>
- *
+ * @see LocalDateDeserializer
  * @author AdoroTutto
  * @date 2021-10-27 0:44
  */
+@SuppressWarnings("all")
 public class CustomLocalDateDeserializer extends JSR310DateTimeDeserializerBase<LocalDateTime> {
     private static final long serialVersionUID = 1L;
 

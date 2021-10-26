@@ -23,5 +23,5 @@ public class ConvertConsant {
     /**
      * yyyy-MM-dd HH:mm:ss 正则匹配
      */
-    public static final String YYYY_MM_DD_HH_MM_SS_REGEX = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYY_MM_DD_HH_MM_SS_REGEX = "^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}:\\d{1,2}$";
 }

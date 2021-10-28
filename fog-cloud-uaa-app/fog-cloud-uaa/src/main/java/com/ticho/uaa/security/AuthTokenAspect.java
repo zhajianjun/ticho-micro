@@ -1,6 +1,6 @@
 package com.ticho.uaa.security;
 
-import com.ticho.commons.view.ResultView;
+import com.ticho.core.mvc.view.Result;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.slf4j.Logger;
@@ -22,17 +22,17 @@ public class AuthTokenAspect {
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
     @SuppressWarnings("unchecked")
     public Object postAccessToken(ProceedingJoinPoint pjp) throws Throwable {
-        ResultView<OAuth2AccessToken> resultView = null;
+        Result<OAuth2AccessToken> resultView = null;
         Object proceed = pjp.proceed();
         if (proceed != null) {
             ResponseEntity<OAuth2AccessToken> responseEntity = (ResponseEntity<OAuth2AccessToken>) proceed;
             OAuth2AccessToken body = responseEntity.getBody();
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
-                resultView = ResultView.ok(body);
+                resultView = Result.ok(body);
 
             } else {
                 logger.error("error:{}", responseEntity.getStatusCode().toString());
-                resultView = ResultView.fail();
+                resultView = Result.fail();
                 resultView.setData(body);
             }
         }

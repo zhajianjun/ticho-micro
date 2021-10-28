@@ -1,7 +1,6 @@
 package com.ticho.uaa.security.config;
 
 
-
 import com.ticho.uaa.security.exception.Oauth2ExceptionTranslator;
 import com.ticho.uaa.security.filter.CustomClientCredentialsTokenEndpointFilter;
 import com.ticho.uaa.security.interceptor.LoginInterceptor;
@@ -18,14 +17,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 授权服务器
@@ -46,12 +46,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private Oauth2ExceptionTranslator oauth2ExceptionTranslator;
-
-    @Autowired
-    private LoginInterceptor loginInterceptor;
-
-    @Autowired
     @Qualifier("customTokenExtraInfo")
     private TokenEnhancer tokenEnhancer;
 
@@ -59,58 +53,46 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private TokenStore tokenStore;
 
     @Autowired
-    private AuthorizationCodeServices authorizationCodeServices;
+    private DataSource dataSource;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // @formatter:off
-        clients.inMemory()//Token保存在内存中
-                //指明client-id和client-secret
-                .withClient("web")
-                .secret(passwordEncoder.encode("web"))
-                .resourceIds("resource")
-                // 令牌有效时间，单位秒
-                .accessTokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(30))
-                .refreshTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1))
-                // 支持 密码模式、授权码模式、简化模式、客户端模式和刷新令牌
-                .authorizedGrantTypes("password", "authorization_code", "implicit", "client_credentials", "refresh_token")
-                // 权限有哪些,如果这两配置了该参数，客户端发请求可以不带参数，使用配置的参数
-                .scopes("all", "read", "write")
-                .autoApprove(true)
-                .redirectUris("http://www.baidu.com", "http://localhost:8081/webjars/oauth/oauth2.html", "http://localhost:8080/authorizationCode");
-        // @formatter:on
+        JdbcClientDetailsService clientService = new JdbcClientDetailsService(dataSource);
+        //// clientService.setSelectClientDetailsSql();
+        //// clientService.setFindClientDetailsSql();
+        clients.withClientDetails(clientService);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        // TODO 待优化
+        JdbcAuthorizationCodeServices authorizationCodeServices = new JdbcAuthorizationCodeServices(dataSource);
+
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer, jwtAccessTokenConverter));
         // @formatter:off
         endpoints.authenticationManager(authenticationManager)
-                // 允许获取token的请求方法
-                //.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-                // 用户查询服务
-                .userDetailsService(userDetailsService)
-                // token存储方式
-                .tokenStore(tokenStore)
-                // jwt来进行编码以及解码的类
-                .accessTokenConverter(jwtAccessTokenConverter)
-                // 向token中添加自定义信息
-                .tokenEnhancer(tokenEnhancerChain)
-                // 异常转换
-                .exceptionTranslator(oauth2ExceptionTranslator)
-                // 获取token接口修改
-                .pathMapping("/oauth/token", "/oauth/token")
-                // 配置自定义code
-                .authorizationCodeServices(authorizationCodeServices)
-                // 登录拦截
-                .addInterceptor(loginInterceptor);
+            // 允许获取token的请求方法
+            //.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
+            // 用户查询服务
+            .userDetailsService(userDetailsService)
+            // token存储方式
+            .tokenStore(tokenStore)
+            // jwt来进行编码以及解码的类
+            .accessTokenConverter(jwtAccessTokenConverter)
+            // 向token中添加自定义信息
+            .tokenEnhancer(tokenEnhancerChain)
+            // 异常转换
+            .exceptionTranslator(new Oauth2ExceptionTranslator())
+            // 获取token接口修改
+            .pathMapping("/oauth/token", "/oauth/token")
+            // 配置自定义code
+            .authorizationCodeServices(authorizationCodeServices)
+            // 登录拦截
+            .addInterceptor(new LoginInterceptor());
     }
 
     /**

@@ -9,8 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,12 +36,6 @@ import java.io.Serializable;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer;
-
-    @Autowired
-    private Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder;
 
     @ApiOperation(value = "添加用户", position = 10)
     @PostMapping
@@ -74,7 +66,7 @@ public class UserController {
 
     @ApiOperation(value = "分页查询用户列表", position = 50)
     @GetMapping("page")
-    public PageResult<User> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,User user) {
+    public PageResult<User> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, User user) {
         return userService.page(pageNum, pageSize, user);
     }
 }

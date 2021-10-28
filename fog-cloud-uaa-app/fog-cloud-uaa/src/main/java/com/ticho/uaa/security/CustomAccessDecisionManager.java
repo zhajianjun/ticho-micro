@@ -34,7 +34,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
         // 统一放行
-        String header = request.getHeader(com.ticho.security.SecurityConstants.HeaderKeyValue.GlobalFiltingFlag.getKey());
+        String header = request.getHeader(SecurityConstants.HeaderKeyValue.GlobalFiltingFlag.getKey());
         if (ObjectUtil.isNotNull(header)) {
             return;
         }

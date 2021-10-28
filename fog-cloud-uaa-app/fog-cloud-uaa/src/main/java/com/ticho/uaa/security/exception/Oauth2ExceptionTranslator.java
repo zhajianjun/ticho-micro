@@ -3,7 +3,6 @@ package com.ticho.uaa.security.exception;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
-import org.springframework.stereotype.Component;
 
 /**
  * 自定义OAuth2Exception异常转换
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @author AdoroTutto
  * @date 2021-08-17 12:44 下午
  */
-@Component
 public class Oauth2ExceptionTranslator implements WebResponseExceptionTranslator<OAuth2Exception> {
 
     @Override

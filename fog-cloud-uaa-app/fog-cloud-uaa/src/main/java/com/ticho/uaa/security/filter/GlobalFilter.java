@@ -1,13 +1,13 @@
 package com.ticho.uaa.security.filter;
 
-import com.ticho.uaa.security.SecurityConstants;
-import org.springframework.beans.factory.annotation.Value;
+import com.ticho.uaa.security.SecurityConst;
 import org.springframework.lang.NonNull;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import sun.security.util.SecurityConstants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,15 +32,15 @@ import java.util.Vector;
  * @author AdoroTutto
  * @date 2021-08-21 18:07
  */
-@Component
 public class GlobalFilter extends OncePerRequestFilter {
-    public static final String REGEX = ",";
+    public static final String HEADER_AUTH_KEY = "Authorization";
+    public static final String HEADER_AUTH_VALUE_PREFIX_1 = "bearer";
 
     private final List<RequestMatcher> requestMatchers;
 
-    public GlobalFilter(@Value("${fog.default.matchers}") String matches) {
+    public GlobalFilter(String[] matches) {
         List<RequestMatcher> matcherList = new ArrayList<>();
-        for (String s : matches.split(REGEX)) {
+        for (String s : matches) {
             RequestMatcher requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(s));
             matcherList.add(requestMatcher);
         }
@@ -50,9 +50,15 @@ public class GlobalFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
-        boolean isMatch = isMatch(request);
-
-        Vector<String> vector = new Vector<>();
+        boolean isMatch = false;
+        // 统一放行
+        for (RequestMatcher requestMatcher : requestMatchers) {
+            if (requestMatcher.matches(request)) {
+                isMatch = true;
+                break;
+            }
+        }
+        Vector<String> strings = new Vector<>();
         if (isMatch) {
             request = new HttpServletRequestWrapper(request) {
                 /**
@@ -60,8 +66,8 @@ public class GlobalFilter extends OncePerRequestFilter {
                  */
                 @Override
                 public Enumeration<String> getHeaders(String name) {
-                    if (SecurityConstants.AUTHORIZATION.equalsIgnoreCase(name)) {
-                        return vector.elements();
+                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
+                        return strings.elements();
                     }
                     return super.getHeaders(name);
                 }
@@ -71,11 +77,12 @@ public class GlobalFilter extends OncePerRequestFilter {
                  */
                 @Override
                 public String getHeader(String name) {
-                    if (name.equalsIgnoreCase(SecurityConstants.HeaderKeyValue.GlobalFiltingFlag.getKey())) {
-                        return SecurityConstants.HeaderKeyValue.GlobalFiltingFlag.getValue();
+                    if (name.equalsIgnoreCase(SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getKey())) {
+                        return SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getValue();
                     }
                     return super.getHeader(name);
                 }
+
             };
         } else {
             request = new HttpServletRequestWrapper(request) {
@@ -84,13 +91,13 @@ public class GlobalFilter extends OncePerRequestFilter {
                  */
                 @Override
                 public Enumeration<String> getHeaders(String name) {
-                    if (SecurityConstants.AUTHORIZATION.equalsIgnoreCase(name)) {
+                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
                         Enumeration<String> headers = super.getHeaders(name);
                         if (Objects.nonNull(headers) && headers.hasMoreElements()) {
                             String auth = headers.nextElement();
                             if (this.hasNotAuthPrefix(auth)) {
-                                vector.add(SecurityConstants.BEARER + " " + auth);
-                                return vector.elements();
+                                strings.add(HEADER_AUTH_VALUE_PREFIX_1 + " " + auth);
+                                return strings.elements();
                             }
                         }
                     }
@@ -99,10 +106,10 @@ public class GlobalFilter extends OncePerRequestFilter {
 
                 @Override
                 public String getHeader(String name) {
-                    if (SecurityConstants.AUTHORIZATION.equalsIgnoreCase(name)) {
+                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
                         String auth = super.getHeader(name);
                         if (this.hasNotAuthPrefix(auth)) {
-                            return SecurityConstants.BEARER + " " + super.getHeader(name);
+                            return HEADER_AUTH_VALUE_PREFIX_1 + " " + super.getHeader(name);
                         }
                     }
                     return super.getHeader(name);
@@ -113,22 +120,10 @@ public class GlobalFilter extends OncePerRequestFilter {
                         return false;
                     }
                     auth = auth.toLowerCase();
-                    return !auth.startsWith(SecurityConstants.BEARER);
+                    return !auth.startsWith(HEADER_AUTH_VALUE_PREFIX_1);
                 }
             };
         }
         doFilter(request, response, filterChain);
-    }
-
-    public boolean isMatch(HttpServletRequest request) {
-        boolean isMatch = false;
-        // 统一放行
-        for (RequestMatcher requestMatcher : requestMatchers) {
-            if (requestMatcher.matches(request)) {
-                isMatch = true;
-                break;
-            }
-        }
-        return isMatch;
     }
 }

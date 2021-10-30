@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
+import java.security.Principal;
 
 
 /**
@@ -36,6 +38,13 @@ import java.io.Serializable;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @ApiOperation(value = "权限用户信息", notes = "权限用户信息", position = 5)
+    @GetMapping("principal")
+    @View(ignore = true)
+    public Principal principal(Principal principal) {
+        return principal;
+    }
 
     @ApiOperation(value = "添加用户", position = 10)
     @PostMapping

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -107,11 +106,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpointFilter.setAuthenticationEntryPoint(clientExceptionView);
 
         security
-                // /oauth/check_token（检查token）放行
-                .checkTokenAccess("permitAll()")
-                // /oauth/token_key（jwt密钥，只有JwtAccessTokenConverter注入容器才会有这个接口）保护
-                .tokenKeyAccess("isAuthenticated()")
-                .authenticationEntryPoint(clientExceptionView)
-                .addTokenEndpointAuthenticationFilter(endpointFilter);
+            // /oauth/check_token（检查token）放行
+            .checkTokenAccess("permitAll()")
+            // /oauth/token_key（jwt密钥，只有JwtAccessTokenConverter注入容器才会有这个接口）保护
+            .tokenKeyAccess("isAuthenticated()")
+            .authenticationEntryPoint(clientExceptionView)
+            .addTokenEndpointAuthenticationFilter(endpointFilter);
     }
 }

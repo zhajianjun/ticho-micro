@@ -1,5 +1,6 @@
 package com.ticho.storage;
 
+import com.ticho.core.swagger.annotation.EnableFogSwaggerSecurityConfig;
 import com.ticho.core.swagger.annotation.EnableFogSwaggerSortConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFogSwaggerSortConfig
+@EnableFogSwaggerSecurityConfig
 public class StorageApplication {
     public static void main(String[] args) {
         SpringApplication.run(StorageApplication.class, args);

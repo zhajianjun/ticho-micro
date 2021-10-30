@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -21,7 +20,6 @@ import java.util.Collection;
  * @date 2020-07-03 15:39
  */
 @Slf4j
-@Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 
     /**
@@ -34,7 +32,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
         // 统一放行
-        String header = request.getHeader(SecurityConstants.HeaderKeyValue.GlobalFiltingFlag.getKey());
+        String header = request.getHeader(SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getKey());
         if (ObjectUtil.isNotNull(header)) {
             return;
         }

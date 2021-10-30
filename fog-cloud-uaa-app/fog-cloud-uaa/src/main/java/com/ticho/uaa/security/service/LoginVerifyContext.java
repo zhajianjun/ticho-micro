@@ -1,6 +1,6 @@
 package com.ticho.uaa.security.service;
 
-import com.ticho.uaa.security.SecurityConstants;
+import com.ticho.uaa.security.SecurityConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class LoginVerifyContext {
         String type = request.getParameter("type");
         LoginVerifyStrategy loginVerifyStrategy = strategyMap.get(type);
         if (StringUtils.isEmpty(loginVerifyStrategy)) {
-            loginVerifyStrategy = strategyMap.get(SecurityConstants.DEFAULT_TYPE);
+            loginVerifyStrategy = strategyMap.get(SecurityConst.DEFAULT_TYPE);
         }
         loginVerifyStrategy.verify(request);
     }

@@ -9,5 +9,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.ticho.core.mvc.config.JacksonCustomizerConfig,\
   com.ticho.core.mvc.converter.DateConverter,\
   com.ticho.core.mvc.converter.LocalDateConverter,\
-  com.ticho.core.mvc.converter.LocalDateTimeConverter
+  com.ticho.core.mvc.converter.LocalDateTimeConverter,\
+  com.ticho.core.mvc.config.CorsConfig
 

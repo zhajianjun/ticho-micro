@@ -81,10 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         // 自定义登录页面
-        http
-            .csrf()
-            .disable()
-            .formLogin();
+        http.csrf().disable()
+            .formLogin().loginPage("/login.html").loginProcessingUrl("/login");
     }
-
 }

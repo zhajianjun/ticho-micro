@@ -2,6 +2,7 @@ package com.ticho.core.swagger.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -38,7 +39,8 @@ public class SwaggerConfig {
     // @formatter:off
 
     @Bean
-    public Docket docket() {
+    @ConditionalOnMissingBean(Docket.class)
+    public Docket docket(ApiInfo apiInfo) {
         return new Docket(DocumentationType.SWAGGER_2)
             .pathMapping("/")
             .select()
@@ -53,12 +55,14 @@ public class SwaggerConfig {
             .securitySchemes(securitySchemes())
             .securityContexts(securityContexts())
             //文档描叙
-            .apiInfo(apiInfo());
+            .apiInfo(apiInfo);
     }
 
     /**
      * 接口文档简介
      */
+    @Bean
+    @ConditionalOnMissingBean(ApiInfo.class)
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title(applicationName)

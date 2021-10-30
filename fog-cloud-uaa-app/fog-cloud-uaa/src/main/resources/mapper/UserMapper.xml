@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="User_map" type="com.ticho.uaa.entity.User">
         <result column="id" property="id"/>
-        <result column="`account`" property="account"/>
+        <result column="`username`" property="username"/>
         <result column="`password`" property="password"/>
         <result column="nickname" property="nickname"/>
         <result column="realname" property="realname"/>
@@ -32,7 +32,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="User_sql">
-        id, `account`, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, remark, create_by, create_time, update_by, update_time, is_deleted
+        id, `username`, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, remark, create_by, create_time, update_by, update_time, is_deleted
     </sql>
 
     <select id="selectByConditions" resultMap="User_map">
@@ -41,7 +41,7 @@
         FROM sys_user
         <where>
             <if test="id!=null">and id=#{id}</if>
-            <if test="account!=null">and `account`=#{account}</if>
+            <if test="username!=null">and `username`=#{username}</if>
             <if test="password!=null">and `password`=#{password}</if>
             <if test="nickname!=null">and nickname=#{nickname}</if>
             <if test="realname!=null">and realname=#{realname}</if>

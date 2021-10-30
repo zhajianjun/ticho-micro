@@ -1,14 +1,14 @@
 package com.ticho.uaa.security;
 
 import cn.hutool.core.codec.Base64;
-import com.ticho.utils.JsonUtils;
+import com.ticho.core.mvc.util.JsonUtils;
 
 /**
  *
  * @author AdoroTutto
  * @date 2020-07-05 0:36
  */
-public class SecurityConstants {
+public class SecurityConst {
 
     /**
      * 登录类型
@@ -18,6 +18,13 @@ public class SecurityConstants {
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "bearer";
+
+    /**
+     * 放行的url，可以放到全局配置里,必须/开头
+     */
+    public static final String[] RELEASE_URL = {"/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs",
+            "/favicon.ico", "/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.ttf", "/**/*.woff", "/**/oauth/**", "/login",
+            "/login.html"};
 
     /**
      *

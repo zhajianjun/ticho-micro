@@ -42,7 +42,7 @@ public class SwaggerSecurityConfig {
         return creteDocket(null, securityContexts(), passwordSecuritySchemes());
     }
 
-    //@Bean("authorizationCodeDocket")
+    @Bean("authorizationCodeDocket")
     public Docket authorizationCodeDocket() {
         return creteDocket("default-authorizationCode", securityContexts(), authorizationCodeSecuritySchemes());
     }

@@ -30,7 +30,7 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthExc
         gen.writeStartObject();
         gen.writeNumberField("code", 401);
         gen.writeStringField("msg", value.getMessage());
-        gen.writeStringField("data", request.getRequestURI());
+        gen.writeNumberField("time", System.currentTimeMillis());
 
         if (value.getAdditionalInformation() != null) {
             for (Map.Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {

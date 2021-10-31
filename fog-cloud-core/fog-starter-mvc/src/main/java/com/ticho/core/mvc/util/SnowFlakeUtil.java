@@ -5,10 +5,10 @@ import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.IdUtil;
 
 /**
- * 雪花算法
+ * 雪花
  *
- * @author zzxadi
- * @date
+ * @author AdoroTutto
+ * @date 2021-10-16 20:24
  */
 public class SnowFlakeUtil {
 

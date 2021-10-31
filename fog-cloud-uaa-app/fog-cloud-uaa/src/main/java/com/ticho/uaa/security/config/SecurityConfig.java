@@ -82,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         // 自定义登录页面
         http.csrf().disable()
+            .httpBasic().disable()
             .formLogin().loginPage("/login.html").loginProcessingUrl("/login");
     }
 }

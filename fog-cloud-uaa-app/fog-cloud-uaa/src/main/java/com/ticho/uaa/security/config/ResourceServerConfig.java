@@ -50,6 +50,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
             // 关闭csrf保护(关闭跨域保护)
             .csrf().disable()
+            .httpBasic().disable()
             .formLogin().loginPage("/login.html").loginProcessingUrl("/login")
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)

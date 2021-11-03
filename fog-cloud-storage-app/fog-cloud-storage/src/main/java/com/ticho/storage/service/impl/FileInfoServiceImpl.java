@@ -116,9 +116,10 @@ public class FileInfoServiceImpl implements FileInfoService {
         try (OutputStream outputStream = response.getOutputStream()) {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encode(fileInfoDto.getFileName()));
             response.setContentType(fileInfoDto.getContentType());
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Cache-Control", "no-cache");
-            response.setDateHeader("Expires", 0);
+            response.setHeader(HttpHeaders.PRAGMA, "no-cache");
+            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+            response.setHeader(HttpHeaders.CONTENT_LENGTH, Integer.toString(in.available()));
+            response.setDateHeader(HttpHeaders.EXPIRES, 0);
             IoUtil.copy(in, outputStream, 1024);
         } catch (Exception e) {
             log.error("文件下载失败，{}", e.getMessage(), e);

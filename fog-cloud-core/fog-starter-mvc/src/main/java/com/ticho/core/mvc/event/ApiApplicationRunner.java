@@ -118,7 +118,7 @@ public class ApiApplicationRunner implements ApplicationRunner {
         res.put("serviceId", microService);
         res.put("size", list.size());
         res.put("list", list);
-        log.info(res.toString());
+        log.debug(res.toString());
     }
 
     private String getUrls(Set<String> urls) {

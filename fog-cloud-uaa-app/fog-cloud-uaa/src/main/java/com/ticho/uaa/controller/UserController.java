@@ -31,7 +31,7 @@ import java.security.Principal;
  * @date 2021-10-24 22:12
  */
 @RestController
-@RequestMapping("User")
+@RequestMapping("user")
 @Api(tags = "用户")
 @View
 @ApiSort(10)

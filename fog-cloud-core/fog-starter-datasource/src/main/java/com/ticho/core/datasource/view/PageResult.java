@@ -32,18 +32,18 @@ public class PageResult<T> implements Serializable {
     private List<T> rows;
 
 
-    public PageResult(Page<T> list) {
-        this.total = list.getTotal();
-        this.rows = list.getResult();
-        this.pageNum = list.getPageNum();
-        this.pageSize = list.getPageSize();
+    public PageResult(Page<T> page) {
+        this.total = page.getTotal();
+        this.rows = page.getResult();
+        this.pageNum = page.getPageNum();
+        this.pageSize = page.getPageSize();
     }
 
-    public PageResult(com.baomidou.mybatisplus.extension.plugins.pagination.Page<T> list) {
-        this.total = list.getTotal();
-        this.rows = list.getRecords();
-        this.pageNum = (int) list.getCurrent();
-        this.pageSize = (int) list.getSize();
+    public PageResult(com.baomidou.mybatisplus.extension.plugins.pagination.Page<T> page) {
+        this.total = page.getTotal();
+        this.rows = page.getRecords();
+        this.pageNum = (int) page.getCurrent();
+        this.pageSize = (int) page.getSize();
     }
 
     public PageResult(Integer pageNum, Integer pageSize, Long total, List<T> rows) {

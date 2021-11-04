@@ -56,7 +56,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
             .and()
             .authorizeRequests()
-            .antMatchers(SecurityConst.RELEASE_URL).permitAll()
             // 给特定资源接口放行
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override

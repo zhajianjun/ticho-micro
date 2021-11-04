@@ -60,7 +60,7 @@ public class GlobalFilter extends OncePerRequestFilter {
         if (isMatch) {
             request = new HttpServletRequestWrapper(request) {
                 /**
-                 * 一旦放行全局url，，给header中Authorization的value赋空值，这样security就不会校验token信息了
+                 * 一旦放行全局url，给header中Authorization的value赋空值，这样security就不会校验token信息了
                  */
                 @Override
                 public Enumeration<String> getHeaders(String name) {

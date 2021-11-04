@@ -5,8 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="User_map" type="com.ticho.uaa.entity.User">
         <result column="id" property="id"/>
-        <result column="`username`" property="username"/>
-        <result column="`password`" property="password"/>
+        <result column="username`" property="username"/>
+        <result column="password" property="password"/>
         <result column="nickname" property="nickname"/>
         <result column="realname" property="realname"/>
         <result column="idcard" property="idcard"/>

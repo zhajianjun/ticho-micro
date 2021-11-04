@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="OauthCode_map" type="com.ticho.uaa.entity.OauthCode">
-        <result column="`code`" property="code"/>
+        <result column="code" property="code"/>
         <result column="authentication" property="authentication"/>
     </resultMap>
 

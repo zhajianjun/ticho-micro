@@ -112,13 +112,14 @@ public class FileInfoServiceImpl implements FileInfoService {
         Assert.isNotBlank(storageId, BaseResultCode.PARAM_ERROR, "资源id不能为空");
         bucketName = getBucketName(bucketName);
         GetObjectResponse in = minioTemplate.getObject(bucketName, storageId);
-        FileInfoDTO fileInfoDto = getFileInfoDto(in.headers());
+        Headers headers = in.headers();
+        FileInfoDTO fileInfoDto = getFileInfoDto(headers);
         try (OutputStream outputStream = response.getOutputStream()) {
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encode(fileInfoDto.getFileName()));
             response.setContentType(fileInfoDto.getContentType());
             response.setHeader(HttpHeaders.PRAGMA, "no-cache");
             response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
-            response.setHeader(HttpHeaders.CONTENT_LENGTH, Integer.toString(in.available()));
+            response.setHeader(HttpHeaders.CONTENT_LENGTH, headers.get(HttpHeaders.CONTENT_LENGTH));
             response.setDateHeader(HttpHeaders.EXPIRES, 0);
             IoUtil.copy(in, outputStream, 1024);
         } catch (Exception e) {
@@ -161,9 +162,9 @@ public class FileInfoServiceImpl implements FileInfoService {
                 }
             }
         }
-        long size = Optional.ofNullable(headers.get("Content-Length")).map(Long::valueOf).orElse(0L) / 1000;
+        long size = Optional.ofNullable(headers.get(HttpHeaders.CONTENT_LENGTH)).map(Long::valueOf).orElse(0L) / 1000;
         fileInfoDTO.setSize(size + "KB");
-        fileInfoDTO.setContentType(headers.get("Content-Type"));
+        fileInfoDTO.setContentType(headers.get(HttpHeaders.CONTENT_TYPE));
         return fileInfoDTO;
     }
 }

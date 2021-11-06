@@ -1,5 +1,6 @@
 package com.ticho.core.mvc.util.valid;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.ticho.core.mvc.exception.ServiceException;
 import com.ticho.core.mvc.view.BaseResultCode;
 import org.hibernate.validator.BaseHibernateValidatorConfiguration;
@@ -15,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -55,8 +55,9 @@ public class ValidUtils {
      * @param obj 校验对象
      */
     public static void valid(Object obj) {
+        Object preCheck = preCheck(obj);
         Class<?>[] groups = getGroups(true);
-        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck(obj), groups);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck, groups);
         throwValidException(validate);
     }
 
@@ -68,8 +69,9 @@ public class ValidUtils {
      * @param groups 校验分组
      */
     public static void valid(Object obj, Class<?>... groups) {
+        Object preCheck = preCheck(obj);
         Class<?>[] groupsNew = getGroups(true, groups);
-        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck(obj), groupsNew);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck, groupsNew);
         throwValidException(validate);
     }
 
@@ -81,8 +83,9 @@ public class ValidUtils {
      * @param obj 校验对象
      */
     public static void validFast(Object obj) {
+        Object preCheck = preCheck(obj);
         Class<?>[] groups = getGroups(true);
-        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck(obj), groups);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck, groups);
         throwValidException(validate);
     }
 
@@ -95,8 +98,9 @@ public class ValidUtils {
      * @param groups 校验分组
      */
     public static void validFast(Object obj, Class<?>... groups) {
+        Object preCheck = preCheck(obj);
         Class<?>[] groupsNew = getGroups(true, groups);
-        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck(obj), groupsNew);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck, groupsNew);
         throwValidException(validate);
     }
 
@@ -108,14 +112,91 @@ public class ValidUtils {
      * @param checkDefaultGroup 是否检验默认分组
      * @param groups 校验分组
      */
-    public static <T> void valid(T obj, boolean failFast, boolean checkDefaultGroup, Class<?>... groups) {
+    public static void valid(Object obj, boolean failFast, boolean checkDefaultGroup, Class<?>... groups) {
+        Object preCheck = preCheck(obj);
         Validator validtor = failFast ? VALIDATOR_FAIL_FAST : VALIDATOR_DEFAULT;
         Class<?>[] groupsNew = getGroups(checkDefaultGroup, groups);
-        Set<ConstraintViolation<T>> validate = validtor.validate(preCheck(obj), groupsNew);
+        Set<ConstraintViolation<Object>> validate = validtor.validate(preCheck, groupsNew);
         throwValidException(validate);
     }
 
     // @formatter:off
+    /**
+     * valid 参数校验
+     *
+     * @see Default 默认校验默认分组注解，比如@NotNull 没有写group分组，实际用的默认分组
+     * @param obj 校验对象
+     * @param customMessage 自定义作物信息
+     */
+    public static void valid(Object obj, String customMessage) {
+        Object preCheck = preCheck(obj, customMessage);
+        Class<?>[] groups = getGroups(true);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck, groups);
+        throwValidException(validate);
+    }
+
+    /**
+     * valid 参数校验
+     *
+     * @see Default 默认校验默认分组注解，比如@NotNull 没有写group分组，实际用的默认分组
+     * @param obj 校验对象
+     * @param customMessage 自定义作物信息
+     * @param groups 校验分组
+     */
+    public static void valid(Object obj, String customMessage, Class<?>... groups) {
+        Object preCheck = preCheck(obj, customMessage);
+        Class<?>[] groupsNew = getGroups(true, groups);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_DEFAULT.validate(preCheck, groupsNew);
+        throwValidException(validate);
+    }
+
+    /**
+     * valid 参数校验
+     *
+     * @see Default 默认校验默认分组注解，比如@NotNull 没有写group分组，实际用的默认分组
+     * @see BaseHibernateValidatorConfiguration#failFast(boolean) 默认快速校验,遇到第一错误就报异常
+     * @param obj 校验对象
+     * @param customMessage 自定义作物信息
+     */
+    public static void validFast(Object obj, String customMessage) {
+        Object preCheck = preCheck(obj, customMessage);
+        Class<?>[] groups = getGroups(true);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck, groups);
+        throwValidException(validate);
+    }
+
+    /**
+     * valid 参数校验
+     *
+     * @see Default 默认校验默认分组注解，比如@NotNull 没有写group分组，实际用的默认分组
+     * @see BaseHibernateValidatorConfiguration#failFast(boolean) 默认快速校验,遇到第一错误就报异常
+     * @param obj 校验对象
+     * @param groups 校验分组
+     * @param customMessage 自定义作物信息
+     */
+    public static void validFast(Object obj, String customMessage, Class<?>... groups) {
+        Object preCheck = preCheck(obj, customMessage);
+        Class<?>[] groupsNew = getGroups(true, groups);
+        Set<ConstraintViolation<Object>> validate = VALIDATOR_FAIL_FAST.validate(preCheck, groupsNew);
+        throwValidException(validate);
+    }
+
+    /**
+     * valid 参数校验
+     *
+     * @param obj 校验对象
+     * @param customMessage 自定义作物信息
+     * @param failFast 是否快速检查 检验到错误就返回，而不是检验所有错误
+     * @param checkDefaultGroup 是否检验默认分组
+     * @param groups 校验分组
+     */
+    public static void valid(Object obj, String customMessage, boolean failFast, boolean checkDefaultGroup, Class<?>... groups) {
+        Object preCheck = preCheck(obj, customMessage);
+        Validator validtor = failFast ? VALIDATOR_FAIL_FAST : VALIDATOR_DEFAULT;
+        Class<?>[] groupsNew = getGroups(checkDefaultGroup, groups);
+        Set<ConstraintViolation<Object>> validate = validtor.validate(preCheck, groupsNew);
+        throwValidException(validate);
+    }
 
     /**
      * valid 参数校验
@@ -201,13 +282,39 @@ public class ValidUtils {
      */
     @SuppressWarnings("all")
     private static <T> T preCheck(T obj) {
-        if (Objects.isNull(obj)) {
-            throw new ServiceException(BaseResultCode.PARAM_ERROR, "数据不能为空");
+        if (ObjectUtil.isEmpty(obj)) {
+            throw new ServiceException(BaseResultCode.PARAM_ERROR);
         }
         if (obj instanceof Collection<?>) {
             Collection<?> objnew = (Collection<?>) obj;
             if (objnew.isEmpty()) {
-                throw new ServiceException(BaseResultCode.PARAM_ERROR, "数据不能为空");
+                throw new ServiceException(BaseResultCode.PARAM_ERROR);
+            }
+            ValidBean<?> validBean = new ValidBean<>(objnew);
+            return (T) validBean;
+        }
+        return obj;
+    }
+
+    /**
+     * 预校验
+     * <p>1.如果是非集合对象，判断是否为null</p>
+     * <p>2.如果是集合对象，则注入ValidBean对象中进行校验</p>
+     *
+     * @see ValidBean
+     * @param obj T
+     * @param customMessage 自定义作物信息
+     * @return T
+     */
+    @SuppressWarnings("all")
+    private static <T> T preCheck(T obj, String customMessage) {
+        if (ObjectUtil.isEmpty(obj)) {
+            throw new ServiceException(BaseResultCode.PARAM_ERROR, customMessage);
+        }
+        if (obj instanceof Collection<?>) {
+            Collection<?> objnew = (Collection<?>) obj;
+            if (objnew.isEmpty()) {
+                throw new ServiceException(BaseResultCode.PARAM_ERROR, customMessage);
             }
             ValidBean<?> validBean = new ValidBean<>(objnew);
             return (T) validBean;

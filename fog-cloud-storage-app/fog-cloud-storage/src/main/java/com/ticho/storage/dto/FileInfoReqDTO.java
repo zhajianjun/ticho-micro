@@ -31,10 +31,10 @@ public class FileInfoReqDTO implements Serializable {
     private String bucketName;
 
     @ApiModelProperty(value = "文件名，如果没有则默认使用MultipartFile中的文件名", required = true, position = 30)
-    @Size(min = 1, max = 20, message = "文件名过长，1-20字符以内！")
+    @Size(max = 20, message = "文件名过长，1-20字符以内！")
     private String fileName;
 
     @ApiModelProperty(value = "备注", required = true, position = 40)
-    @Size(min = 1, max = 50, message = "备注过长，1-50字符以内！")
+    @Size(max = 50, message = "备注过长，1-50字符以内！")
     private String remark;
 }

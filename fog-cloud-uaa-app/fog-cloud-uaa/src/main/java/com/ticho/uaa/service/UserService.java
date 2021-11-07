@@ -24,35 +24,40 @@ public interface UserService extends IService<User> {
     PageResult<User> page(int pageNum, int pageSize, User user);
 
     /**
-     * 根据账户名
+     * 根据账户名查询用户
+     *
      * @param username 账户名
      * @return SecurityUser
      */
     SecurityUser getByUsername(String username);
 
     /**
-     * 根据手机号码
+     * 根据手机号码查询用户
+     *
      * @param mobile 手机号码
      * @return SecurityUser
      */
     SecurityUser getByMobile(String mobile);
 
     /**
-     * 根据邮箱
+     * 根据邮箱查询用户
+     *
      * @param email 邮箱
      * @return SecurityUser
      */
     SecurityUser getByEmail(String email);
 
     /**
-     * 根据微信号码
+     * 根据微信号码查询用户
+     *
      * @param wechat 微信号码
      * @return SecurityUser
      */
     SecurityUser getByWechat(String wechat);
 
     /**
-     * 根据QQ号码查询
+     * 根据QQ号码查询查询用户
+     *
      * @param qq QQ号码
      * @return SecurityUser
      */

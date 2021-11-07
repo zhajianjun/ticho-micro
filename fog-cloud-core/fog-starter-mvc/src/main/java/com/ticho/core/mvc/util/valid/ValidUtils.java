@@ -16,7 +16,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Validator 参数校验
@@ -235,14 +237,15 @@ public class ValidUtils {
             log.warn("参数校验异常，property=【{}】,message=【{}】", propertyPath, message);
             throw new ServiceException(BaseResultCode.PARAM_ERROR, message);
         }
-        ConstraintViolation<T> violation = validate
+        List<ConstraintViolation<T>> validated = validate
             .stream()
             .sorted(Comparator.comparing(ConstraintViolation::getMessage))
             .peek(next -> {
                 String message = next.getMessage();
                 String propertyPath = next.getPropertyPath().toString();
                 log.warn("参数校验异常，property=【{}】,message=【{}】", propertyPath, message);
-            }).findFirst().get();
+            }).collect(Collectors.toList());
+        ConstraintViolation<T> violation = validated.get(0);
         throw new ServiceException(BaseResultCode.PARAM_ERROR, violation.getMessage());
         // @formatter:on
     }

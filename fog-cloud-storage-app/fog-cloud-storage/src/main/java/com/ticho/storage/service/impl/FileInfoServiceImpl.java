@@ -141,7 +141,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 
     private String getBucketName(String bucketName) {
-        return StrUtil.isBlank(bucketName) ? bucketName.trim() : minioProperty.getDefaultBucket();
+        return StrUtil.isNotBlank(bucketName) ? bucketName.trim() : minioProperty.getDefaultBucket();
     }
 
     /**

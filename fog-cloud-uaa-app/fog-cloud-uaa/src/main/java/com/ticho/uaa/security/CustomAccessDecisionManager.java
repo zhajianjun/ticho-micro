@@ -60,7 +60,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     }
 
     /**
-     * 复制默认方法，使得@PreAuthorize("hasRole('ROLE_ADMIN')") 可用
+     * 复制默认方法，使得@PreAuthorize("hasRole('ADMIN')") 可用
      */
     @Override
     public boolean supports(ConfigAttribute attribute) {

@@ -1,12 +1,15 @@
 package com.ticho.uaa.security.filter;
 
 import com.ticho.uaa.security.SecurityConst;
+import lombok.Getter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,15 +33,16 @@ import java.util.Vector;
  * @author AdoroTutto
  * @date 2021-08-21 18:07
  */
+@Getter
+@Component
 public class GlobalFilter extends OncePerRequestFilter {
-    public static final String HEADER_AUTH_KEY = "Authorization";
-    public static final String HEADER_AUTH_VALUE_PREFIX_1 = "bearer";
 
-    private final List<RequestMatcher> requestMatchers;
+    private List<RequestMatcher> requestMatchers;
 
-    public GlobalFilter(String[] matches) {
+    @PostConstruct
+    public void init() {
         List<RequestMatcher> matcherList = new ArrayList<>();
-        for (String s : matches) {
+        for (String s : SecurityConst.RELEASE_URL) {
             RequestMatcher requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(s));
             matcherList.add(requestMatcher);
         }
@@ -64,21 +68,10 @@ public class GlobalFilter extends OncePerRequestFilter {
                  */
                 @Override
                 public Enumeration<String> getHeaders(String name) {
-                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
+                    if (SecurityConst.AUTHORIZATION.equalsIgnoreCase(name)) {
                         return strings.elements();
                     }
                     return super.getHeaders(name);
-                }
-
-                /**
-                 * 一旦放行url，给header中注入标志k，v
-                 */
-                @Override
-                public String getHeader(String name) {
-                    if (name.equalsIgnoreCase(SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getKey())) {
-                        return SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getValue();
-                    }
-                    return super.getHeader(name);
                 }
 
             };
@@ -89,12 +82,12 @@ public class GlobalFilter extends OncePerRequestFilter {
                  */
                 @Override
                 public Enumeration<String> getHeaders(String name) {
-                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
+                    if (SecurityConst.AUTHORIZATION.equalsIgnoreCase(name)) {
                         Enumeration<String> headers = super.getHeaders(name);
                         if (Objects.nonNull(headers) && headers.hasMoreElements()) {
                             String auth = headers.nextElement();
                             if (this.hasNotAuthPrefix(auth)) {
-                                strings.add(HEADER_AUTH_VALUE_PREFIX_1 + " " + auth);
+                                strings.add(SecurityConst.AUTHORIZATION + " " + auth);
                                 return strings.elements();
                             }
                         }
@@ -104,10 +97,10 @@ public class GlobalFilter extends OncePerRequestFilter {
 
                 @Override
                 public String getHeader(String name) {
-                    if (HEADER_AUTH_KEY.equalsIgnoreCase(name)) {
+                    if (SecurityConst.AUTHORIZATION.equalsIgnoreCase(name)) {
                         String auth = super.getHeader(name);
                         if (this.hasNotAuthPrefix(auth)) {
-                            return HEADER_AUTH_VALUE_PREFIX_1 + " " + super.getHeader(name);
+                            return SecurityConst.BEARER + " " + super.getHeader(name);
                         }
                     }
                     return super.getHeader(name);
@@ -118,7 +111,7 @@ public class GlobalFilter extends OncePerRequestFilter {
                         return false;
                     }
                     auth = auth.toLowerCase();
-                    return !auth.startsWith(HEADER_AUTH_VALUE_PREFIX_1);
+                    return !auth.startsWith(SecurityConst.BEARER);
                 }
             };
         }

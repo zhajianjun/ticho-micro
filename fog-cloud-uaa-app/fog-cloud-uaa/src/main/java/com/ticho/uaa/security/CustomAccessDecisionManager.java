@@ -30,13 +30,15 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        HttpServletRequest request = ((FilterInvocation) object).getRequest();
+        //// HttpServletRequest request = ((FilterInvocation) object).getRequest();
         // 统一放行
-        String header = request.getHeader(SecurityConst.HeaderKeyValue.GlobalFiltingFlag.getKey());
-        if (ObjectUtil.isNotNull(header)) {
-            return;
+        if (!configAttributes.isEmpty()) {
+            for (ConfigAttribute item : configAttributes) {
+                if (item.toString().contains(SecurityConst.PERMIT_ALL)) {
+                    return;
+                }
+            }
         }
-
         // 非放行的url没有权限信息 默认是 AnonymousAuthenticationToken
         if (authentication instanceof AnonymousAuthenticationToken) {
             // 说明没有token传入，所以没有权限信息，即是没有用户信息，即没有登录，抛出异常会进入 FogTokenFailureEntryPoint 中去

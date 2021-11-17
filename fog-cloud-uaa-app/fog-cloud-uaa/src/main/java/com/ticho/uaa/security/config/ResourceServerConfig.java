@@ -6,6 +6,7 @@ import com.ticho.uaa.security.filter.GlobalFilter;
 import com.ticho.uaa.security.view.AuthenticationFailView;
 import com.ticho.uaa.security.view.NoAuthenticationMessageView;
 import com.ticho.uaa.security.view.PermissionDeniedView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -27,6 +28,10 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @Configuration
 @Order(3)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+    @Autowired
+    private GlobalFilter globalFilter;
+
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -56,6 +61,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
             .and()
             .authorizeRequests()
+            .antMatchers(SecurityConst.RELEASE_URL).permitAll()
             // 给特定资源接口放行
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override
@@ -73,7 +79,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .authenticationEntryPoint(new NoAuthenticationMessageView())
             .and()
             // 在认证处理器之前添加过滤器
-            .addFilterBefore(new GlobalFilter(SecurityConst.RELEASE_URL), AbstractPreAuthenticatedProcessingFilter.class)
+            .addFilterBefore(globalFilter, AbstractPreAuthenticatedProcessingFilter.class)
             // 解决iframe无法访问
             .headers().frameOptions().sameOrigin();
         // @formatter:on

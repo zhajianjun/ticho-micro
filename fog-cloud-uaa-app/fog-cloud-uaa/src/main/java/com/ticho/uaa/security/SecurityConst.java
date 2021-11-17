@@ -18,6 +18,7 @@ public class SecurityConst {
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "bearer";
+    public static final String PERMIT_ALL = "permitAll";
 
     /**
      * 放行的url，可以放到全局配置里,必须/开头
@@ -25,32 +26,6 @@ public class SecurityConst {
     public static final String[] RELEASE_URL = {"/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs",
             "/favicon.ico", "/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.ttf", "/**/*.woff", "/**/oauth/**", "/login",
             "/login.html"};
-
-    /**
-     *
-     */
-    public enum HeaderKeyValue {
-        /**
-         * 全局过滤后，放入header中的标志k，v
-         */
-        GlobalFiltingFlag("global release flag", "any else");
-
-        private final String key;
-        private final String value;
-
-        HeaderKeyValue(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
 
     public static void main(String[] args) {
         String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"

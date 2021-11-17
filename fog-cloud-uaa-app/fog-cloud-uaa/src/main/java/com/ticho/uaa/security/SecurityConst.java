@@ -10,12 +10,6 @@ import com.ticho.core.mvc.util.JsonUtils;
  */
 public class SecurityConst {
 
-    /**
-     * 登录类型
-     */
-    public static final String DEFAULT_TYPE = "Default";
-    public static final String IMAGE_CODE_TYPE = "ImageCode";
-
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "bearer";
     public static final String PERMIT_ALL = "permitAll";

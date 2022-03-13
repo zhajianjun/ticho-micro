@@ -13,13 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 获取token返回视图修改
+ * 获取token返回视图修改 AOP增强拦截
  *
  * @author AdoroTutto
  * @date 2021-08-21 18:32
  */
-//@Component
-//@Aspect
+@Deprecated
 public class AuthTokenAspect {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenAspect.class);
 

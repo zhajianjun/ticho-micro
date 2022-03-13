@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -82,7 +81,7 @@ public class JsonUtils {
             }
             return Objects.nonNull(obj) ? MAPPER.writeValueAsString(obj) : EMPTY;
         } catch (Exception e) {
-            log.error("toJSONString exception {}", obj.toString(), e);
+            log.error("toJsonString exception {}", obj.toString(), e);
             return EMPTY;
         }
     }
@@ -96,7 +95,7 @@ public class JsonUtils {
     public static <T> T toJavaObject(String jsonString, Class<T> clazz) {
         try {
             Optional.ofNullable(clazz).orElseThrow(NullPointerException::new);
-            return StringUtils.isEmpty(jsonString) ? null : MAPPER.readValue(jsonString, clazz);
+            return isEmpty(jsonString) ? null : MAPPER.readValue(jsonString, clazz);
         } catch (Exception e) {
             log.error("tojavaObject exception {}", jsonString, e);
             return null;
@@ -111,7 +110,7 @@ public class JsonUtils {
     public static List<Object> toList(String jsonString) {
         try {
             JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, Object.class);
-            return StringUtils.isEmpty(jsonString) ? Collections.emptyList() : MAPPER.readValue(jsonString, javaType);
+            return isEmpty(jsonString) ? Collections.emptyList() : MAPPER.readValue(jsonString, javaType);
         } catch (Exception e) {
             log.error("toList exception {}", jsonString, e);
             return Collections.emptyList();
@@ -128,7 +127,7 @@ public class JsonUtils {
         try {
             Optional.ofNullable(clazz).orElseThrow(NullPointerException::new);
             JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
-            return StringUtils.isEmpty(jsonString) ? Collections.emptyList() : MAPPER.readValue(jsonString, javaType);
+            return isEmpty(jsonString) ? Collections.emptyList() : MAPPER.readValue(jsonString, javaType);
         } catch (Exception e) {
             log.error("toList exception {}", jsonString, e);
             return Collections.emptyList();
@@ -143,7 +142,7 @@ public class JsonUtils {
     public static Map<Object, Object> toMap(String jsonString) {
         try {
             JavaType javaType = MAPPER.getTypeFactory().constructParametricType(Map.class, Object.class, Object.class);
-            return StringUtils.isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
+            return isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
         } catch (Exception e) {
             log.error("toMap exception {}", jsonString, e);
             return new LinkedHashMap<>();
@@ -162,7 +161,7 @@ public class JsonUtils {
             Optional.ofNullable(kClass).orElseThrow(NullPointerException::new);
             Optional.ofNullable(vClass).orElseThrow(NullPointerException::new);
             JavaType javaType = MAPPER.getTypeFactory().constructParametricType(Map.class, kClass, vClass);
-            return StringUtils.isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
+            return isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
         } catch (Exception e) {
             log.error("toMap exception {}", jsonString, e);
             return new LinkedHashMap<>();
@@ -182,7 +181,7 @@ public class JsonUtils {
             }
             String jsonString = toJsonString(obj);
             JavaType javaType = MAPPER.getTypeFactory().constructParametricType(Map.class, String.class, Object.class);
-            return StringUtils.isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
+            return isEmpty(jsonString) ? new LinkedHashMap<>() : MAPPER.readValue(jsonString, javaType);
         } catch (Exception e) {
             log.error("toMap exception {}", obj, e);
             return new LinkedHashMap<>();
@@ -221,5 +220,9 @@ public class JsonUtils {
             }
         }
         return resultList;
+    }
+
+    public static boolean isEmpty(CharSequence str) {
+        return str == null || str.length() == 0;
     }
 }

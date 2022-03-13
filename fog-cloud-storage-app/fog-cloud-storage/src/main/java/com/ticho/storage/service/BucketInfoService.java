@@ -16,6 +16,7 @@ public interface BucketInfoService {
      * 文件桶是否存在
      *
      * @param bucketName 文件桶名称
+     * @return true-存在 false-不存在
      */
     boolean bucketExists(String bucketName);
 

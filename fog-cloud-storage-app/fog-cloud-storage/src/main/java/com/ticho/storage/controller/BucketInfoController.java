@@ -1,5 +1,6 @@
 package com.ticho.storage.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.core.mvc.annotation.View;
 import com.ticho.storage.dto.BucketInfoDTO;
@@ -37,14 +38,16 @@ public class BucketInfoController {
     @Autowired
     private BucketInfoService bucketInfoService;
 
-    @ApiOperation(value = "创建文件桶", notes = "创建文件桶", position = 10)
+    @ApiOperation(value = "创建文件桶", notes = "创建文件桶")
+    @ApiOperationSupport(order = 10)
     @ApiImplicitParam(value = "存储桶名称", name = "bucketName", required = true)
     @PostMapping
     public void createBucket(String bucketName) {
         bucketInfoService.createBucket(bucketName);
     }
 
-    @ApiOperation(value = "删除文件桶", notes = "删除文件桶", position = 20)
+    @ApiOperation(value = "删除文件桶", notes = "删除文件桶")
+    @ApiOperationSupport(order = 20)
     @ApiImplicitParams({
         @ApiImplicitParam(value = "存储桶名称", name = "bucketName", required = true),
         @ApiImplicitParam(value = "是否删除所有文件，true-默认删除所有文件和桶，false-桶中有文件不可删除", name = "delAllFile", required = true)
@@ -54,14 +57,16 @@ public class BucketInfoController {
         bucketInfoService.removeBucket(bucketName, delAllFile);
     }
 
-    @ApiOperation(value = "查询文件桶是否存在", notes = "查询文件桶是否存在", position = 30)
+    @ApiOperation(value = "查询文件桶是否存在", notes = "查询文件桶是否存在")
+    @ApiOperationSupport(order = 30)
     @ApiImplicitParam(value = "存储桶名称", name = "bucketName", required = true)
     @GetMapping
     public boolean listBuckets(String bucketName) {
         return bucketInfoService.bucketExists(bucketName);
     }
 
-    @ApiOperation(value = "查询所有文件桶", notes = "获取所有文件桶", position = 40)
+    @ApiOperation(value = "查询所有文件桶", notes = "获取所有文件桶")
+    @ApiOperationSupport(order = 40)
     @GetMapping("list")
     public List<BucketInfoDTO> listBuckets() {
         return bucketInfoService.listBuckets();

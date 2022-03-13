@@ -1,5 +1,6 @@
 package com.ticho.core.mvc.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.core.mvc.annotation.View;
 import io.swagger.annotations.Api;
@@ -35,7 +36,8 @@ public class HeathyController {
     private String healthy;
 
 
-    @ApiOperation(value = "健康检查", notes = "健康检查", position = 10)
+    @ApiOperation(value = "健康检查", notes = "健康检查")
+    @ApiOperationSupport(order = 10)
     @GetMapping
     public String healthy() {
         return String.format("【应用名：%s。端口：%s。健康配置参数内容：%s】", applicationName, port, healthy);

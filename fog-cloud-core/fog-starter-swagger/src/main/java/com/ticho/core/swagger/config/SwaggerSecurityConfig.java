@@ -48,11 +48,13 @@ public class SwaggerSecurityConfig {
     }
 
     //@Bean("implicitSecurityDocket")
+
     public Docket implicitSecurityDocket() {
         return creteDocket("default-implicitSecurity", securityContexts(), implicitSecuritySchemes());
     }
 
     //@Bean("clientCredentialsDocket")
+
     public Docket clientCredentialsDocket() {
         return creteDocket("default-clientCredentials", securityContexts(), clientCredentialsSchemes());
     }

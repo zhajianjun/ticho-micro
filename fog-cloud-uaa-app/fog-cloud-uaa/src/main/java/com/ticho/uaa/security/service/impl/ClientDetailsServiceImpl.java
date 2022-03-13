@@ -4,8 +4,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ticho.core.mvc.util.JsonUtils;
 import com.ticho.uaa.entity.OauthClientDetails;
-import com.ticho.uaa.mapper.OauthClientDetailsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,7 +30,10 @@ import java.util.stream.Collectors;
  */
 @Service
 @Primary
+@SuppressWarnings({"All", "AlibabaRemoveCommentedCode"})
 public class ClientDetailsServiceImpl implements ClientDetailsService {
+
+    // @formatter:off
 
     //@Autowired
     //private OauthClientDetailsMapper oauthClientDetailsMapper;

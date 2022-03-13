@@ -1,5 +1,6 @@
 package com.ticho.uaa.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.core.datasource.view.PageResult;
 import com.ticho.core.mvc.annotation.View;
@@ -39,43 +40,53 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "权限用户信息", notes = "权限用户信息", position = 5)
+    @ApiOperation(value = "权限用户信息", notes = "权限用户信息")
+    @ApiOperationSupport(order = 10)
     @GetMapping("principal")
     @View(ignore = true)
     public Principal principal(Principal principal) {
         return principal;
     }
 
-    @ApiOperation(value = "添加用户", position = 10)
+    @ApiOperation(value = "添加用户")
+    @ApiOperationSupport(order = 20)
     @PostMapping
     public User save(@RequestBody User user) {
         userService.save(user);
         return user;
     }
 
-    @ApiOperation(value = "根据id删除用户", position = 20)
+    @ApiOperation(value = "根据id删除用户")
+    @ApiOperationSupport(order = 30)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping("{id}")
     public boolean removeById(@PathVariable("id") Serializable id) {
         return userService.removeById(id);
     }
 
-    @ApiOperation(value = "更新用户", position = 30)
+    @ApiOperation(value = "更新用户")
+    @ApiOperationSupport(order = 40)
     @PutMapping
     public boolean modify(@RequestBody User user) {
         return userService.updateById(user);
     }
 
-    @ApiOperation(value = "根据id查询用户", position = 40)
+    @ApiOperation(value = "根据id查询用户")
+    @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping("{id}")
     public User getById(@PathVariable("id") Serializable id) {
         return userService.getById(id);
     }
 
-    @ApiOperation(value = "分页查询用户列表", position = 50)
+    @ApiOperation(value = "分页查询用户列表")
+    @ApiOperationSupport(order = 60)
     @GetMapping("page")
-    public PageResult<User> page(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, User user) {
+    public PageResult<User> page(
+        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+        User user
+    ) {
         return userService.page(pageNum, pageSize, user);
     }
 }

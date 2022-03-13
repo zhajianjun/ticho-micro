@@ -1,5 +1,6 @@
 package com.ticho.storage.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.core.mvc.annotation.View;
 import com.ticho.storage.dto.FileInfoDTO;
@@ -36,13 +37,15 @@ public class FileInfoController {
     @Autowired
     private FileInfoService fileInfoService;
 
-    @ApiOperation(value = "文件上传", position = 10)
+    @ApiOperation(value = "文件上传")
+    @ApiOperationSupport(order = 10)
     @PostMapping("upload")
     public FileInfoDTO upload(FileInfoReqDTO fileInfoReqDTO) {
         return fileInfoService.upload(fileInfoReqDTO);
     }
 
-    @ApiOperation(value = "文件下载", position = 20, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ApiOperation(value = "文件下载", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ApiOperationSupport(order = 20)
     @ApiImplicitParams({
         @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
         @ApiImplicitParam(value = "资源id", name = "storageId", required = true)
@@ -52,7 +55,8 @@ public class FileInfoController {
         fileInfoService.download(bucketName,storageId);
     }
 
-    @ApiOperation(value = "根据id删除文件", position = 30)
+    @ApiOperation(value = "根据id删除文件")
+    @ApiOperationSupport(order = 30)
     @ApiImplicitParams({
         @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
         @ApiImplicitParam(value = "资源id", name = "storageId", required = true)
@@ -62,7 +66,8 @@ public class FileInfoController {
         fileInfoService.delete(bucketName,storageId);
     }
 
-    @ApiOperation(value = "根据资源id获取下载链接", position = 40)
+    @ApiOperation(value = "根据资源id获取下载链接")
+    @ApiOperationSupport(order = 40)
     @ApiImplicitParams({
         @ApiImplicitParam(value = "存储桶名称", name = "bucketName", example = "test"),
         @ApiImplicitParam(value = "资源id", name = "storageId", required = true),

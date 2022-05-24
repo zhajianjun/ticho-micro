@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.ticho.core.mvc.converter.CustomLocalDateDeserializer;
+import com.ticho.core.mvc.converter.CustomLocalDateTimeDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -41,10 +42,10 @@ public class JacksonCustomizerConfig {
         // @formatter:off
         return builder -> {
             builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
-            builder.deserializerByType(LocalDateTime.class, new CustomLocalDateDeserializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
+            builder.deserializerByType(LocalDateTime.class, new CustomLocalDateTimeDeserializer(DateTimeFormatter.ofPattern(localDateTimePattern)));
 
             builder.serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(localDatePattern)));
-            builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(localDatePattern)));
+            builder.deserializerByType(LocalDate.class, new CustomLocalDateDeserializer(DateTimeFormatter.ofPattern(localDatePattern)));
 
             builder.serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(localTimePattern)));
             builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(localTimePattern)));

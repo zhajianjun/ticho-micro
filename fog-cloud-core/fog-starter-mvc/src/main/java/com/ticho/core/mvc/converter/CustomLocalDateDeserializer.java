@@ -3,18 +3,17 @@ package com.ticho.core.mvc.converter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.JsonTokenId;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.datatype.jsr310.deser.JSR310DateTimeDeserializerBase;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.io.IOException;
 import java.time.DateTimeException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -24,22 +23,29 @@ import java.time.format.DateTimeFormatter;
  * </p>
  * @see LocalDateDeserializer
  * @author AdoroTutto
- * @date 2021-10-27 0:44
+ * @date 2022-05-12 15:45
  */
 @SuppressWarnings("all")
-public class CustomLocalDateDeserializer extends JSR310DateTimeDeserializerBase<LocalDateTime> {
+public class CustomLocalDateDeserializer extends JSR310DateTimeDeserializerBase<LocalDate> {
     private static final long serialVersionUID = 1L;
 
-    private static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    private static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
 
     public static final CustomLocalDateDeserializer INSTANCE = new CustomLocalDateDeserializer();
 
-    protected CustomLocalDateDeserializer() { // was private before 2.12
+    protected CustomLocalDateDeserializer() {
         this(DEFAULT_FORMATTER);
     }
 
-    public CustomLocalDateDeserializer(DateTimeFormatter formatter) {
-        super(LocalDateTime.class, formatter);
+    public CustomLocalDateDeserializer(DateTimeFormatter dtf) {
+        super(LocalDate.class, dtf);
+    }
+
+    /**
+     * Since 2.10
+     */
+    public CustomLocalDateDeserializer(CustomLocalDateDeserializer base, DateTimeFormatter dtf) {
+        super(base, dtf);
     }
 
     /**
@@ -49,9 +55,16 @@ public class CustomLocalDateDeserializer extends JSR310DateTimeDeserializerBase<
         super(base, leniency);
     }
 
+    /**
+     * Since 2.11
+     */
+    protected CustomLocalDateDeserializer(LocalDateDeserializer base, JsonFormat.Shape shape) {
+        super(base, shape);
+    }
+
     @Override
-    protected CustomLocalDateDeserializer withDateFormat(DateTimeFormatter formatter) {
-        return new CustomLocalDateDeserializer(formatter);
+    protected CustomLocalDateDeserializer withDateFormat(DateTimeFormatter dtf) {
+        return new CustomLocalDateDeserializer(this, dtf);
     }
 
     @Override
@@ -65,104 +78,78 @@ public class CustomLocalDateDeserializer extends JSR310DateTimeDeserializerBase<
     }
 
     @Override
-    public LocalDateTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        if (parser.hasTokenId(JsonTokenId.ID_STRING)) {
-            return fromString(parser, context, parser.getText());
-        }
-        // 30-Sep-2020, tatu: New! "Scalar from Object" (mostly for XML)
-        if (parser.isExpectedStartObjectToken()) {
-            return fromString(parser, context, context.extractScalarFromObject(parser, this, handledType()));
+    public LocalDate deserialize(JsonParser parser, DeserializationContext context) throws IOException
+    {
+        if (parser.hasToken(JsonToken.VALUE_STRING)) {
+            String string = parser.getText().trim();
+            if (string.length() == 0) {
+                if (!isLenient()) {
+                    return _failForNotLenient(parser, context, JsonToken.VALUE_STRING);
+                }
+                return null;
+            }
+            // as per [datatype-jsr310#37], only check for optional (and, incorrect...) time marker 'T'
+            // if we are using default formatter
+            DateTimeFormatter format = _formatter;
+            try {
+                if (string.matches(ConvertConsant.YYYY_MM_DD_HH_MM_SS_REGEX)) {
+                    LocalDateTime localDateTime = LocalDateTime.parse(string, DateTimeFormatter.ofPattern(ConvertConsant.YYYY_MM_DD_HH_MM_SS));
+                    return localDateTime.toLocalDate();
+                }
+                if (_formatter == DEFAULT_FORMATTER) {
+                    // JavaScript by default includes time in JSON serialized Dates (UTC/ISO instant format).
+                    if (string.length() > 10 && string.charAt(10) == 'T') {
+                        if (string.endsWith("Z")) {
+                            return LocalDateTime.ofInstant(Instant.parse(string), ZoneOffset.UTC).toLocalDate();
+                        } else {
+                            return LocalDate.parse(string, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        }
+                    }
+                }
+                return LocalDate.parse(string, format);
+            } catch (DateTimeException e) {
+                return _handleDateTimeException(context, e, string);
+            }
         }
         if (parser.isExpectedStartArrayToken()) {
             JsonToken t = parser.nextToken();
             if (t == JsonToken.END_ARRAY) {
                 return null;
             }
-            if ((t == JsonToken.VALUE_STRING || t == JsonToken.VALUE_EMBEDDED_OBJECT) && context
-                    .isEnabled(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS)) {
-                final LocalDateTime parsed = deserialize(parser, context);
+            if (context.isEnabled(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS)
+                    && (t == JsonToken.VALUE_STRING || t==JsonToken.VALUE_EMBEDDED_OBJECT)) {
+                final LocalDate parsed = deserialize(parser, context);
                 if (parser.nextToken() != JsonToken.END_ARRAY) {
                     handleMissingEndArrayForSingle(parser, context);
                 }
                 return parsed;
             }
             if (t == JsonToken.VALUE_NUMBER_INT) {
-                LocalDateTime result;
-
                 int year = parser.getIntValue();
                 int month = parser.nextIntValue(-1);
                 int day = parser.nextIntValue(-1);
-                int hour = parser.nextIntValue(-1);
-                int minute = parser.nextIntValue(-1);
 
-                t = parser.nextToken();
-                if (t == JsonToken.END_ARRAY) {
-                    result = LocalDateTime.of(year, month, day, hour, minute);
-                } else {
-                    int second = parser.getIntValue();
-                    t = parser.nextToken();
-                    if (t == JsonToken.END_ARRAY) {
-                        result = LocalDateTime.of(year, month, day, hour, minute, second);
-                    } else {
-                        int partialSecond = parser.getIntValue();
-                        if (partialSecond < 1_000 && !context
-                                .isEnabled(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)) {
-                            partialSecond *= 1_000_000; // value is milliseconds, convert it to nanoseconds
-                        }
-                        if (parser.nextToken() != JsonToken.END_ARRAY) {
-                            throw context.wrongTokenException(parser, handledType(), JsonToken.END_ARRAY,
-                                    "Expected array to end");
-                        }
-                        result = LocalDateTime.of(year, month, day, hour, minute, second, partialSecond);
-                    }
+                if (parser.nextToken() != JsonToken.END_ARRAY) {
+                    throw context.wrongTokenException(parser, handledType(), JsonToken.END_ARRAY,
+                            "Expected array to end");
                 }
-                return result;
+                return LocalDate.of(year, month, day);
             }
-            context.reportInputMismatch(handledType(), "Unexpected token (%s) within Array, expected VALUE_NUMBER_INT", t);
+            context.reportInputMismatch(handledType(),
+                    "Unexpected token (%s) within Array, expected VALUE_NUMBER_INT",
+                    t);
         }
         if (parser.hasToken(JsonToken.VALUE_EMBEDDED_OBJECT)) {
-            return (LocalDateTime) parser.getEmbeddedObject();
+            return (LocalDate) parser.getEmbeddedObject();
         }
+        // 06-Jan-2018, tatu: Is this actually safe? Do users expect such coercion?
         if (parser.hasToken(JsonToken.VALUE_NUMBER_INT)) {
-            _throwNoNumericTimestampNeedTimeZone(parser, context);
+            // issue 58 - also check for NUMBER_INT, which needs to be specified when serializing.
+            if (_shape == JsonFormat.Shape.NUMBER_INT || isLenient()) {
+                return LocalDate.ofEpochDay(parser.getLongValue());
+            }
+            return _failForNotLenient(parser, context, JsonToken.VALUE_STRING);
         }
         return _handleUnexpectedToken(context, parser, "Expected array or string.");
-    }
-
-    protected LocalDateTime fromString(JsonParser p, DeserializationContext ctxt, String string0) throws IOException {
-        String string = string0.trim();
-        if (string.length() == 0) {
-            // 22-Oct-2020, tatu: not sure if we should pass original (to distinguish
-            //   b/w empty and blank); for now don't which will allow blanks to be
-            //   handled like "regular" empty (same as pre-2.12)
-            return _fromEmptyString(p, ctxt, string);
-        }
-        try {
-            // 21-Oct-2020, tatu: Changed as per [modules-base#94] for 2.12,
-            //    had bad timezone handle change from [modules-base#56]
-            if (string.matches(ConvertConsant.YYYY_MM_DD_REGEX)) {
-                LocalDate localDate = LocalDate.parse(string, DateTimeFormatter.ofPattern(ConvertConsant.YYYY_MM_DD));
-                return LocalDateTime.of(localDate, LocalTime.MIN);
-            }
-            if (_formatter == DEFAULT_FORMATTER) {
-                // ... only allow iff lenient mode enabled since
-                // JavaScript by default includes time and zone in JSON serialized Dates (UTC/ISO instant format).
-                // And if so, do NOT use zoned date parsing as that can easily produce
-                // incorrect answer.
-                if (string.length() > 10 && string.charAt(10) == 'T') {
-                    if (string.endsWith("Z")) {
-                        if (isLenient()) {
-                            return LocalDateTime.parse(string.substring(0, string.length() - 1), _formatter);
-                        }
-                        JavaType t = getValueType(ctxt);
-                        return (LocalDateTime) ctxt.handleWeirdStringValue(t.getRawClass(), string,
-                                "Should not contain offset when 'strict' mode set for property or type (enable 'lenient' handling to allow)");
-                    }
-                }
-            }
-            return LocalDateTime.parse(string, _formatter);
-        } catch (DateTimeException e) {
-            return _handleDateTimeException(ctxt, e, string);
-        }
     }
 }

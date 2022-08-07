@@ -16,6 +16,7 @@ spring:
         namespace: @nacos.namespace@
         group: @nacos.group@
         file-extension: yaml
+        prefix: ${spring.application.name}
       discovery:
         namespace: ${spring.cloud.nacos.config.namespace}
         group: ${spring.cloud.nacos.config.group}

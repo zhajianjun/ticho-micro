@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ticho.core.datasource.config.DataSourceConfig,\
-  com.ticho.core.datasource.config.MybatisPlusConfig,\
-  com.ticho.core.datasource.handler.MateMetaObjectHandler
-

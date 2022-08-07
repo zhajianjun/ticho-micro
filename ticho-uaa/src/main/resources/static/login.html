@@ -1,0 +1,181 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <script src="js/vue.global.js"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="css/element-plus1.1.0-beta.9.css">
+    <!-- import JavaScript -->
+    <script src="js/element-plus1.1.0-beta.9.js"></script>
+    <title>权限中心</title>
+</head>
+<body>
+<div id="app">
+    <div class="login-container">
+        <el-form
+                id="loginForm"
+                ref="loginForm"
+                :model="loginForm"
+                :rules="loginRules"
+                class="login-form"
+                autocomplete="on"
+                label-position="left"
+                action="/login"
+                method="post"
+        >
+            <div class="title-container">
+                <h3 class="title">系统登录</h3>
+            </div>
+
+            <el-form-item prop="username">
+                <el-input
+                        ref="username"
+                        v-model="loginForm.username"
+                        class="input-username"
+                        placeholder="账号"
+                        name="username"
+                        type="text"
+                        tabindex="1"
+                        autocomplete="on"
+                        prefix-icon="el-icon-apple"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input
+                        ref="password"
+                        v-model="loginForm.password"
+                        class="input-password"
+                        placeholder="密码"
+                        name="password"
+                        tabindex="2"
+                        autocomplete="on"
+                        @keyup.enter="handleLogin"
+                        prefix-icon="el-icon-apple"
+                        :show-password="true"
+                >
+                </el-input>
+            </el-form-item>
+            <el-button
+                    :loading="loading"
+                    type="primary"
+                    style="width: 100%; margin-top: 20px"
+                    @click.prevent="handleLogin"
+            >
+                登录
+            </el-button>
+        </el-form>
+    </div>
+</div>
+<script>
+    const App = {
+        data() {
+            const validateUsername = (rule, value, callback) => {
+                if (!value) {
+                    callback(new Error("请输入用户名"));
+                } else {
+                    callback();
+                }
+            };
+            const validatePassword = (rule, value, callback) => {
+                if (value.length < 6) {
+                    callback(new Error("密码不能少于六位"));
+                } else {
+                    callback();
+                }
+            };
+            return {
+                loginForm: {
+                    username: null,
+                    password: null,
+                },
+                loginRules: {
+                    username: [
+                        {required: true, trigger: "blur", validator: validateUsername},
+                    ],
+                    password: [
+                        {required: true, trigger: "blur", validator: validatePassword},
+                    ],
+                },
+                loading: false,
+            };
+        },
+        watch: {},
+        created() {
+        },
+        mounted() {
+            if (this.loginForm.username === "") {
+                this.$refs.username.focus();
+            } else if (this.loginForm.password === "") {
+                this.$refs.password.focus();
+            }
+        },
+        methods: {
+            handleLogin() {
+                this.$refs.loginForm.validate(async (valid) => {
+                    if (valid) {
+                        this.loading = true;
+                        document.getElementById("loginForm").submit()
+                        this.loading = false;
+                    } else {
+                        console.log("error submit!!");
+                        return false;
+                    }
+                });
+            },
+        },
+    };
+    const app = Vue.createApp(App);
+    app.use(ElementPlus);
+    app.mount("#app");
+</script>
+</body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        width: 100%;
+        height: 100%;
+        background: url("imgs/background.svg") 0 0 / 100% 100%;
+        overflow: hidden;
+    }
+
+    .login-form {
+        /*容器边角弧度*/
+        border-radius: 15px;
+        background-clip: padding-box;
+        margin: 15% auto 200px;
+        width: 500px;
+        height: 300px;
+        /*内边距*/
+        padding: 35px 35px 15px 35px;
+        background: #ffffff;
+        border: 1px solid #eaeaea;
+        /*阴影效果*/
+        box-shadow: 0 0 25px #cac6c6;
+    }
+
+    .title-container {
+        position: relative;
+    }
+
+    .title {
+        font-size: 26px;
+        color: #000000;
+        margin: 0 auto 40px auto;
+        text-align: center;
+        font-weight: bold;
+    }
+
+
+    .input-password {
+        margin-top: 10px;
+    }
+
+    @media only screen and (max-width: 470px) {
+    }
+
+
+</style>
+</html>

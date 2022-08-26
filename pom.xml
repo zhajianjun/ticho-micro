@@ -33,11 +33,11 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
+                <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
                 <nacos.namespace>4580072d-c09e-4fa4-8a39-f32fc4a64030</nacos.namespace>
-                <nacos.group>dev</nacos.group>
-                <nacos.username>fog</nacos.username>
-                <nacos.password>fog123456</nacos.password>
+                <nacos.group>DEFAULT_GROUP</nacos.group>
+                <nacos.username>ticho</nacos.username>
+                <nacos.password>ticho1511ticho.</nacos.password>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -46,12 +46,12 @@
         <profile>
             <id>st</id>
             <properties>
-                <spring.active>dev</spring.active>
-                <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
-                <nacos.namespace>4580072d-c09e-4fa4-8a39-f32fc4a64030</nacos.namespace>
-                <nacos.group>st</nacos.group>
-                <nacos.username>fog</nacos.username>
-                <nacos.password>fog123456</nacos.password>
+                <spring.active>st</spring.active>
+                <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
+                <nacos.namespace>6d8dfe99-209d-4bc6-9ebe-21e8220cb58f</nacos.namespace>
+                <nacos.group>DEFAULT_GROUP</nacos.group>
+                <nacos.username>ticho</nacos.username>
+                <nacos.password>ticho1511ticho.</nacos.password>
             </properties>
             <activation>
             </activation>
@@ -60,11 +60,11 @@
             <id>prod</id>
             <properties>
                 <spring.active>prod</spring.active>
-                <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
+                <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
                 <nacos.namespace>993d8331-142a-4458-a87c-2abe9fc39bd6</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>fog</nacos.username>
-                <nacos.password>fog123456</nacos.password>
+                <nacos.username>ticho</nacos.username>
+                <nacos.password>ticho1511ticho.</nacos.password>
             </properties>
         </profile>
     </profiles>

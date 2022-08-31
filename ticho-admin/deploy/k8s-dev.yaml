@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ticho-admin-dev
     version: v1
-  name: ticho-admin
+  name: ticho-admin-dev
 spec:
   # 使用NodePort类型（替换默认ClusterIP，便于测试）
   type: NodePort

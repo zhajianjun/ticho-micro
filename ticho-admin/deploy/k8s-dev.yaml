@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ticho-admin-dev
     version: v1
-  name: ticho-admin-dev
+  name: ticho-admin
 spec:
   # 使用NodePort类型（替换默认ClusterIP，便于测试）
   type: NodePort
@@ -26,7 +26,7 @@ metadata:
   labels:
     app: ticho-admin-dev
     version: v1
-  name: ticho-admin-dev
+  name: ticho-admin
 spec:
   replicas: 1
   selector:
@@ -44,7 +44,7 @@ spec:
       imagePullSecrets:
         - name: docker-aliyun-acr
       containers:
-        - name: app
+        - name: ticho-admin-dev
           # 设置Docker镜像（同Jenkinsfile脚本中的环境变量）
           image: $DOCKER_REGISTRY/$DOCKER_NAMESPACE/$APP_NAME:$IMAGE_TAG
           imagePullPolicy: Always

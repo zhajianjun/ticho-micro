@@ -61,11 +61,22 @@ spec:
               memory: 128Mi
             limits:
               cpu: '1'
-              memory: 1000Mi
+              memory: 500Mi
           volumeMounts:
             - name: host-time
               readOnly: true
               mountPath: /etc/localtime
+          env:
+            - name: JVM_MMS
+              value: 320m
+            - name: JVM_MS
+              value: 128m
+            - name: JVM_XMN
+              value: 64m
+            - name: JVM_XMS
+              value: 128m
+            - name: JVM_XMX
+              value: 256m
           # 健康检查
           livenessProbe:
             failureThreshold: 3

@@ -68,7 +68,7 @@ spec:
               mountPath: /etc/localtime
           env:
             - name: JVM_OPTS
-              value: "-server -Xmn64m -Xms128m -Xmx256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
+              value: "-server -Xms512m -Xmx512m -Xmn170m"
           # 健康检查
           livenessProbe:
             failureThreshold: 3

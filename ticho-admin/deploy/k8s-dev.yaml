@@ -67,16 +67,8 @@ spec:
               readOnly: true
               mountPath: /etc/localtime
           env:
-            - name: JVM_MMS
-              value: 320m
-            - name: JVM_MS
-              value: 128m
-            - name: JVM_XMN
-              value: 64m
-            - name: JVM_XMS
-              value: 128m
-            - name: JVM_XMX
-              value: 256m
+            - name: JAVA_OPTIONS
+              value: "-server -Xms=128m -Xmx=256m -Xmn=64m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
           # 健康检查
           livenessProbe:
             failureThreshold: 3

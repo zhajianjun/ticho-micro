@@ -58,17 +58,17 @@ spec:
           resources:
             requests:
               cpu: 10m
-              memory: 128Mi
+              memory: 256Mi
             limits:
               cpu: '1'
-              memory: 500Mi
+              memory: 512Mi
           volumeMounts:
             - name: host-time
               readOnly: true
               mountPath: /etc/localtime
           env:
             - name: JVM_OPTS
-              value: "-server -Xms512m -Xmx512m -Xmn170m"
+              value: '-Xms256m -Xmx512m'
           # 健康检查
           livenessProbe:
             failureThreshold: 3

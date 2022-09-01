@@ -73,7 +73,7 @@ spec:
             - '-Xmx512m'
             - '-Xmn170m'
             - '-Dserver.port=8080'
-            - '-Dspring.active=st'
+            - '--spring.profiles.active=st'
             - /app.jar
           # 健康检查
           livenessProbe:

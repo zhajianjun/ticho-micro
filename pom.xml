@@ -19,6 +19,7 @@
         <module>ticho-storage</module>
         <module>ticho-admin</module>
         <module>ticho-gateway</module>
+        <module>ticho-email</module>
     </modules>
 
     <name>ticho-cloud</name>

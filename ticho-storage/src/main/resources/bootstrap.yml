@@ -17,6 +17,7 @@ spring:
         group: @nacos.group@
         file-extension: yaml
       discovery:
+        ip: @nacos.ip@
         namespace: ${spring.cloud.nacos.config.namespace}
         group: ${spring.cloud.nacos.config.group}
         watch:

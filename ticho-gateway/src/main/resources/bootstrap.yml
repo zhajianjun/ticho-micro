@@ -22,3 +22,8 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
+    discovery:
+      client:
+        simple:
+          instances:
+            health-check-url-path: /api/actuator/health

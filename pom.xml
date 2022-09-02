@@ -33,6 +33,7 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
+                <nacos.ip>122.112.164.156</nacos.ip>
                 <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
                 <nacos.namespace>4580072d-c09e-4fa4-8a39-f32fc4a64030</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
@@ -47,6 +48,7 @@
             <id>st</id>
             <properties>
                 <spring.active>st</spring.active>
+                <nacos.ip>122.112.164.156</nacos.ip>
                 <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
                 <nacos.namespace>6d8dfe99-209d-4bc6-9ebe-21e8220cb58f</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
@@ -60,6 +62,7 @@
             <id>prod</id>
             <properties>
                 <spring.active>prod</spring.active>
+                <nacos.ip>122.112.164.156</nacos.ip>
                 <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
                 <nacos.namespace>993d8331-142a-4458-a87c-2abe9fc39bd6</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>

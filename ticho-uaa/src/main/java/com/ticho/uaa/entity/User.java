@@ -112,6 +112,6 @@ public class User extends Model<User> implements Serializable {
 
     @ApiModelProperty(value = "删除标识。0-未删除,1-已删除", position = 240)
     @TableField(fill = FieldFill.INSERT)
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
 }

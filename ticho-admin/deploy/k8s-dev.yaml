@@ -78,14 +78,14 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /health
+              path: /login
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 60
             successThreshold: 1
           readinessProbe:
             httpGet:
-              path: /health
+              path: /login
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 20

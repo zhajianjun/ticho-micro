@@ -24,7 +24,7 @@ public class SecurityConst {
      * 放行的url，可以放到全局配置里,必须/开头
      */
     public static final String[] RELEASE_URL = {"/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs",
-            "/favicon.ico", "/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.ttf", "/**/*.woff", "/**/oauth/**", "/login",
+            "/favicon.ico", "/css/**", "/js/**", "/imgs/**", "/**/oauth/**", "/login",
             "/login.html"};
 
     public static void main(String[] args) {

@@ -21,8 +21,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        SecurityUser byUsername = userService.getByUsername(username);
         if (username == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        SecurityUser byUsername = userService.getByUsername(username);
+        if (byUsername == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
         return byUsername;

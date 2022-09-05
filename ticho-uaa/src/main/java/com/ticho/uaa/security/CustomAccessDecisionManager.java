@@ -1,6 +1,5 @@
 package com.ticho.uaa.security;
 
-import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -8,9 +7,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.FilterInvocation;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**

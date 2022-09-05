@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ticho.boot.web.util.JsonUtil;
 import com.ticho.uaa.entity.OauthClientDetails;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,13 +32,17 @@ import java.util.stream.Collectors;
  */
 @Service
 @Primary
-@SuppressWarnings({"All", "AlibabaRemoveCommentedCode"})
+@SuppressWarnings({"AlibabaRemoveCommentedCode"})
+@RefreshScope
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     // @formatter:off
 
     //@Autowired
     //private OauthClientDetailsMapper oauthClientDetailsMapper;
+
+    @Value("${ticho.uaa.redirectUri}")
+    private String url;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
@@ -49,7 +55,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         oauthClientDetails.setResourceIds("resource,resource1");
         oauthClientDetails.setScope("all,read,write");
         oauthClientDetails.setAuthorizedGrantTypes("password,authorization_code,implicit,client_credentials,refresh_token");
-        oauthClientDetails.setWebServerRedirectUri("http://localhost:8010/webjars/oauth/oauth2.html");
+        oauthClientDetails.setWebServerRedirectUri(url);
         oauthClientDetails.setAuthorities(null);
         oauthClientDetails.setAccessTokenValidity(1800);
         oauthClientDetails.setRefreshTokenValidity(3600);

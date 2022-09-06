@@ -12,8 +12,8 @@ import com.ticho.boot.view.util.Assert;
 import com.ticho.boot.web.util.CloudIdUtil;
 import com.ticho.storage.dto.FileInfoDTO;
 import com.ticho.storage.dto.FileInfoReqDTO;
-import com.ticho.storage.service.FileInfoService;
 import com.ticho.storage.emums.MioErrCode;
+import com.ticho.storage.service.FileInfoService;
 import io.minio.GetObjectResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
@@ -43,6 +43,7 @@ public class FileInfoServiceImpl implements FileInfoService {
     public static final String X_AMZ_META_PREFIX = "x-amz-meta-";
     public static final String FILENAME_KEY = "fileName";
     public static final String REMARK_KEY = "remark";
+    public static final String STORAGE_ID_NOT_BLANK = "资源id不能为空";
 
 
     @Autowired
@@ -98,8 +99,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public void delete(String bucketName, String storageId) {
-        String errMsg = "资源id不能为空";
-        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, errMsg);
+        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, STORAGE_ID_NOT_BLANK);
         bucketName = getBucketName(bucketName);
         minioTemplate.removeObject(bucketName, storageId);
     }
@@ -108,12 +108,13 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public void download(String bucketName, String storageId) {
         // @formatter:off
-        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, "资源id不能为空");
+        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, STORAGE_ID_NOT_BLANK);
         bucketName = getBucketName(bucketName);
         GetObjectResponse in = minioTemplate.getObject(bucketName, storageId);
         Headers headers = in.headers();
         FileInfoDTO fileInfoDto = getFileInfoDto(headers);
         try (OutputStream outputStream = response.getOutputStream()) {
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encodeAll(fileInfoDto.getFileName()));
             response.setContentType(fileInfoDto.getContentType());
             response.setHeader(HttpHeaders.PRAGMA, "no-cache");
@@ -130,7 +131,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public String getUrl(String bucketName, String storageId, Integer expires) {
-        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, "资源id不能为空");
+        Assert.isNotBlank(storageId, BizErrCode.PARAM_ERROR, STORAGE_ID_NOT_BLANK);
         if (expires != null) {
             Assert.isTrue(expires <= TimeUnit.DAYS.toSeconds(7), BizErrCode.PARAM_ERROR, "过期时间最长为7天");
         }

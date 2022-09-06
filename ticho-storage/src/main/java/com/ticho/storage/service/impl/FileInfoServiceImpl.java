@@ -13,7 +13,7 @@ import com.ticho.boot.web.util.CloudIdUtil;
 import com.ticho.storage.dto.FileInfoDTO;
 import com.ticho.storage.dto.FileInfoReqDTO;
 import com.ticho.storage.service.FileInfoService;
-import com.ticho.storage.view.MioErrCode;
+import com.ticho.storage.emums.MioErrCode;
 import io.minio.GetObjectResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class FileInfoServiceImpl implements FileInfoService {
     public static final String X_AMZ_META_PREFIX = "x-amz-meta-";
-    public static final String FILENAME_KEY = "filename";
+    public static final String FILENAME_KEY = "fileName";
     public static final String REMARK_KEY = "remark";
 
 
@@ -56,14 +56,14 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public FileInfoDTO upload(FileInfoReqDTO fileInfoReqDTO) {
+        // @formatter:off
         String bucketName = fileInfoReqDTO.getBucketName();
         String fileName = fileInfoReqDTO.getFileName();
         String remark = fileInfoReqDTO.getRemark();
         MultipartFile file = fileInfoReqDTO.getFile();
         String originalFilename = file.getOriginalFilename();
-        DataSize fileSize = minioProperty.getFileSize();
-        Assert.isTrue(file.getSize() <= fileSize.toBytes(), MioErrCode.FILE_SIZE_TO_LARGER,
-                "文件大小不能超出" + fileSize.toMegabytes() + "MB");
+        DataSize fileSize = minioProperty.getMaxFileSize();
+        Assert.isTrue(file.getSize() <= fileSize.toBytes(), MioErrCode.FILE_SIZE_TO_LARGER, "文件大小不能超出" + fileSize.toMegabytes() + "MB");
         // 后缀名 .png
         String extName = StrUtil.DOT + FileNameUtil.extName(originalFilename);
         String objectName = CloudIdUtil.getId() + extName;
@@ -93,6 +93,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfoDTO.setRemark(remark);
         fileInfoDTO.setBucket(bucketName);
         return fileInfoDTO;
+        // @formatter:on
     }
 
     @Override
@@ -113,7 +114,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         Headers headers = in.headers();
         FileInfoDTO fileInfoDto = getFileInfoDto(headers);
         try (OutputStream outputStream = response.getOutputStream()) {
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encode(fileInfoDto.getFileName()));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encodeAll(fileInfoDto.getFileName()));
             response.setContentType(fileInfoDto.getContentType());
             response.setHeader(HttpHeaders.PRAGMA, "no-cache");
             response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
@@ -144,24 +145,26 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     /**
      * 从header中获取用户上传的自定义信息
+     *
      * @param headers headers
      * @return 自定义headers信息
      */
     private FileInfoDTO getFileInfoDto(Headers headers) {
         FileInfoDTO fileInfoDTO = new FileInfoDTO();
         for (String key : headers.names()) {
-            if (key.startsWith(X_AMZ_META_PREFIX)) {
-                String substring = key.substring(X_AMZ_META_PREFIX.length());
-                if (substring.equalsIgnoreCase(FILENAME_KEY)) {
-                    fileInfoDTO.setFileName(headers.get(key));
-                }
-                if (substring.equalsIgnoreCase(REMARK_KEY)) {
-                    fileInfoDTO.setRemark(headers.get(key));
-                }
+            if (!key.startsWith(X_AMZ_META_PREFIX)) {
+                continue;
+            }
+            String substring = key.substring(X_AMZ_META_PREFIX.length());
+            if (substring.equalsIgnoreCase(FILENAME_KEY)) {
+                fileInfoDTO.setFileName(headers.get(key));
+            }
+            if (substring.equalsIgnoreCase(REMARK_KEY)) {
+                fileInfoDTO.setRemark(headers.get(key));
             }
         }
-        long size = Optional.ofNullable(headers.get(HttpHeaders.CONTENT_LENGTH)).map(Long::valueOf).orElse(0L) / 1000;
-        fileInfoDTO.setSize(size + "KB");
+        long size = Optional.ofNullable(headers.get(HttpHeaders.CONTENT_LENGTH)).map(Long::valueOf).orElse(0L);
+        fileInfoDTO.setSize(size + "B");
         fileInfoDTO.setContentType(headers.get(HttpHeaders.CONTENT_TYPE));
         return fileInfoDTO;
     }

@@ -29,13 +29,13 @@
 
 #### 
 
-### fog-starter-gateway-app
+### ticho-cloud-gateway
 1. 简述：
 
-### ticho-cloud-storage-app
+### ticho-cloud-storage
 1. 简述：
 
-### ticho-cloud-uaa-app
+### ticho-cloud-uaa
 1. 简述：
 
 # 注意事项

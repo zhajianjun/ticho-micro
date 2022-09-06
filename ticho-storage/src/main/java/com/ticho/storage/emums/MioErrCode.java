@@ -1,4 +1,4 @@
-package com.ticho.storage.view;
+package com.ticho.storage.emums;
 
 
 import com.ticho.boot.view.enums.IErrCode;

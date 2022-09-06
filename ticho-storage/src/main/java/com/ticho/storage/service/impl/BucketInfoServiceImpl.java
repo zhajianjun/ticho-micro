@@ -6,7 +6,7 @@ import com.ticho.boot.view.exception.BizException;
 import com.ticho.boot.view.util.Assert;
 import com.ticho.storage.dto.BucketInfoDTO;
 import com.ticho.storage.service.BucketInfoService;
-import com.ticho.storage.view.MioErrCode;
+import com.ticho.storage.emums.MioErrCode;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;

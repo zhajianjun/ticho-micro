@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
  * 文件表
@@ -19,8 +18,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "文件信息")
-public class FileInfoReqDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class FileInfoReqDTO {
 
     @ApiModelProperty(value = "文件", required = true, position = 10)
     @NotNull(message = "文件不能空")
@@ -37,4 +35,5 @@ public class FileInfoReqDTO implements Serializable {
     @ApiModelProperty(value = "备注", required = true, position = 40)
     @Size(max = 50, message = "备注过长，1-50字符以内！")
     private String remark;
+
 }

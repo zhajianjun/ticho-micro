@@ -1,8 +1,10 @@
 package com.ticho.uaa.security.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.ticho.uaa.security.entity.SecurityUser;
-import com.ticho.uaa.service.UserService;
+import com.ticho.uaa.security.service.LoginHandleContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,20 +16,21 @@ import org.springframework.stereotype.Service;
  * @date 2020-07-02 20:10
  */
 @Service
+@Primary
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private LoginHandleContext loginHandleContext;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        if (username == null) {
+        if (StrUtil.isBlank(username)) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        SecurityUser byUsername = userService.getByUsername(username);
-        if (byUsername == null) {
+        SecurityUser securityUser = loginHandleContext.loadUserByUsername(username);
+        if (securityUser == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        return byUsername;
+        return securityUser;
     }
 }

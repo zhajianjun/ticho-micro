@@ -39,7 +39,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -105,7 +104,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             // /oauth/check_token（检查token）放行
             .checkTokenAccess("permitAll()")
             // /oauth/token_key（jwt密钥，只有JwtAccessTokenConverter注入容器才会有这个接口）保护
-            .tokenKeyAccess("isAuthenticated()")
+            .tokenKeyAccess("permitAll()")
             .authenticationEntryPoint(clientExceptionView)
             .addTokenEndpointAuthenticationFilter(endpointFilter);
     }

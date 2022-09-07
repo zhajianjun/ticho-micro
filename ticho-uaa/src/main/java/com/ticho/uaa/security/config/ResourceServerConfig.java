@@ -1,8 +1,8 @@
 package com.ticho.uaa.security.config;
 
 import com.ticho.uaa.security.CustomAccessDecisionManager;
-import com.ticho.uaa.security.SecurityConst;
 import com.ticho.uaa.security.filter.GlobalFilter;
+import com.ticho.uaa.security.prop.SecurityProperty;
 import com.ticho.uaa.security.view.AuthenticationFailView;
 import com.ticho.uaa.security.view.NoAuthenticationMessageView;
 import com.ticho.uaa.security.view.PermissionDeniedView;
@@ -31,6 +31,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private GlobalFilter globalFilter;
+
+    @Autowired
+    private SecurityProperty securityProperty;
 
 
     @Override
@@ -61,7 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
             .and()
             .authorizeRequests()
-            .antMatchers(SecurityConst.RELEASE_URL).permitAll()
+            .antMatchers(securityProperty.getAntPatterns()).permitAll()
             // 给特定资源接口放行
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override

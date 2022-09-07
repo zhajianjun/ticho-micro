@@ -1,5 +1,6 @@
 package com.ticho.uaa.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -10,16 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.KeyPair;
 import java.util.stream.Collectors;
 
 
@@ -44,18 +48,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        // @formatter:off
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        //// 对称加密方式
-        //jwtAccessTokenConverter.setSigningKey("secret");
-        // 非对称加密
-        Resource resource = new ClassPathResource("pub.txt");
-        String keyPair = null;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
-            keyPair = reader.lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jwtAccessTokenConverter.setSigningKey(keyPair);
+        // 1. 对称加密方式
+        // jwtAccessTokenConverter.setSigningKey("secret");
+        // 2.非对称加密， 直接使用公钥
+        //Resource resource = new ClassPathResource("pub.txt");
+        //String key = null;
+        //try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+        //    key = reader.lines().collect(Collectors.joining("\n"));
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+        //jwtAccessTokenConverter.setSigningKey(key);
+        // 3.非对称加密，使用证书
+        ClassPathResource resource = new ClassPathResource("rsa_first.jks");
+        //设置密钥对（私钥） 此处传入的是创建jks文件时的别名-alias 和 秘钥库访问密码
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(resource, "123456".toCharArray());
+        KeyPair keyPair = keyStoreKeyFactory.getKeyPair("com.ticho");
+        jwtAccessTokenConverter.setKeyPair(keyPair);
+        // 注入额外信息
+        //DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+        //defaultAccessTokenConverter.setUserTokenConverter(new CustomTokenExtraInfo());
+        //jwtAccessTokenConverter.setAccessTokenConverter(defaultAccessTokenConverter);
+        // @formatter:on
         return jwtAccessTokenConverter;
     }
 

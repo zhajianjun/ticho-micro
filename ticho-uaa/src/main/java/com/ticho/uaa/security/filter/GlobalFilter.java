@@ -1,26 +1,27 @@
 package com.ticho.uaa.security.filter;
 
 import com.ticho.uaa.security.SecurityConst;
+import com.ticho.uaa.security.prop.SecurityProperty;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 /**
  *  全局过滤器
@@ -37,21 +38,22 @@ import java.util.Vector;
 @Component
 public class GlobalFilter extends OncePerRequestFilter {
 
-    private List<RequestMatcher> requestMatchers;
+    @Autowired
+    private SecurityProperty securityProperty;
 
-    @PostConstruct
-    public void init() {
-        List<RequestMatcher> matcherList = new ArrayList<>();
-        for (String s : SecurityConst.RELEASE_URL) {
-            RequestMatcher requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(s));
-            matcherList.add(requestMatcher);
-        }
-        this.requestMatchers = matcherList;
-    }
+
+    // @formatter:off
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+        @NonNull HttpServletRequest request,
+        @NonNull HttpServletResponse response,
+        @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
+        String[] antPatterns = securityProperty.getAntPatterns();
+        List<RequestMatcher> requestMatchers = Arrays.stream(antPatterns)
+            .map(AntPathRequestMatcher::new)
+            .collect(Collectors.toList());
         boolean isMatch = false;
         // 统一放行
         for (RequestMatcher requestMatcher : requestMatchers) {

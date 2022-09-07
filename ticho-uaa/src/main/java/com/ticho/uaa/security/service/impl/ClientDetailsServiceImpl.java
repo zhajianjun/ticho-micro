@@ -1,15 +1,15 @@
 package com.ticho.uaa.security.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ticho.boot.web.util.JsonUtil;
-import com.ticho.uaa.entity.OauthClientDetails;
-import org.springframework.beans.factory.annotation.Value;
+import com.ticho.uaa.entity.OauthClient;
+import com.ticho.uaa.security.interceptor.LoginInterceptor;
+import com.ticho.uaa.security.service.LoginHandleContext;
+import com.ticho.uaa.service.OauthClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.provider.ClientAlreadyExistsException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,117 +37,51 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     // @formatter:off
 
-    //@Autowired
-    //private OauthClientDetailsMapper oauthClientDetailsMapper;
-
-    @Value("${ticho.uaa.redirectUri}")
-    private String url;
+    @Autowired
+    private OauthClientService oauthClientService;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+        if (StrUtil.isBlank(clientId)) {
+            throw new NoSuchClientException("this clientId is blank");
+        }
         // 需要做缓存或者线程变量
-        //// OauthClientDetails oauthClientDetails = oauthClientDetailsMapper.selectById(clientId);
-        OauthClientDetails oauthClientDetails = new OauthClientDetails();
-        oauthClientDetails.setClientId("web");
-        // web
-        oauthClientDetails.setClientSecret("$2a$10$4A9kkAjXqFzyRqFhkxDqwOvV7qBJNtvkVh1XwEVodqNpx82/F8eQm");
-        oauthClientDetails.setResourceIds("resource,resource1");
-        oauthClientDetails.setScope("all,read,write");
-        oauthClientDetails.setAuthorizedGrantTypes("password,authorization_code,implicit,client_credentials,refresh_token");
-        oauthClientDetails.setWebServerRedirectUri(url);
-        oauthClientDetails.setAuthorities(null);
-        oauthClientDetails.setAccessTokenValidity(1800);
-        oauthClientDetails.setRefreshTokenValidity(3600);
-        oauthClientDetails.setAdditionalInformation(null);
-        oauthClientDetails.setAutoapprove("true");
-        //oauthClientDetails.setRemark();
-        //oauthClientDetails.setCreateBy();
-        //oauthClientDetails.setCreateTime();
-        //oauthClientDetails.setUpdateBy();
-        //oauthClientDetails.setUpdateTime();
-        //oauthClientDetails.setIsDeleted();
-
-        //if (oauthClientDetails == null) {
-        //    throw new NoSuchClientException("this client is not exists");
-        //}
-        //if (oauthClientDetails.getIsDeleted()) {
-        //    throw new NoSuchClientException("this client is delete");
-        //}
-        return getBaseClient(oauthClientDetails);
+        OauthClient oauthClient = LoginHandleContext.oauthClientThreadLocal.get();
+        if (oauthClient == null) {
+            oauthClient = oauthClientService.getByClientId(clientId);
+            LoginHandleContext.oauthClientThreadLocal.set(oauthClient);
+        }
+        if (oauthClient == null) {
+            throw new NoSuchClientException("this client is not exists");
+        }
+        return getBaseClient(oauthClient);
     }
 
-    public void addClientDetails(OauthClientDetails clientDetails) throws ClientAlreadyExistsException {
-    }
-
-    public void updateClientDetails(OauthClientDetails clientDetails) throws NoSuchClientException {
-
-    }
-
-    public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
-
-    }
-
-    public void removeClientDetails(String clientId) throws NoSuchClientException {
-
-    }
-
-    public List<ClientDetails> listClientDetails() {
-        return null;
-    }
-
-
-    private BaseClientDetails getBaseClient(OauthClientDetails oauthClientDetails) {
+    private BaseClientDetails getBaseClient(OauthClient oauthClient) {
         // @formatter:off
-        if (oauthClientDetails == null) {
+        if (oauthClient == null) {
             return null;
         }
-        String resourceIds = oauthClientDetails.getResourceIds();
-        String authorities = oauthClientDetails.getAuthorities();
-        String authorizedGrantTypes = oauthClientDetails.getAuthorizedGrantTypes();
-        String scope = oauthClientDetails.getScope();
-        String autoapprove = oauthClientDetails.getAutoapprove();
+        String resourceIds = oauthClient.getResourceIds();
+        String authorities = oauthClient.getAuthorities();
+        String authorizedGrantTypes = oauthClient.getAuthorizedGrantTypes();
+        String scope = oauthClient.getScope();
+        String autoapprove = oauthClient.getAutoapprove();
 
         BaseClientDetails baseClientDetails = new BaseClientDetails();
-        baseClientDetails.setAccessTokenValiditySeconds(oauthClientDetails.getAccessTokenValidity());
-        baseClientDetails.setRefreshTokenValiditySeconds(oauthClientDetails.getRefreshTokenValidity());
+        baseClientDetails.setAccessTokenValiditySeconds(oauthClient.getAccessTokenValidity());
+        baseClientDetails.setRefreshTokenValiditySeconds(oauthClient.getRefreshTokenValidity());
         baseClientDetails.setAuthorities(getSimpleGrantedAuthorities(authorities));
         baseClientDetails.setAuthorizedGrantTypes(split(authorizedGrantTypes));
-        baseClientDetails.setClientId(oauthClientDetails.getClientId());
-        baseClientDetails.setClientSecret(oauthClientDetails.getClientSecret());
-        baseClientDetails.setRegisteredRedirectUri(splitToSet(oauthClientDetails.getWebServerRedirectUri()));
+        baseClientDetails.setClientId(oauthClient.getClientId());
+        baseClientDetails.setClientSecret(oauthClient.getClientSecret());
+        baseClientDetails.setRegisteredRedirectUri(splitToSet(oauthClient.getWebServerRedirectUri()));
         baseClientDetails.setScope(split(scope));
         baseClientDetails.setResourceIds(split(resourceIds));
         baseClientDetails.setAutoApproveScopes(split(autoapprove));
-        baseClientDetails.setAdditionalInformation(JsonUtil.toMap(oauthClientDetails.getAdditionalInformation(), String.class, Object.class));
+        baseClientDetails.setAdditionalInformation(JsonUtil.toMap(oauthClient.getAdditionalInformation(), String.class, Object.class));
         // @formatter:on
         return baseClientDetails;
-    }
-
-    private OauthClientDetails getOauthClientDetails(BaseClientDetails baseClientDetails) {
-        // @formatter:off
-        if (baseClientDetails == null) {
-            return null;
-        }
-        Set<String> resourceIds = baseClientDetails.getResourceIds();
-        Collection<GrantedAuthority> authorities = baseClientDetails.getAuthorities();
-        Set<String> authorizedGrantTypes = baseClientDetails.getAuthorizedGrantTypes();
-        Set<String> scope = baseClientDetails.getScope();
-        Set<String> autoApproveScopes = baseClientDetails.getAutoApproveScopes();
-
-        OauthClientDetails oauthClientDetails = new OauthClientDetails();
-        oauthClientDetails.setAccessTokenValidity(baseClientDetails.getAccessTokenValiditySeconds());
-        oauthClientDetails.setRefreshTokenValidity(baseClientDetails.getRefreshTokenValiditySeconds());
-        oauthClientDetails.setAuthorities(getAuthoritieStr(authorities));
-        oauthClientDetails.setAuthorizedGrantTypes(join(authorizedGrantTypes));
-        oauthClientDetails.setClientId(baseClientDetails.getClientId());
-        oauthClientDetails.setClientSecret(baseClientDetails.getClientSecret());
-        oauthClientDetails.setWebServerRedirectUri(join(baseClientDetails.getRegisteredRedirectUri()));
-        oauthClientDetails.setScope(join(scope));
-        oauthClientDetails.setAutoapprove(join(autoApproveScopes));
-        oauthClientDetails.setResourceIds(join(resourceIds));
-        oauthClientDetails.setAdditionalInformation(JsonUtil.toJsonString(baseClientDetails.getAdditionalInformation()));
-        // @formatter:on
-        return oauthClientDetails;
     }
 
     private List<String> split(String str) {
@@ -175,14 +108,6 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         // @formatter:on
     }
 
-    private String join(Collection<String> strs) {
-        // @formatter:off
-        if (CollectionUtil.isEmpty(strs)){
-            return null;
-        }
-        return String.join("," ,strs);
-        // @formatter:on
-    }
 
     private List<SimpleGrantedAuthority> getSimpleGrantedAuthorities(String authorities) {
         // @formatter:off
@@ -197,15 +122,4 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         // @formatter:on
     }
 
-    private String getAuthoritieStr(Collection<GrantedAuthority> simpleGrantedAuthorities) {
-        // @formatter:off
-        if (CollectionUtil.isEmpty(simpleGrantedAuthorities)){
-            return null;
-        }
-        return simpleGrantedAuthorities
-            .stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-        // @formatter:on
-    }
 }

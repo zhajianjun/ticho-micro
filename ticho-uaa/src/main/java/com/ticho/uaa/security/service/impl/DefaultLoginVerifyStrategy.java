@@ -1,11 +1,12 @@
 package com.ticho.uaa.security.service.impl;
 
 import com.ticho.uaa.security.SecurityConst;
+import com.ticho.uaa.security.entity.SecurityUser;
 import com.ticho.uaa.security.service.LoginVerifyStrategy;
+import com.ticho.uaa.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 默认登录校验
@@ -16,12 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class DefaultLoginVerifyStrategy implements LoginVerifyStrategy {
 
-    /**
-     * 登录校验
-     * @param httpServletRequest 客户端的请求
-     */
+    @Autowired
+    private UserService userService;
+
     @Override
-    public void verify(HttpServletRequest httpServletRequest) {
-        log.debug("默认登录校验");
+    public SecurityUser loadUserByUsername(String username) {
+        return userService.getByUsername(username);
     }
 }

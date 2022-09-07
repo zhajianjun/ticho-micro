@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "oauth2客户端信息")
 @TableName("oauth_client_details")
-public class OauthClientDetails extends Model<OauthClientDetails> implements Serializable {
+public class OauthClient extends Model<OauthClient> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "客户端id", position = 10)
@@ -83,6 +84,7 @@ public class OauthClientDetails extends Model<OauthClientDetails> implements Ser
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
+    @TableLogic
     @ApiModelProperty(value = "删除标识。0-未删除,1-已删除", position = 170)
     @TableField(fill = FieldFill.INSERT)
     private Boolean isDeleted;

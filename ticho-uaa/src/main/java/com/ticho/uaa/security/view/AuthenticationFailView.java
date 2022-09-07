@@ -27,6 +27,7 @@ public class AuthenticationFailView implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException {
         res.setContentType("application/json;charset=UTF-8");
         Result<String> fail = Result.of(HttpErrCode.TOKEN_INVALID);
+        fail.setMsg(e.getMessage());
         fail.setData(req.getRequestURI());
         String result = JsonUtil.toJsonString(fail);
         PrintWriter writer = res.getWriter();

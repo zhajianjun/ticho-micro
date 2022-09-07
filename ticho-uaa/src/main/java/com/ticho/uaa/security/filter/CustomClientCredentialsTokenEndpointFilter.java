@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.provider.client.ClientCredentialsToke
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
+ * client错误返回视图修改
  *
  * @author zhajianjun
  * @date 2021-08-22 14:54

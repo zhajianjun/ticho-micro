@@ -2,12 +2,10 @@ package com.ticho.uaa.security.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;

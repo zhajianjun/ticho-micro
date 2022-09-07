@@ -1,7 +1,11 @@
 package com.ticho.uaa.security.interceptor;
 
+import com.ticho.uaa.security.service.LoginHandleContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,18 +20,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
-    private static final String OAUTH_TOKEN_URL = "/**/oauth/token";
-
+    private static final String OAUTH_TOKEN_URL = "/**/oauth/**";
 
     /**
      * 请求url接口
      */
-    //private final RequestMatcher requestMatcher;
+    private final RequestMatcher requestMatcher;
 
     // @formatter:off
 
     public LoginInterceptor() {
-        //this.requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(OAUTH_TOKEN_URL, "POST"));
+        this.requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(OAUTH_TOKEN_URL));
     }
 
     @Override
@@ -38,9 +41,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, ModelAndView modelAndView) {
+        log.debug("postHandle");
     }
 
     @Override
     public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, Exception ex) {
+        log.debug("afterCompletion");
+        if(!(requestMatcher.matches(request))){
+            return;
+        }
+        // 删除缓存数据
+        LoginHandleContext.oauthClientThreadLocal.remove();
+        LoginHandleContext.oauthCodeThreadLocal.remove();
+        LoginHandleContext.userDetailsThreadLocal.remove();
     }
 }

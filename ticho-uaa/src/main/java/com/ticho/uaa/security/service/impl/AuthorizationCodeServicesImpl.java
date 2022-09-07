@@ -2,7 +2,8 @@ package com.ticho.uaa.security.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.ticho.uaa.entity.OauthCode;
-import com.ticho.uaa.mapper.OauthCodeMapper;
+import com.ticho.uaa.security.service.LoginHandleContext;
+import com.ticho.uaa.service.OauthCodeService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Service;
 public class AuthorizationCodeServicesImpl implements AuthorizationCodeServices {
 
     @Autowired
-    private OauthCodeMapper oauthCodeMapper;
+    private OauthCodeService oauthCodeService;
 
 
     @SneakyThrows
@@ -38,15 +39,20 @@ public class AuthorizationCodeServicesImpl implements AuthorizationCodeServices 
         OauthCode oauthCode = new OauthCode();
         oauthCode.setCode(code);
         oauthCode.setAuthentication(serialize);
-        oauthCodeMapper.insert(oauthCode);
+        oauthCodeService.save(oauthCode);
+        LoginHandleContext.oauthCodeThreadLocal.set(oauthCode);
         return code;
     }
 
     @Override
     public OAuth2Authentication consumeAuthorizationCode(String code) throws InvalidGrantException {
         log.warn("consume authorization code");
-        OauthCode oauthCode = oauthCodeMapper.selectById(code);
-        oauthCodeMapper.deleteById(code);
+        OauthCode oauthCode = LoginHandleContext.oauthCodeThreadLocal.get();
+        if (oauthCode == null) {
+            oauthCode = oauthCodeService.getByCode(code);
+        }
+        oauthCodeService.removeById(code);
+        LoginHandleContext.oauthCodeThreadLocal.remove();
         byte[] bytes = oauthCode.getAuthentication();
         return SerializationUtils.deserialize(bytes);
     }

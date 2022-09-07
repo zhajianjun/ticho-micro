@@ -2,7 +2,6 @@ package com.ticho.uaa.security.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.ticho.uaa.entity.OauthCode;
-import com.ticho.uaa.security.service.LoginHandleContext;
 import com.ticho.uaa.service.OauthCodeService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -40,19 +39,14 @@ public class AuthorizationCodeServicesImpl implements AuthorizationCodeServices 
         oauthCode.setCode(code);
         oauthCode.setAuthentication(serialize);
         oauthCodeService.save(oauthCode);
-        LoginHandleContext.oauthCodeThreadLocal.set(oauthCode);
         return code;
     }
 
     @Override
     public OAuth2Authentication consumeAuthorizationCode(String code) throws InvalidGrantException {
         log.warn("consume authorization code");
-        OauthCode oauthCode = LoginHandleContext.oauthCodeThreadLocal.get();
-        if (oauthCode == null) {
-            oauthCode = oauthCodeService.getByCode(code);
-        }
+        OauthCode oauthCode = oauthCodeService.getByCode(code);
         oauthCodeService.removeById(code);
-        LoginHandleContext.oauthCodeThreadLocal.remove();
         byte[] bytes = oauthCode.getAuthentication();
         return SerializationUtils.deserialize(bytes);
     }

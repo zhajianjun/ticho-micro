@@ -35,7 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler)  {
-        log.debug("登录拦截");
+        log.debug("登录拦截{}", request.getRequestURI());
         return true;
     }
 
@@ -52,7 +52,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         // 删除缓存数据
         LoginHandleContext.oauthClientThreadLocal.remove();
-        LoginHandleContext.oauthCodeThreadLocal.remove();
         LoginHandleContext.userDetailsThreadLocal.remove();
     }
 }

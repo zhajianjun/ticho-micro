@@ -24,8 +24,9 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class LoginHandleContext {
+    // TODO 使用分布式缓存吧
     public static final ThreadLocal<OauthClient> oauthClientThreadLocal = new TransmittableThreadLocal<>();
-    public static final ThreadLocal<OauthCode> oauthCodeThreadLocal = new TransmittableThreadLocal<>();
+    // TODO 使用分布式缓存吧
     public static final ThreadLocal<SecurityUser> userDetailsThreadLocal = new TransmittableThreadLocal<>();
 
     @Autowired

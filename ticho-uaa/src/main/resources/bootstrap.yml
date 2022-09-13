@@ -4,10 +4,6 @@ server:
 spring:
   profiles:
     active: @spring.active@
-  mvc:
-    pathmatch:
-      # 配置策略
-      matching-strategy: ANT_PATH_MATCHER
   main:
     allow-bean-definition-overriding: true
   application:
@@ -27,45 +23,4 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
-
-
-ticho:
-  health: 健康检查！
-  cors:
-    enable: true
-  async:
-    threadNamePrefix: uaa_
-  datasource:
-    url: jdbc:mysql://122.112.164.156:10030/ticho_dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: mysql1511ticho.
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  security:
-    url: http://localhost:7010
-    type: default
-  uaa:
-    antPatterns: ["/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/favicon.ico", "/css/**", "/js/**", "/imgs/**", "/**/oauth/**", "/login", "/login.html"]
-
-
-management:
-  endpoint:
-    shutdown:
-      enabled: true #开启端点
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: "*" #开启所有接口
-
-logging:
-  level:
-    root: INFO
-    com.alibaba: ERROR
-    com.ticho: DEBUG
-    org.mybatis.spring.mapper: ERROR
-    com.baomidou.mybatisplus.core.injector: ERROR
-
-knife4j:
-  enable: true
 

@@ -20,10 +20,10 @@
         <module>ticho-admin</module>
         <module>ticho-gateway</module>
         <module>ticho-email</module>
+        <module>ticho-api</module>
     </modules>
 
     <name>ticho-cloud</name>
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

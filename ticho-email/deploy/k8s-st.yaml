@@ -43,7 +43,7 @@ spec:
       # 设置Docker仓库密钥（用于拉取镜像）
       # 通过同K8s namespace的密钥secret名称来指定镜像仓库及凭证信息
       imagePullSecrets:
-        - name: docker-aliyun-acr
+        - name: aliyun-registry
       volumes:
         - name: host-time
           hostPath:

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ticho.upms.mapper.OauthCodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="OauthCode_map" type="com.ticho.upms.entity.OauthCode">
+        <result column="code" property="code"/>
+        <result column="authentication" property="authentication"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="OauthCode_sql">
+        `code`, authentication
+    </sql>
+
+    <select id="selectByConditions" resultMap="OauthCode_map">
+        SELECT
+        <include refid="OauthCode_sql"/>
+        FROM oauth_code
+        <where>
+            <if test="code!=null">and `code`=#{code}</if>
+            <if test="authentication!=null">and authentication=#{authentication}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,5 +1,6 @@
 server:
-  port: 7040
+  port: 7010
+
 spring:
   profiles:
     active: @spring.active@
@@ -22,3 +23,4 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
+

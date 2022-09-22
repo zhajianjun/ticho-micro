@@ -87,6 +87,7 @@ public class JwtTemplate implements InitializingBean {
     public static String encode(Object data) {
         JwtTemplate jwtTemplate = SpringUtil.getBean(JwtTemplate.class);
         Signer signer = jwtTemplate.getSigner();
+        Assert.notNull(signer, "signer is null");
         return JwtHelper.encode(JsonUtil.toJsonString(data), signer).getEncoded();
     }
 
@@ -98,7 +99,7 @@ public class JwtTemplate implements InitializingBean {
     public static String decodeAndVerify(String token) {
         JwtTemplate jwtTemplate = SpringUtil.getBean(JwtTemplate.class);
         SignatureVerifier verifier = jwtTemplate.getVerifier();
-        Assert.notNull(verifier, "verifier is null ");
+        Assert.notNull(verifier, "verifier is null");
         return JwtHelper.decodeAndVerify(token, verifier).getClaims();
     }
 

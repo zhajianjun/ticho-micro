@@ -6,9 +6,8 @@ spring:
     active: @spring.active@
   main:
     allow-bean-definition-overriding: true
-    allow-circular-references: true
   application:
-    name: ${artifactId}
+    name: @artifactId@
   cloud:
     nacos:
       server-addr: @nacos.server-addr@
@@ -24,5 +23,17 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
+
+
+ticho:
+  health: 健康检查！
+  cors:
+    enable: true
+  async:
+    threadNamePrefix: uaa_
+  swagger:
+    enable: true
+    securityUrl: http://localhost:7010
+    securityType: password
 
 

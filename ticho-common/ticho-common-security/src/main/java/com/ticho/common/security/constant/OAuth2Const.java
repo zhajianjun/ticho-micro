@@ -1,12 +1,18 @@
 package com.ticho.common.security.constant;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  *
  *
  * @author zhajianjun
  * @date 2022-09-21 16:59
  */
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OAuth2Const {
+
     public static final String BEARER_TYPE = "Bearer";
 
     public static final String ACCESS_TOKEN = "access_token";

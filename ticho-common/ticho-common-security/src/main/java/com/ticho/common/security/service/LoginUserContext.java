@@ -20,7 +20,7 @@ public class LoginUserContext {
     private Map<String, LoginUserService> loginUserServiceMap;
 
     public SecurityUser loadUser(String account, String credentials, String type) {
-        LoginUserService loadUserService = loginUserServiceMap.get(type);
+        LoginUserService loadUserService = loginUserServiceMap.get(SecurityConst.LOGIN_USER_TYPE + type);
         if (loadUserService == null) {
             loadUserService = loginUserServiceMap.get(SecurityConst.LOGIN_USER_TYPE_USERNAME);
         }

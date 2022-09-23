@@ -1,4 +1,4 @@
-package com.ticho.auth.filter;
+package com.ticho.common.security.filter;
 
 import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.Result;
@@ -8,12 +8,17 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+/**
+ * 认证成功,权限不足返回视图
+ *
+ * @author zhajianjun
+ * @date 2022-09-23 17:44:39
+ */
 @Component
 @Slf4j
 public class RewriteAccessDenyFilter implements AccessDeniedHandler {

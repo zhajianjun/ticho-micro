@@ -6,6 +6,7 @@ import com.ticho.boot.web.annotation.View;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.Ordered;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +31,8 @@ public class PrinciplController {
     @ApiOperationSupport(order = 10)
     @GetMapping
     @View(ignore = true)
-    public Principal principal(Principal principal) {
-        return principal;
+    public Principal principal() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }

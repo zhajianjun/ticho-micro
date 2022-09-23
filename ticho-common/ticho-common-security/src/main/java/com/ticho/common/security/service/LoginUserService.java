@@ -4,7 +4,7 @@ package com.ticho.common.security.service;
 import com.ticho.common.security.dto.SecurityUser;
 
 /**
- *
+ * 用户登录服务
  *
  * @author zhajianjun
  * @date 2022-09-22 10:46
@@ -12,7 +12,7 @@ import com.ticho.common.security.dto.SecurityUser;
 public interface LoginUserService {
 
     /**
-     * 根据凭证获取用户信息
+     * 根据凭证获取token信息
      *
      * @param account 账户
      * @param credentials 凭证

@@ -24,8 +24,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ticho</groupId>
-            <artifactId>ticho-common-security</artifactId>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-security-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-security-server</artifactId>
         </dependency>
 
         <dependency>

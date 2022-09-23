@@ -34,7 +34,7 @@ public class SecurityUser implements UserDetails, Serializable {
     private String password;
 
     @ApiModelProperty(value = "用户状态。1-正常,2-已失效,3-已被锁定,4-已过期", position = 30)
-    private Integer status;
+    private Integer status = 2;
 
     @ApiModelProperty(value = "角色信息", position = 40)
     private List<SimpleGrantedAuthority> authorities;

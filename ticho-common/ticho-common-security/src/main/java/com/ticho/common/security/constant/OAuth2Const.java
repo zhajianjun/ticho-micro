@@ -19,9 +19,17 @@ public class OAuth2Const {
 
     public static final String REFRESH_TOKEN = "refresh_token";
 
+    public static final String USERNAME = "username";
+
+    public static final String AUTHORITIES = "authorities";
+
     public static final String EXP = "exp";
 
     public static final String EXPIRES_IN = "expires_in";
 
     public static final String IAT = "iat";
+
+    public static final String TYPE = "type";
+
+    public static final String STATUS = "status";
 }

@@ -1,8 +1,9 @@
-package com.ticho.auth.config;
+package com.ticho.common.security.config;
 
 
-import com.ticho.auth.filter.JwtAuthenticationTokenFilter;
-import com.ticho.auth.filter.RewriteAccessDenyFilter;
+import com.ticho.common.security.convert.JwtConverter;
+import com.ticho.common.security.filter.JwtAuthenticationTokenFilter;
+import com.ticho.common.security.filter.RewriteAccessDenyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,9 +29,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final JwtConverter jwtConverter;
+    private final UserDetailsChecker userDetailsChecker;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService){
+    public WebSecurityConfig(UserDetailsService userDetailsService, JwtConverter jwtConverter, UserDetailsChecker userDetailsChecker){
         this.userDetailsService = userDetailsService;
+        this.jwtConverter = jwtConverter;
+        this.userDetailsChecker = userDetailsChecker;
     }
 
     @Autowired
@@ -51,13 +57,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .antMatchers("/auth/login/**").permitAll()
+            .antMatchers("/auth/**").permitAll()
             .antMatchers("/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/favicon.ico", "/css/**", "/js/**", "/imgs/**").permitAll()
             .antMatchers("/druid/**").anonymous().anyRequest().authenticated()
             .and()
             .headers()
             .cacheControl();
-        http.addFilterBefore(new JwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationTokenFilter(jwtConverter, userDetailsChecker), UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling().accessDeniedHandler(new RewriteAccessDenyFilter());
 
 

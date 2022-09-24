@@ -1,10 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ticho.common.security.config.DefaultSecurityConfig,\
-  com.ticho.common.security.controller.PrinciplController,\
-  com.ticho.common.security.service.load.DefaultUsernameUserDetailsService,\
-  com.ticho.common.security.service.load.DefaultEmailUserDetailsService,\
-  com.ticho.common.security.service.load.DefaultPhoneUserDetailsService,\
-  com.ticho.common.security.service.LoadUserContext,\
-  com.ticho.common.security.service.login.DefaultUsernameLoginUserService,\
-  com.ticho.common.security.config.WebSecurityConfig
-
+  com.ticho.common.security.component.DefaultAuthenticationTokenFilter,\
+  com.ticho.common.security.service.DefaultUsernameUserDetailsService,\
+  com.ticho.common.security.component.DefaultJwtExtInfo

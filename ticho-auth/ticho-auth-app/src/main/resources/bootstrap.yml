@@ -32,7 +32,7 @@ ticho:
   async:
     threadNamePrefix: uaa_
   security:
-    ant-patterns: [ "/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/favicon.ico", "/**/oauth/**", "/health" ]
+    ant-patterns: [ "/doc.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/favicon.ico", "/health" ]
   swagger:
     enable: true
     securityUrl: http://localhost:7011

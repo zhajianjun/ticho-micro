@@ -29,6 +29,11 @@
             <artifactId>ticho-upms-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>ticho-auth-api</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

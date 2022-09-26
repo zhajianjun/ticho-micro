@@ -37,6 +37,12 @@
 
             <dependency>
                 <groupId>com.ticho</groupId>
+                <artifactId>ticho-auth-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ticho</groupId>
                 <artifactId>ticho-common-security</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>

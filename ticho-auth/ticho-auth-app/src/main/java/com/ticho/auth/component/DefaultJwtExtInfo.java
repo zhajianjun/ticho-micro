@@ -1,9 +1,10 @@
-package com.ticho.common.security.component;
+package com.ticho.auth.component;
 
+import com.ticho.auth.dto.SecurityUser;
 import com.ticho.boot.security.handle.jwt.JwtExtInfo;
-import com.ticho.common.security.dto.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author zhajianjun
  * @date 2022-09-23 10:47
  */
+@Component
 public class DefaultJwtExtInfo implements JwtExtInfo {
 
     @Override

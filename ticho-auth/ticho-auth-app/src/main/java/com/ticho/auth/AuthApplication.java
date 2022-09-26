@@ -1,6 +1,6 @@
 package com.ticho.auth;
 
-import com.ticho.boot.security.config.EnableOauth2AuthServer;
+import com.ticho.boot.security.annotation.EnableOauth2AuthServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;

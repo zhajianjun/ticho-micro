@@ -1,4 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.ticho.common.security.component.DefaultAuthenticationTokenFilter,\
-  com.ticho.common.security.service.DefaultUsernameUserDetailsService,\
-  com.ticho.common.security.component.DefaultJwtExtInfo
+  com.ticho.common.security.config.SecurityConfig

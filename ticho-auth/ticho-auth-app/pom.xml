@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ticho-upms</artifactId>
+        <artifactId>ticho-auth</artifactId>
         <groupId>com.ticho</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ticho-upms-app</artifactId>
+
+    <artifactId>ticho-auth-app</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-cloud</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.ticho.boot</groupId>
@@ -19,46 +24,24 @@
 
         <dependency>
             <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-cloud</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
             <artifactId>ticho-starter-swagger</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-datasource</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho</groupId>
-            <artifactId>ticho-upms-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.ticho</groupId>
             <artifactId>ticho-common-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>ticho-auth-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>ticho-upms-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

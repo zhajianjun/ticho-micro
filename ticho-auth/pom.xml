@@ -9,52 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ticho-auth</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>ticho-auth-api</module>
+        <module>ticho-auth-app</module>
+    </modules>
 
 
-    <dependencies>
 
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-cloud</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho</groupId>
-            <artifactId>ticho-common-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-swagger</artifactId>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

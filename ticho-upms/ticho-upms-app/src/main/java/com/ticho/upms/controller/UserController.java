@@ -2,6 +2,7 @@ package com.ticho.upms.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
+import com.ticho.boot.security.annotation.IgnoreAuth;
 import com.ticho.boot.web.annotation.View;
 import com.ticho.upms.dto.UserDTO;
 import com.ticho.upms.entity.User;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 
 /**
@@ -33,14 +32,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "权限用户信息", notes = "权限用户信息")
-    @ApiOperationSupport(order = 10)
-    @GetMapping("principal")
-    @View(ignore = true)
-    public Principal principal(Principal principal) {
-        return principal;
-    }
-
     @ApiOperation(value = "添加用户")
     @ApiOperationSupport(order = 20)
     @PostMapping
@@ -49,9 +40,10 @@ public class UserController {
         return user;
     }
 
-    @ApiOperation(value = "更新用户")
+    @ApiOperation(value = "根据用户名查询用户")
     @ApiOperationSupport(order = 40)
     @GetMapping("getByUsername")
+    @IgnoreAuth(inner = true)
     public UserDTO getByUsername(String username) {
         return userService.getByUsername(username);
     }

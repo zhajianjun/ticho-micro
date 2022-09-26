@@ -17,10 +17,10 @@ public interface UserBizFeignService {
 
 
     /**
-     * 根据账户名查询用户
+     * 根据用户名查询用户
      *
-     * @param username 账户名
-     * @return SecurityUser
+     * @param username 用户名
+     * @return 用户信息
      */
     @GetMapping("getByUsername")
     Result<UserDTO> getByUsername(@RequestParam("username") String username);

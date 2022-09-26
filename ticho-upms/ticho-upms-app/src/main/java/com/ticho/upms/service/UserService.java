@@ -24,9 +24,9 @@ public interface UserService extends IService<User> {
     PageResult<User> page(int pageNum, int pageSize, User user);
 
     /**
-     * 根据账户名查询用户
+     * 根据用户名查询用户
      *
-     * @param username 账户名
+     * @param username 用户名
      * @return SecurityUser
      */
     UserDTO getByUsername(String username);

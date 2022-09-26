@@ -1,9 +1,6 @@
 package com.ticho.upms.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ticho.upms.entity.OauthCode;
-import com.ticho.upms.mapper.OauthCodeMapper;
-import com.ticho.upms.service.OauthCodeService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -61,6 +61,13 @@
             <artifactId>ticho-common-security</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>

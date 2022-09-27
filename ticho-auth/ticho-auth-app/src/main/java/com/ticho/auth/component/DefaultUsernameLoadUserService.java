@@ -30,6 +30,9 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         // @formatter:off
         Result<UserDTO> result = userBizFeignService.getByUsername(account);
         UserDTO data = result.getData();
+        if (data == null) {
+            return null;
+        }
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(data.getUsername());
         securityUser.setPassword(data.getPassword());

@@ -1,4 +1,4 @@
-package com.ticho.auth.controller;
+package com.ticho.upms.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;

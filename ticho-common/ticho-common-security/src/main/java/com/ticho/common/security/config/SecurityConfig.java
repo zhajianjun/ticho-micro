@@ -1,6 +1,6 @@
 package com.ticho.common.security.config;
 
-import com.ticho.auth.api.AuthBizFeignService;
+import com.ticho.upms.api.OauthBizFeignService;
 import com.ticho.boot.security.handle.jwt.JwtSigner;
 import com.ticho.boot.security.prop.TichoOauthProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,8 +18,8 @@ public class SecurityConfig {
 
     @Bean
     @ConditionalOnMissingBean(TichoOauthProperty.class)
-    public JwtSigner jwtSigner(AuthBizFeignService authBizFeignService) {
-        return new JwtSigner(authBizFeignService.publicKey().getData());
+    public JwtSigner jwtSigner(OauthBizFeignService oauthBizFeignService) {
+        return new JwtSigner(oauthBizFeignService.publicKey().getData());
     }
 
 }

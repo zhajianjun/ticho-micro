@@ -1,6 +1,6 @@
-package com.ticho.auth.component;
+package com.ticho.upms.core.component;
 
-import com.ticho.auth.dto.SecurityUser;
+import com.ticho.upms.dto.SecurityUser;
 import com.ticho.boot.security.handle.jwt.JwtExtInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

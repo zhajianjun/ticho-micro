@@ -7,7 +7,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: @artifactId@
+    name: @parent.artifactId@
   cloud:
     nacos:
       server-addr: @nacos.server-addr@

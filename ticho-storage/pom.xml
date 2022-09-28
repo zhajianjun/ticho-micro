@@ -38,6 +38,11 @@
             <artifactId>ticho-starter-swagger</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ticho</groupId>
+            <artifactId>ticho-common-security</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package com.ticho.auth.dto;
+package com.ticho.upms.dto;
 
 import com.ticho.boot.view.core.TichoSecurityUser;
 import io.swagger.annotations.ApiModelProperty;

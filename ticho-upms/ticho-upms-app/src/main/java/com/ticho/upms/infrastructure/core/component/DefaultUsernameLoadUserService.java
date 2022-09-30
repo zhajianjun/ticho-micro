@@ -1,10 +1,10 @@
-package com.ticho.upms.core.component;
+package com.ticho.upms.infrastructure.core.component;
 
 import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;
-import com.ticho.upms.dto.SecurityUser;
-import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.application.UserService;
+import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserUpdDTO;
+import com.ticho.upms.application.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -27,15 +27,15 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
     @Override
     public SecurityUser load(String account) {
         // @formatter:off
-        UserDTO userDTO = userService.getByUsername(account);
-        if (userDTO == null) {
+        UserDTO userUpdDTO = userService.getByUsername(account);
+        if (userUpdDTO == null) {
             return null;
         }
         SecurityUser securityUser = new SecurityUser();
-        securityUser.setUsername(userDTO.getUsername());
-        securityUser.setPassword(userDTO.getPassword());
-        securityUser.setRoleIds(userDTO.getRoleIds());
-        securityUser.setStatus(userDTO.getStatus());
+        securityUser.setUsername(userUpdDTO.getUsername());
+        securityUser.setPassword(userUpdDTO.getPassword());
+        securityUser.setRoleIds(userUpdDTO.getRoleIds());
+        securityUser.setStatus(userUpdDTO.getStatus());
         return securityUser;
         // @formatter:on
     }

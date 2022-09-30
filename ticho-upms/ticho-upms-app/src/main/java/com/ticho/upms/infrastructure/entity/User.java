@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户
+ * 用户信息
  *
  * @author zhajianjun
  * @date 2021-10-24 22:12

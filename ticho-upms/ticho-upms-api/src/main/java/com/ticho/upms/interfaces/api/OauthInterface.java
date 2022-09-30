@@ -1,4 +1,4 @@
-package com.ticho.upms.api;
+package com.ticho.upms.interfaces.api;
 
 import com.ticho.boot.view.core.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @date 2022-09-22 14:49
  */
 @FeignClient(value = "ticho-upms-app", contextId = "OauthService", path = "oauth")
-public interface OauthBizFeignService {
+public interface OauthInterface {
 
     /**
      * 获取公钥

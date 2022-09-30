@@ -1,9 +1,7 @@
-package com.ticho.upms.application;
+package com.ticho.upms.application.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.ticho.boot.view.core.PageResult;
-import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserUpdDTO;
 
 /**
  * 用户 服务接口
@@ -11,17 +9,9 @@ import com.ticho.upms.infrastructure.entity.User;
  * @author zhajianjun
  * @date 2021-10-24 22:12
  */
-public interface UserService extends IService<User> {
+public interface UserService {
 
-    /**
-     * 分页查询 用户 列表
-     *
-     * @param pageNum 当前页
-     * @param pageSize 页大小
-     * @param user 条件
-     * @return PageInfo<User> 用户 列表
-     */
-    PageResult<User> page(int pageNum, int pageSize, User user);
+    void saveUser(UserUpdDTO userUpdDTO);
 
     /**
      * 根据用户名查询用户

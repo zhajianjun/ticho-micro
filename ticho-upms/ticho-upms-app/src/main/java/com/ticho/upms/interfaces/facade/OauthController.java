@@ -1,4 +1,4 @@
-package com.ticho.upms.interfaces;
+package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
@@ -7,7 +7,9 @@ import com.ticho.boot.security.constant.OAuth2Const;
 import com.ticho.boot.security.dto.LoginRequest;
 import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
+import com.ticho.boot.view.core.Result;
 import com.ticho.boot.web.annotation.View;
+import com.ticho.upms.interfaces.api.OauthInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiSort(Ordered.HIGHEST_PRECEDENCE + 200)
 @Api(tags = "权限用户登录")
 @View
-public class OauthController {
+public class OauthController implements OauthInterface {
 
     @Autowired
     private LoginUserHandle loginUserHandle;
@@ -56,8 +58,9 @@ public class OauthController {
     @IgnoreAuth(inner = true)
     @ApiOperationSupport(order = 30)
     @GetMapping("publicKey")
-    public String getPublicKey() {
-        return loginUserHandle.getPublicKey();
+    @Override
+    public Result<String> publicKey() {
+        return Result.ok(loginUserHandle.publicKey());
     }
 
     @ApiOperation("测试权限")
@@ -65,7 +68,7 @@ public class OauthController {
     @ApiOperationSupport(order = 30)
     @GetMapping("test")
     public String test() {
-        return loginUserHandle.getPublicKey();
+        return loginUserHandle.publicKey();
     }
 
 

@@ -1,4 +1,4 @@
-package com.ticho.upms.core.config;
+package com.ticho.upms.infrastructure.core.config;
 
 import com.ticho.boot.security.annotation.EnableOauth2AuthServer;
 import com.ticho.boot.security.handle.jwt.JwtSigner;

@@ -1,12 +1,14 @@
-package com.ticho.upms.interfaces;
+package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.security.annotation.IgnoreAuth;
+import com.ticho.boot.view.core.Result;
 import com.ticho.boot.web.annotation.View;
-import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.infrastructure.entity.User;
-import com.ticho.upms.application.UserService;
+import com.ticho.upms.application.service.UserService;
+import com.ticho.upms.interfaces.api.UserInterface;
+import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +30,23 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "用户")
 @View
 @ApiSort(10)
-public class UserController {
+public class UserController implements UserInterface {
     @Autowired
     private UserService userService;
 
     @ApiOperation(value = "添加用户")
     @ApiOperationSupport(order = 20)
     @PostMapping
-    public User save(@RequestBody User user) {
-        userService.save(user);
-        return user;
+    public void save(@RequestBody UserUpdDTO userUpdDTO) {
+        userService.saveUser(userUpdDTO);
     }
 
     @ApiOperation(value = "根据用户名查询用户")
     @ApiOperationSupport(order = 40)
     @GetMapping("getByUsername")
     @IgnoreAuth(inner = true)
-    public UserDTO getByUsername(String username) {
-        return userService.getByUsername(username);
+    public Result<UserDTO> getByUsername(String username) {
+        return Result.ok(userService.getByUsername(username));
     }
 
 }

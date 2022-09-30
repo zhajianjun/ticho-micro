@@ -2,8 +2,8 @@ package com.ticho.upms.infrastructure.core.component;
 
 import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;
+import com.ticho.upms.interfaces.dto.SecurityUser;
 import com.ticho.upms.interfaces.dto.UserDTO;
-import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import com.ticho.upms.application.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

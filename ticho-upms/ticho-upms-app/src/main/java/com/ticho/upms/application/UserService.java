@@ -1,9 +1,9 @@
-package com.ticho.upms.service;
+package com.ticho.upms.application;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.entity.User;
+import com.ticho.upms.infrastructure.entity.User;
 
 /**
  * 用户 服务接口

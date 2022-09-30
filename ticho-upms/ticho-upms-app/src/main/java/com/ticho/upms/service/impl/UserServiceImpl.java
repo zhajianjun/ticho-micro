@@ -9,9 +9,9 @@ import com.ticho.boot.datasource.util.PageUtil;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.convert.UserConvert;
 import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.entity.User;
-import com.ticho.upms.mapper.UserMapper;
-import com.ticho.upms.service.UserService;
+import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.infrastructure.mapper.UserMapper;
+import com.ticho.upms.application.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

@@ -4,7 +4,7 @@ import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;
 import com.ticho.upms.dto.SecurityUser;
 import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.service.UserService;
+import com.ticho.upms.application.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

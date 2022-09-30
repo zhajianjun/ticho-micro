@@ -1,4 +1,4 @@
-package com.ticho.upms.entity;
+package com.ticho.upms.infrastructure.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

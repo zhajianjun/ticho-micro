@@ -1,7 +1,7 @@
 package com.ticho.upms.convert;
 
 import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.entity.User;
+import com.ticho.upms.infrastructure.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

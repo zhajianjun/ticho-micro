@@ -1,12 +1,12 @@
-package com.ticho.upms.controller;
+package com.ticho.upms.interfaces;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.security.annotation.IgnoreAuth;
 import com.ticho.boot.web.annotation.View;
 import com.ticho.upms.dto.UserDTO;
-import com.ticho.upms.entity.User;
-import com.ticho.upms.service.UserService;
+import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.application.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

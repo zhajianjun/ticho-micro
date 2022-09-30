@@ -1,4 +1,4 @@
-package com.ticho.upms.controller;
+package com.ticho.upms.interfaces;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;

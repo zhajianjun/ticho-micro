@@ -20,6 +20,11 @@
             <artifactId>ticho-starter-feign</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-view</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

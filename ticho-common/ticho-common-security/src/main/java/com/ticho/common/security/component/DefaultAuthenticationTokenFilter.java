@@ -1,7 +1,7 @@
 package com.ticho.common.security.component;
 
 import cn.hutool.core.convert.Convert;
-import com.ticho.upms.dto.SecurityUser;
+import com.ticho.upms.interfaces.dto.SecurityUser;
 import com.ticho.boot.security.constant.OAuth2Const;
 import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.filter.AbstractAuthTokenFilter;

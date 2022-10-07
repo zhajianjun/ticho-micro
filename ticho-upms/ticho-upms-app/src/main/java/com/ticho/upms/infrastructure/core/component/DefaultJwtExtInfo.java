@@ -1,7 +1,7 @@
 package com.ticho.upms.infrastructure.core.component;
 
 import com.ticho.boot.security.handle.jwt.JwtExtInfo;
-import com.ticho.upms.interfaces.dto.SecurityUser;
+import com.ticho.common.security.dto.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

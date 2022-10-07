@@ -9,7 +9,7 @@ import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
 import com.ticho.boot.view.core.Result;
 import com.ticho.boot.web.annotation.View;
-import com.ticho.upms.interfaces.api.OauthInterface;
+import com.ticho.upms.interfaces.api.OauthProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户信息
+ * 权限用户登录
  *
  * @author zhajianjun
  * @date 2022-09-22 15:36
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiSort(Ordered.HIGHEST_PRECEDENCE + 200)
 @Api(tags = "权限用户登录")
 @View
-public class OauthController implements OauthInterface {
+public class OauthController implements OauthProvider {
 
     @Autowired
     private LoginUserHandle loginUserHandle;

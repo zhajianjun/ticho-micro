@@ -6,7 +6,7 @@ import com.ticho.boot.security.annotation.IgnoreAuth;
 import com.ticho.boot.view.core.Result;
 import com.ticho.boot.web.annotation.View;
 import com.ticho.upms.application.service.UserService;
-import com.ticho.upms.interfaces.api.UserInterface;
+import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import io.swagger.annotations.Api;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * 用户 控制器
+ * 用户信息
  *
  * @author zhajianjun
  * @date 2021-10-24 22:12
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "用户")
 @View
 @ApiSort(10)
-public class UserController implements UserInterface {
+public class UserController implements UserProvider {
     @Autowired
     private UserService userService;
 

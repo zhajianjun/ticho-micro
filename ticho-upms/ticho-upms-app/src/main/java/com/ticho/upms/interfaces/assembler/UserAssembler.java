@@ -4,6 +4,7 @@ import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -22,6 +23,8 @@ public interface UserAssembler {
      * @param user 用户
      * @return {@link UserDTO}
      */
+    @Mapping(target = "roleIds", ignore = true)
+    @Mapping(target = "deptIds", ignore = true)
     UserDTO userToDto(User user);
 
 
@@ -31,5 +34,14 @@ public interface UserAssembler {
      * @param userUpdDTO 用户更新对象
      * @return {@link User}
      */
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "remark", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "lastTime", ignore = true)
+    @Mapping(target = "lastIp", ignore = true)
+    @Mapping(target = "isDeleted", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
     User updToUser(UserUpdDTO userUpdDTO);
 }

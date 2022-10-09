@@ -1,6 +1,6 @@
 package com.ticho.upms.infrastructure.core.component;
 
-import com.ticho.boot.security.handle.jwt.JwtExtInfo;
+import com.ticho.boot.security.handle.jwt.JwtExtra;
 import com.ticho.common.security.dto.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +16,10 @@ import java.util.Map;
  * @date 2022-09-23 10:47
  */
 @Component
-public class DefaultJwtExtInfo implements JwtExtInfo {
+public class DefaultJwtExtra implements JwtExtra {
 
     @Override
-    public Map<String, Object> getExt() {
+    public Map<String, Object> getExtra() {
         Map<String, Object> extMap = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();

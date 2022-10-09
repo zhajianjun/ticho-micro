@@ -7,14 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 用户更新对象
+ * 用户信息DTO
  *
  * @author zhajianjun
  * @date 2022-09-30 16:45
  */
 @Data
-@ApiModel(value = "用户更新对象")
-public class UserUpdDTO {
+@ApiModel(value = "用户信息DTO")
+public class UserDTO {
 
     @ApiModelProperty(value = "主键id", position = 10)
     @TableId(value = "id", type = IdType.INPUT)
@@ -62,7 +62,7 @@ public class UserUpdDTO {
     @ApiModelProperty(value = "头像地址", position = 160)
     private String photo;
 
-    @ApiModelProperty(value = "用户状态。1-正常,2-已失效,3-已被锁定,4-已过期", position = 181)
+    @ApiModelProperty(value = "用户状态;1-正常,2-已失效,3-已被锁定,4-已过期", position = 181)
     private Integer status;
 
 }

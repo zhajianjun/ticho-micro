@@ -1,7 +1,7 @@
 package com.ticho.upms.application.service;
 
+import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
-import com.ticho.upms.interfaces.dto.UserUpdDTO;
 
 /**
  * 用户 服务接口
@@ -11,7 +11,7 @@ import com.ticho.upms.interfaces.dto.UserUpdDTO;
  */
 public interface UserService {
 
-    void saveUser(UserUpdDTO userUpdDTO);
+    void saveUser(UserDTO userDTO);
 
     /**
      * 根据用户名查询用户
@@ -19,7 +19,7 @@ public interface UserService {
      * @param username 用户名
      * @return SecurityUser
      */
-    UserDTO getByUsername(String username);
+    UpmsUserDTO getByUsername(String username);
 
     /**
      * 根据手机号码查询用户
@@ -27,7 +27,7 @@ public interface UserService {
      * @param mobile 手机号码
      * @return SecurityUser
      */
-    UserDTO getByMobile(String mobile);
+    UpmsUserDTO getByMobile(String mobile);
 
     /**
      * 根据邮箱查询用户
@@ -35,7 +35,7 @@ public interface UserService {
      * @param email 邮箱
      * @return SecurityUser
      */
-    UserDTO getByEmail(String email);
+    UpmsUserDTO getByEmail(String email);
 
     /**
      * 根据微信号码查询用户
@@ -43,7 +43,7 @@ public interface UserService {
      * @param wechat 微信号码
      * @return SecurityUser
      */
-    UserDTO getByWechat(String wechat);
+    UpmsUserDTO getByWechat(String wechat);
 
     /**
      * 根据QQ号码查询查询用户
@@ -51,7 +51,7 @@ public interface UserService {
      * @param qq QQ号码
      * @return SecurityUser
      */
-    UserDTO getByQq(String qq);
+    UpmsUserDTO getByQq(String qq);
 
 }
 

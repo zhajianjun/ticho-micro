@@ -86,7 +86,7 @@ public class User extends Model<User> implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime lastTime;
 
-    @ApiModelProperty(value = "用户状态。1-正常,2-已失效,3-已被锁定,4-已过期", position = 181)
+    @ApiModelProperty(value = "用户状态;1-正常,2-已失效,3-已被锁定,4-已过期", position = 181)
     private Integer status;
 
     @ApiModelProperty(value = "备注", position = 190)

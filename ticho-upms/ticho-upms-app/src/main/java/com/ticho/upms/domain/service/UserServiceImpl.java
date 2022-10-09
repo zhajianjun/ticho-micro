@@ -4,8 +4,8 @@ import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
+import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
-import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,52 +24,52 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void saveUser(UserUpdDTO userUpdDTO) {
-        User user = UserAssembler.INSTANCE.updToUser(userUpdDTO);
+    public void saveUser(UserDTO userDTO) {
+        User user = UserAssembler.INSTANCE.updToUser(userDTO);
         userRepository.save(user);
     }
 
     @Override
-    public UserDTO getByUsername(String username) {
+    public UpmsUserDTO getByUsername(String username) {
         User user = userRepository.getByUsername(username);
-        UserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
+        UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
         setAuthorities(securityUser);
         return securityUser;
     }
 
     @Override
-    public UserDTO getByMobile(String mobile) {
+    public UpmsUserDTO getByMobile(String mobile) {
         User user = userRepository.getByMobile(mobile);
-        UserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
+        UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
         setAuthorities(securityUser);
         return securityUser;
     }
 
     @Override
-    public UserDTO getByEmail(String email) {
+    public UpmsUserDTO getByEmail(String email) {
         User user = userRepository.getByEmail(email);
-        UserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
+        UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
         setAuthorities(securityUser);
         return securityUser;
     }
 
     @Override
-    public UserDTO getByWechat(String wechat) {
+    public UpmsUserDTO getByWechat(String wechat) {
         User user = userRepository.getByWechat(wechat);
-        UserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
+        UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
         setAuthorities(securityUser);
         return securityUser;
     }
 
     @Override
-    public UserDTO getByQq(String qq) {
+    public UpmsUserDTO getByQq(String qq) {
         User user = userRepository.getByQq(qq);
-        UserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
+        UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToDto(user);
         setAuthorities(securityUser);
         return securityUser;
     }
 
-    private void setAuthorities(UserDTO userUpdDto) {
+    private void setAuthorities(UpmsUserDTO userUpdDto) {
         if (userUpdDto == null) {
             return;
         }

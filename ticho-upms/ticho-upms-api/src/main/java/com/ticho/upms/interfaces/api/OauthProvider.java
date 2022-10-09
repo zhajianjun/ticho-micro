@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(value = "ticho-upms-app", contextId = "OauthService", path = "oauth")
 public interface OauthProvider {
 
+
     /**
-     * 获取公钥
+     * 公钥
      *
-     * @return 公钥信息
+     * @return {@link Result}<{@link String}>
      */
     @GetMapping("publicKey")
     Result<String> publicKey();

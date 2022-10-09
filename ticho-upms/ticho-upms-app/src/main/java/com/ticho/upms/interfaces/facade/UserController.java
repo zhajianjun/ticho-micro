@@ -7,8 +7,8 @@ import com.ticho.boot.view.core.Result;
 import com.ticho.boot.web.annotation.View;
 import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.UserProvider;
+import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
-import com.ticho.upms.interfaces.dto.UserUpdDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +37,15 @@ public class UserController implements UserProvider {
     @ApiOperation(value = "添加用户")
     @ApiOperationSupport(order = 20)
     @PostMapping
-    public void save(@RequestBody UserUpdDTO userUpdDTO) {
-        userService.saveUser(userUpdDTO);
+    public void save(@RequestBody UserDTO userDTO) {
+        userService.saveUser(userDTO);
     }
 
     @ApiOperation(value = "根据用户名查询用户")
     @ApiOperationSupport(order = 40)
     @GetMapping("getByUsername")
     @IgnoreAuth(inner = true)
-    public Result<UserDTO> getByUsername(String username) {
+    public Result<UpmsUserDTO> getByUsername(String username) {
         return Result.ok(userService.getByUsername(username));
     }
 

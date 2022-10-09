@@ -3,7 +3,7 @@ package com.ticho.upms.infrastructure.core.component;
 import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;
 import com.ticho.common.security.dto.SecurityUser;
-import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.application.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
     @Override
     public SecurityUser load(String account) {
         // @formatter:off
-        UserDTO userUpdDTO = userService.getByUsername(account);
+        UpmsUserDTO userUpdDTO = userService.getByUsername(account);
         if (userUpdDTO == null) {
             return null;
         }

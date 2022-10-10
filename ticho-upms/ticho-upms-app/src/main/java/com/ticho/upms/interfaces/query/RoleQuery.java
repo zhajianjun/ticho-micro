@@ -65,6 +65,6 @@ public class RoleQuery extends BasePageQuery implements Serializable {
 
     /** 删除标识;0-未删除,1-已删除 */
     @ApiModelProperty(value = "删除标识;0-未删除,1-已删除", position = 110)
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

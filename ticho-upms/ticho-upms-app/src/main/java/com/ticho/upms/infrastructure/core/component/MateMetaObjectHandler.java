@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+
 /**
- * 自动填充时间字段
+ * sql数据自动填充处理
  *
- * @author AdoroTutto
- * @date 2021-10-18 0:01
+ * @author zhajianjun
+ * @date 2022-10-10 14:54
  */
 @Component
 public class MateMetaObjectHandler implements MetaObjectHandler {

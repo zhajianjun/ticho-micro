@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
  * 角色信息 转换
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 @Mapper
 public interface RoleAssembler {

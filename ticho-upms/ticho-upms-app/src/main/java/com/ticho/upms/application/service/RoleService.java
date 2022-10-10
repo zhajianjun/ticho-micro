@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 角色信息 服务接口
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 public interface RoleService {
     /**
@@ -39,9 +39,9 @@ public interface RoleService {
      * 根据id查询角色信息
      *
      * @param id 主键
-     * @return {@link Role}
+     * @return {@link RoleDTO}
      */
-    Role getById(Serializable id);
+    RoleDTO getById(Serializable id);
 
     /**
      * 分页查询角色信息列表

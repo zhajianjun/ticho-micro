@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * 角色信息 服务实现
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -48,8 +48,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getById(Serializable id) {
-        return roleRepository.getById(id);
+    public RoleDTO getById(Serializable id) {
+        Role role = roleRepository.getById(id);
+        return RoleAssembler.INSTANCE.entityToDto(role);
     }
 
     @Override

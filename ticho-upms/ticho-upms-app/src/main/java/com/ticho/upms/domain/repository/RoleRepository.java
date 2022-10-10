@@ -12,7 +12,7 @@ import java.util.List;
  * 角色信息 repository接口
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 public interface RoleRepository extends IService<Role> {
 
@@ -62,7 +62,7 @@ public interface RoleRepository extends IService<Role> {
      * 根据id查询角色信息
      *
      * @param id 主键
-     * @return Role 角色信息
+     * @return {@link Role}
      */
     @Override
     Role getById(Serializable id);

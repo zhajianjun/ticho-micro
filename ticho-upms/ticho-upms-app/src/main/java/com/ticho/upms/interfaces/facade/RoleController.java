@@ -26,7 +26,7 @@ import java.io.Serializable;
  * 角色信息 控制器
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 @RestController
 @RequestMapping("role")
@@ -37,14 +37,14 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @ApiOperation(value = "保存角色信息", notes = "保存角色信息")
+    @ApiOperation(value = "保存角色信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
     public void save(@RequestBody RoleDTO roleDTO) {
         roleService.save(roleDTO);
     }
 
-    @ApiOperation(value = "删除角色信息", notes = "根据id删除角色信息")
+    @ApiOperation(value = "删除角色信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
@@ -52,22 +52,22 @@ public class RoleController {
         roleService.removeById(id);
     }
 
-    @ApiOperation(value = "修改角色信息", notes = "根据id修改角色信息")
+    @ApiOperation(value = "修改角色信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
     public void update(@RequestBody RoleDTO roleDTO) {
         roleService.updateById(roleDTO);
     }
 
-    @ApiOperation(value = "角色信息查询", notes = "根据id查询角色信息")
+    @ApiOperation(value = "主键查询角色信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Role getById(@RequestParam("id") Serializable id) {
+    public RoleDTO getById(@RequestParam("id") Serializable id) {
         return roleService.getById(id);
     }
 
-    @ApiOperation(value = "角色信息列表查询(分页)", notes = "分页查询角色信息列表")
+    @ApiOperation(value = "分页查询角色信息")
     @ApiOperationSupport(order = 50)
     @GetMapping("page")
     public PageResult<RoleDTO> page(RoleQuery query) {

@@ -11,7 +11,7 @@ import java.util.List;
  * 角色信息 mapper
  *
  * @author zhajianjun
- * @date 2022-10-08 17:45
+ * @date 2022-10-10 17:28
  */
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {

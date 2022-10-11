@@ -21,7 +21,7 @@ public class MateMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("createBy", TichoSecurityUtil.getUserName(), metaObject);
         this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
-        this.setFieldValByName("isDeleted", Boolean.FALSE, metaObject);
+        this.setFieldValByName("isDelete", 0, metaObject);
 
     }
 

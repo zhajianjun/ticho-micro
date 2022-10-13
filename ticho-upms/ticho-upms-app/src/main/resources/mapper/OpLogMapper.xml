@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ticho.upms.infrastructure.mapper.OpLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="OpLog_map" type="com.ticho.upms.infrastructure.entity.OpLog">
+        <result column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="type" property="type"/>
+        <result column="method" property="method"/>
+        <result column="params" property="params"/>
+        <result column="message" property="message"/>
+        <result column="total_time" property="totalTime"/>
+        <result column="ip" property="ip"/>
+        <result column="operate_by" property="operateBy"/>
+        <result column="operate_time" property="operateTime"/>
+        <result column="is_err" property="isErr"/>
+        <result column="err_message" property="errMessage"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="OpLog_sql">
+        id, url, `type`, method, params, message, total_time, ip, operate_by, operate_time, is_err, err_message
+    </sql>
+
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_op_log (id, url, `type`, method, params, message, total_time, ip, operate_by, operate_time, is_err, err_message) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.url},#{item.type},#{item.method},#{item.params},#{item.message},#{item.totalTime},#{item.ip},#{item.operateBy},#{item.operateTime},#{item.isErr},#{item.errMessage})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_op_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="url != null and url != ''">url,</if>
+            <if test="type != null and type != ''">`type`,</if>
+            <if test="method != null and method != ''">method,</if>
+            <if test="params != null and params != ''">params,</if>
+            <if test="message != null and message != ''">message,</if>
+            <if test="totalTime != null">total_time,</if>
+            <if test="ip != null and ip != ''">ip,</if>
+            <if test="operateBy != null and operateBy != ''">operate_by,</if>
+            <if test="operateTime != null">operate_time,</if>
+            <if test="isErr != null">is_err,</if>
+            <if test="errMessage != null and errMessage != ''">err_message,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="url !=null and url != ''">#{url},</if>
+            <if test="type !=null and type != ''">#{type},</if>
+            <if test="method !=null and method != ''">#{method},</if>
+            <if test="params !=null and params != ''">#{params},</if>
+            <if test="message !=null and message != ''">#{message},</if>
+            <if test="totalTime !=null">#{totalTime},</if>
+            <if test="ip !=null and ip != ''">#{ip},</if>
+            <if test="operateBy !=null and operateBy != ''">#{operateBy},</if>
+            <if test="operateTime !=null">#{operateTime},</if>
+            <if test="isErr !=null">#{isErr},</if>
+            <if test="errMessage !=null and errMessage != ''">#{errMessage},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+            <if test="id != null">id = values(id),</if>
+            <if test="url != null and url != ''">url = values(url),</if>
+            <if test="type != null and type != ''">`type` = values(`type`),</if>
+            <if test="method != null and method != ''">method = values(method),</if>
+            <if test="params != null and params != ''">params = values(params),</if>
+            <if test="message != null and message != ''">message = values(message),</if>
+            <if test="totalTime != null">total_time = values(total_time),</if>
+            <if test="ip != null and ip != ''">ip = values(ip),</if>
+            <if test="operateBy != null and operateBy != ''">operate_by = values(operate_by),</if>
+            <if test="operateTime != null">operate_time = values(operate_time),</if>
+            <if test="isErr != null">is_err = values(is_err),</if>
+            <if test="errMessage != null and errMessage != ''">err_message = values(err_message)</if>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_op_log (id, url, `type`, method, params, message, total_time, ip, operate_by, operate_time, is_err, err_message) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.url},#{item.type},#{item.method},#{item.params},#{item.message},#{item.totalTime},#{item.ip},#{item.operateBy},#{item.operateTime},#{item.isErr},#{item.errMessage})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        id = values(id),
+        url = values(url),
+        `type` = values(`type`),
+        method = values(method),
+        params = values(params),
+        message = values(message),
+        total_time = values(total_time),
+        ip = values(ip),
+        operate_by = values(operate_by),
+        operate_time = values(operate_time),
+        is_err = values(is_err),
+        err_message = values(err_message)
+    </insert>
+
+    <select id="selectByConditions" resultMap="OpLog_map">
+        SELECT
+        <include refid="OpLog_sql"/>
+        FROM sys_op_log
+        <where>
+            <if test="id != null">and id=#{id}</if>
+            <if test="url != null">and url=#{url}</if>
+            <if test="type != null">and `type`=#{type}</if>
+            <if test="method != null">and method=#{method}</if>
+            <if test="params != null">and params=#{params}</if>
+            <if test="message != null">and message=#{message}</if>
+            <if test="totalTime != null">and total_time=#{totalTime}</if>
+            <if test="ip != null">and ip=#{ip}</if>
+            <if test="operateBy != null">and operate_by=#{operateBy}</if>
+            <if test="operateTime != null">and operate_time=#{operateTime}</if>
+            <if test="isErr != null">and is_err=#{isErr}</if>
+            <if test="errMessage != null">and err_message=#{errMessage}</if>
+        </where>
+    </select>
+</mapper>

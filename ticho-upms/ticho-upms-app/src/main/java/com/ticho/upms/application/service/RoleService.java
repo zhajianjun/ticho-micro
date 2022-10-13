@@ -1,7 +1,6 @@
 package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
-import com.ticho.upms.infrastructure.entity.Role;
 import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * 角色信息 服务接口
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 public interface RoleService {
     /**

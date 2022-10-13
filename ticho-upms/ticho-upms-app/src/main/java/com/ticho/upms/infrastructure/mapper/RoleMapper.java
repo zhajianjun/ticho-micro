@@ -3,15 +3,17 @@ package com.ticho.upms.infrastructure.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ticho.upms.infrastructure.entity.Role;
 import com.ticho.upms.interfaces.query.RoleQuery;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
  * 角色信息 mapper
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {
@@ -22,7 +24,7 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param roles 角色信息 对象
      * @return int 数量
      */
-    int insertBatch(List<Role> roles);
+    int insertBatch(@Param("ew") Collection<Role> roles);
 
     /**
      * 有则更新无则插入
@@ -44,13 +46,13 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param roles 角色信息 列表
      * @return int 数量
      */
-    int insertOrUpdateBatch(List<Role> roles);
+    int insertOrUpdateBatch(@Param("ew") Collection<Role> roles);
 
     /**
      * 根据条件查询 角色信息 列表
      *
-     * @param query 条件
-     * @return List<Role> 角色信息 列表
+     * @param query 查询条件
+     * @return {@link List}<{@link Role}>
      */
     List<Role> selectByConditions(RoleQuery query);
 

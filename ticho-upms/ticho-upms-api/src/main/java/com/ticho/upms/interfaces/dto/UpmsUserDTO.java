@@ -9,13 +9,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 登录用户信息
+ * 权限用户信息DTO
+ *
  * @author zhajianjun
  * @date 2020-07-02 20:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "权限用户信息")
+@ApiModel(value = "权限用户信息DTO")
 public class UpmsUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

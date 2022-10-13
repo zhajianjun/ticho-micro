@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
  * 角色信息
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

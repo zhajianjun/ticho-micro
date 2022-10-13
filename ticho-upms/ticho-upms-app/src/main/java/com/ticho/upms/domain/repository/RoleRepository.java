@@ -12,16 +12,17 @@ import java.util.List;
  * 角色信息 repository接口
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 public interface RoleRepository extends IService<Role> {
 
-   /**
+    /**
      * 保存角色信息
      *
      * @param role 角色信息 对象
      * @return boolean 是否保存成功
      */
+    @Override
     boolean save(Role role);
 
     /**
@@ -30,6 +31,7 @@ public interface RoleRepository extends IService<Role> {
      * @param role 角色信息 对象集合
      * @return boolean 是否保存成功
      */
+    @Override
     boolean saveBatch(Collection<Role> role);
 
     /**
@@ -56,6 +58,7 @@ public interface RoleRepository extends IService<Role> {
      * @param role 角色信息 对象
      * @return boolean 是否修改成功
      */
+    @Override
     boolean updateById(Role role);
 
     /**

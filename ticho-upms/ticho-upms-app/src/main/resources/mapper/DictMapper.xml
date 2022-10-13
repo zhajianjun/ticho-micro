@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ticho.upms.infrastructure.mapper.DictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="Dict_map" type="com.ticho.upms.infrastructure.entity.Dict">
+        <result column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="type_id" property="typeId"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="level" property="level"/>
+        <result column="structure" property="structure"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="version" property="version"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_delete" property="isDelete"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Dict_sql">
+        id, pid, type_id, `code`, `name`, sort, `level`, structure, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete
+    </sql>
+
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_dict (id, pid, type_id, `code`, `name`, sort, `level`, structure, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.pid},#{item.typeId},#{item.code},#{item.name},#{item.sort},#{item.level},#{item.structure},#{item.status},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="pid != null">pid,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="code != null and code != ''">`code`,</if>
+            <if test="name != null and name != ''">`name`,</if>
+            <if test="sort != null">sort,</if>
+            <if test="level != null">`level`,</if>
+            <if test="structure != null and structure != ''">structure,</if>
+            <if test="status != null">`status`,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="version != null">version,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="pid !=null">#{pid},</if>
+            <if test="typeId !=null">#{typeId},</if>
+            <if test="code !=null and code != ''">#{code},</if>
+            <if test="name !=null and name != ''">#{name},</if>
+            <if test="sort !=null">#{sort},</if>
+            <if test="level !=null">#{level},</if>
+            <if test="structure !=null and structure != ''">#{structure},</if>
+            <if test="status !=null">#{status},</if>
+            <if test="remark !=null and remark != ''">#{remark},</if>
+            <if test="version !=null">#{version},</if>
+            <if test="createBy !=null and createBy != ''">#{createBy},</if>
+            <if test="createTime !=null">#{createTime},</if>
+            <if test="updateBy !=null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime !=null">#{updateTime},</if>
+            <if test="isDelete !=null">#{isDelete},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+            <if test="id != null">id = values(id),</if>
+            <if test="pid != null">pid = values(pid),</if>
+            <if test="typeId != null">type_id = values(type_id),</if>
+            <if test="code != null and code != ''">`code` = values(`code`),</if>
+            <if test="name != null and name != ''">`name` = values(`name`),</if>
+            <if test="sort != null">sort = values(sort),</if>
+            <if test="level != null">`level` = values(`level`),</if>
+            <if test="structure != null and structure != ''">structure = values(structure),</if>
+            <if test="status != null">`status` = values(`status`),</if>
+            <if test="remark != null and remark != ''">remark = values(remark),</if>
+            <if test="version != null">version = values(version),</if>
+            <if test="createBy != null and createBy != ''">create_by = values(create_by),</if>
+            <if test="createTime != null">create_time = values(create_time),</if>
+            <if test="updateBy != null and updateBy != ''">update_by = values(update_by),</if>
+            <if test="updateTime != null">update_time = values(update_time),</if>
+            <if test="isDelete != null">is_delete = values(is_delete)</if>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_dict (id, pid, type_id, `code`, `name`, sort, `level`, structure, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.pid},#{item.typeId},#{item.code},#{item.name},#{item.sort},#{item.level},#{item.structure},#{item.status},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        id = values(id),
+        pid = values(pid),
+        type_id = values(type_id),
+        `code` = values(`code`),
+        `name` = values(`name`),
+        sort = values(sort),
+        `level` = values(`level`),
+        structure = values(structure),
+        `status` = values(`status`),
+        remark = values(remark),
+        version = values(version),
+        create_by = values(create_by),
+        create_time = values(create_time),
+        update_by = values(update_by),
+        update_time = values(update_time),
+        is_delete = values(is_delete)
+    </insert>
+
+    <select id="selectByConditions" resultMap="Dict_map">
+        SELECT
+        <include refid="Dict_sql"/>
+        FROM sys_dict
+        <where>
+            <if test="id != null">and id=#{id}</if>
+            <if test="pid != null">and pid=#{pid}</if>
+            <if test="typeId != null">and type_id=#{typeId}</if>
+            <if test="code != null">and `code`=#{code}</if>
+            <if test="name != null">and `name`=#{name}</if>
+            <if test="sort != null">and sort=#{sort}</if>
+            <if test="level != null">and `level`=#{level}</if>
+            <if test="structure != null">and structure=#{structure}</if>
+            <if test="status != null">and `status`=#{status}</if>
+            <if test="remark != null">and remark=#{remark}</if>
+            <if test="version != null">and version=#{version}</if>
+            <if test="createBy != null">and create_by=#{createBy}</if>
+            <if test="createTime != null">and create_time=#{createTime}</if>
+            <if test="updateBy != null">and update_by=#{updateBy}</if>
+            <if test="updateTime != null">and update_time=#{updateTime}</if>
+            <if test="isDelete != null">and is_delete=#{isDelete}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,17 +1,41 @@
 package com.ticho.upms.application.service;
 
+import com.ticho.boot.security.dto.Oauth2AccessToken;
+import com.ticho.boot.view.core.PageResult;
+import com.ticho.upms.interfaces.dto.SignUpDTO;
 import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.query.UserQuery;
+
+import java.io.Serializable;
 
 /**
- * 用户 服务接口
+ * 用户信息 服务接口
  *
  * @author zhajianjun
- * @date 2021-10-24 22:12
+ * @date 2022-10-13 09:08
  */
 public interface UserService {
+    /**
+     * 保存用户信息
+     *
+     * @param userDTO 用户信息DTO 对象
+     */
+    void save(UserDTO userDTO);
 
-    void saveUser(UserDTO userDTO);
+    /**
+     * 删除用户信息
+     *
+     * @param id 主键
+     */
+    void removeById(Serializable id);
+
+    /**
+     * 修改用户信息
+     *
+     * @param userDTO 用户信息DTO 对象
+     */
+    void updateById(UserDTO userDTO);
 
     /**
      * 根据用户名查询用户
@@ -22,36 +46,27 @@ public interface UserService {
     UpmsUserDTO getByUsername(String username);
 
     /**
-     * 根据手机号码查询用户
+     * 根据id查询用户信息
      *
-     * @param mobile 手机号码
-     * @return SecurityUser
+     * @param id 主键
+     * @return {@link UserDTO}
      */
-    UpmsUserDTO getByMobile(String mobile);
+    UserDTO getById(Serializable id);
 
     /**
-     * 根据邮箱查询用户
+     * 分页查询用户信息列表
      *
-     * @param email 邮箱
-     * @return SecurityUser
+     * @param query 查询
+     * @return {@link PageResult}<{@link UserDTO}>
      */
-    UpmsUserDTO getByEmail(String email);
+    PageResult<UserDTO> page(UserQuery query);
+
 
     /**
-     * 根据微信号码查询用户
+     * 注册
      *
-     * @param wechat 微信号码
-     * @return SecurityUser
+     * @param signUpDTO 注册dto
      */
-    UpmsUserDTO getByWechat(String wechat);
-
-    /**
-     * 根据QQ号码查询查询用户
-     *
-     * @param qq QQ号码
-     * @return SecurityUser
-     */
-    UpmsUserDTO getByQq(String qq);
-
+    void signUp(SignUpDTO signUpDTO);
 }
 

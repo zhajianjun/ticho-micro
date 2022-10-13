@@ -23,9 +23,9 @@
     </sql>
 
 
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role (id, `code`, `name`, tenant_id, remark, version, create_by, create_time, update_by, update_time, is_delete) values
-        <foreach collection="list" item="item" separator=",">
+        <foreach collection="ew" item="item" separator=",">
             (#{item.id},#{item.code},#{item.name},#{item.tenantId},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
         </foreach>
     </insert>
@@ -72,9 +72,9 @@
             <if test="isDelete != null">is_delete = values(is_delete)</if>
     </insert>
 
-    <insert id="insertOrUpdateBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="id">
         insert into sys_role (id, `code`, `name`, tenant_id, remark, version, create_by, create_time, update_by, update_time, is_delete) values
-        <foreach collection="list" item="item" separator=",">
+        <foreach collection="ew" item="item" separator=",">
             (#{item.id},#{item.code},#{item.name},#{item.tenantId},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
         </foreach>
         ON DUPLICATE KEY UPDATE

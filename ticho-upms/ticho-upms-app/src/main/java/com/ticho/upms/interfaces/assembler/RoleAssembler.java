@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
  * 角色信息 转换
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 @Mapper
 public interface RoleAssembler {
@@ -18,7 +18,7 @@ public interface RoleAssembler {
     /**
      * 角色信息
      *
-     * @param dto 用户
+     * @param dto 角色信息DTO
      * @return {@link Role}
      */
     Role dtoToEntity(RoleDTO dto);
@@ -26,7 +26,7 @@ public interface RoleAssembler {
     /**
      * 角色信息DTO
      *
-     * @param entity 用户
+     * @param entity 角色信息
      * @return {@link RoleDTO}
      */
     RoleDTO entityToDto(Role entity);

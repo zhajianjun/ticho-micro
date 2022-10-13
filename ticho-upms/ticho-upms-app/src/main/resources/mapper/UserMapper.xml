@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="User_map" type="com.ticho.upms.infrastructure.entity.User">
         <result column="id" property="id"/>
-        <result column="username`" property="username"/>
+        <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="nickname" property="nickname"/>
         <result column="realname" property="realname"/>
@@ -22,48 +22,187 @@
         <result column="photo" property="photo"/>
         <result column="last_ip" property="lastIp"/>
         <result column="last_time" property="lastTime"/>
+        <result column="status" property="status"/>
+        <result column="tenant_id" property="tenantId"/>
         <result column="remark" property="remark"/>
+        <result column="version" property="version"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
         <result column="update_by" property="updateBy"/>
         <result column="update_time" property="updateTime"/>
-        <result column="is_deleted" property="isDeleted"/>
+        <result column="is_delete" property="isDelete"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="User_sql">
-        id, `username`, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, remark, create_by, create_time, update_by, update_time, is_deleted
+        id, username, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, `status`, tenant_id, remark, version, create_by, create_time, update_by, update_time, is_delete
     </sql>
+
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user (id, username, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, `status`, tenant_id, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.username},#{item.password},#{item.nickname},#{item.realname},#{item.idcard},#{item.sex},#{item.age},#{item.birthday},#{item.address},#{item.education},#{item.email},#{item.qq},#{item.wechat},#{item.mobile},#{item.photo},#{item.lastIp},#{item.lastTime},#{item.status},#{item.tenantId},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="password != null and password != ''">`password`,</if>
+            <if test="nickname != null and nickname != ''">nickname,</if>
+            <if test="realname != null and realname != ''">realname,</if>
+            <if test="idcard != null and idcard != ''">idcard,</if>
+            <if test="sex != null">sex,</if>
+            <if test="age != null">age,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="education != null and education != ''">education,</if>
+            <if test="email != null and email != ''">email,</if>
+            <if test="qq != null">qq,</if>
+            <if test="wechat != null and wechat != ''">wechat,</if>
+            <if test="mobile != null and mobile != ''">mobile,</if>
+            <if test="photo != null and photo != ''">photo,</if>
+            <if test="lastIp != null and lastIp != ''">last_ip,</if>
+            <if test="lastTime != null">last_time,</if>
+            <if test="status != null">`status`,</if>
+            <if test="tenantId != null and tenantId != ''">tenant_id,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="version != null">version,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="username !=null and username != ''">#{username},</if>
+            <if test="password !=null and password != ''">#{password},</if>
+            <if test="nickname !=null and nickname != ''">#{nickname},</if>
+            <if test="realname !=null and realname != ''">#{realname},</if>
+            <if test="idcard !=null and idcard != ''">#{idcard},</if>
+            <if test="sex !=null">#{sex},</if>
+            <if test="age !=null">#{age},</if>
+            <if test="birthday !=null">#{birthday},</if>
+            <if test="address !=null and address != ''">#{address},</if>
+            <if test="education !=null and education != ''">#{education},</if>
+            <if test="email !=null and email != ''">#{email},</if>
+            <if test="qq !=null">#{qq},</if>
+            <if test="wechat !=null and wechat != ''">#{wechat},</if>
+            <if test="mobile !=null and mobile != ''">#{mobile},</if>
+            <if test="photo !=null and photo != ''">#{photo},</if>
+            <if test="lastIp !=null and lastIp != ''">#{lastIp},</if>
+            <if test="lastTime !=null">#{lastTime},</if>
+            <if test="status !=null">#{status},</if>
+            <if test="tenantId !=null and tenantId != ''">#{tenantId},</if>
+            <if test="remark !=null and remark != ''">#{remark},</if>
+            <if test="version !=null">#{version},</if>
+            <if test="createBy !=null and createBy != ''">#{createBy},</if>
+            <if test="createTime !=null">#{createTime},</if>
+            <if test="updateBy !=null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime !=null">#{updateTime},</if>
+            <if test="isDelete !=null">#{isDelete},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+            <if test="id != null">id = values(id),</if>
+            <if test="username != null and username != ''">username = values(username),</if>
+            <if test="password != null and password != ''">`password` = values(`password`),</if>
+            <if test="nickname != null and nickname != ''">nickname = values(nickname),</if>
+            <if test="realname != null and realname != ''">realname = values(realname),</if>
+            <if test="idcard != null and idcard != ''">idcard = values(idcard),</if>
+            <if test="sex != null">sex = values(sex),</if>
+            <if test="age != null">age = values(age),</if>
+            <if test="birthday != null">birthday = values(birthday),</if>
+            <if test="address != null and address != ''">address = values(address),</if>
+            <if test="education != null and education != ''">education = values(education),</if>
+            <if test="email != null and email != ''">email = values(email),</if>
+            <if test="qq != null">qq = values(qq),</if>
+            <if test="wechat != null and wechat != ''">wechat = values(wechat),</if>
+            <if test="mobile != null and mobile != ''">mobile = values(mobile),</if>
+            <if test="photo != null and photo != ''">photo = values(photo),</if>
+            <if test="lastIp != null and lastIp != ''">last_ip = values(last_ip),</if>
+            <if test="lastTime != null">last_time = values(last_time),</if>
+            <if test="status != null">`status` = values(`status`),</if>
+            <if test="tenantId != null and tenantId != ''">tenant_id = values(tenant_id),</if>
+            <if test="remark != null and remark != ''">remark = values(remark),</if>
+            <if test="version != null">version = values(version),</if>
+            <if test="createBy != null and createBy != ''">create_by = values(create_by),</if>
+            <if test="createTime != null">create_time = values(create_time),</if>
+            <if test="updateBy != null and updateBy != ''">update_by = values(update_by),</if>
+            <if test="updateTime != null">update_time = values(update_time),</if>
+            <if test="isDelete != null">is_delete = values(is_delete)</if>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user (id, username, `password`, nickname, realname, idcard, sex, age, birthday, address, education, email, qq, wechat, mobile, photo, last_ip, last_time, `status`, tenant_id, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.id},#{item.username},#{item.password},#{item.nickname},#{item.realname},#{item.idcard},#{item.sex},#{item.age},#{item.birthday},#{item.address},#{item.education},#{item.email},#{item.qq},#{item.wechat},#{item.mobile},#{item.photo},#{item.lastIp},#{item.lastTime},#{item.status},#{item.tenantId},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        id = values(id),
+        username = values(username),
+        `password` = values(`password`),
+        nickname = values(nickname),
+        realname = values(realname),
+        idcard = values(idcard),
+        sex = values(sex),
+        age = values(age),
+        birthday = values(birthday),
+        address = values(address),
+        education = values(education),
+        email = values(email),
+        qq = values(qq),
+        wechat = values(wechat),
+        mobile = values(mobile),
+        photo = values(photo),
+        last_ip = values(last_ip),
+        last_time = values(last_time),
+        `status` = values(`status`),
+        tenant_id = values(tenant_id),
+        remark = values(remark),
+        version = values(version),
+        create_by = values(create_by),
+        create_time = values(create_time),
+        update_by = values(update_by),
+        update_time = values(update_time),
+        is_delete = values(is_delete)
+    </insert>
 
     <select id="selectByConditions" resultMap="User_map">
         SELECT
         <include refid="User_sql"/>
         FROM sys_user
         <where>
-            <if test="id!=null">and id=#{id}</if>
-            <if test="username!=null">and `username`=#{username}</if>
-            <if test="password!=null">and `password`=#{password}</if>
-            <if test="nickname!=null">and nickname=#{nickname}</if>
-            <if test="realname!=null">and realname=#{realname}</if>
-            <if test="idcard!=null">and idcard=#{idcard}</if>
-            <if test="sex!=null">and sex=#{sex}</if>
-            <if test="age!=null">and age=#{age}</if>
-            <if test="birthday!=null">and birthday=#{birthday}</if>
-            <if test="address!=null">and address=#{address}</if>
-            <if test="education!=null">and education=#{education}</if>
-            <if test="email!=null">and email=#{email}</if>
-            <if test="qq!=null">and qq=#{qq}</if>
-            <if test="wechat!=null">and wechat=#{wechat}</if>
-            <if test="mobile!=null">and mobile=#{mobile}</if>
-            <if test="photo!=null">and photo=#{photo}</if>
-            <if test="lastIp!=null">and last_ip=#{lastIp}</if>
-            <if test="lastTime!=null">and last_time=#{lastTime}</if>
-            <if test="remark!=null">and remark=#{remark}</if>
-            <if test="createBy!=null">and create_by=#{createBy}</if>
-            <if test="createTime!=null">and create_time=#{createTime}</if>
-            <if test="updateBy!=null">and update_by=#{updateBy}</if>
-            <if test="updateTime!=null">and update_time=#{updateTime}</if>
-            <if test="isDeleted!=null">and is_deleted=#{isDeleted}</if>
+            <if test="id != null">and id=#{id}</if>
+            <if test="username != null">and username=#{username}</if>
+            <if test="password != null">and `password`=#{password}</if>
+            <if test="nickname != null">and nickname=#{nickname}</if>
+            <if test="realname != null">and realname=#{realname}</if>
+            <if test="idcard != null">and idcard=#{idcard}</if>
+            <if test="sex != null">and sex=#{sex}</if>
+            <if test="age != null">and age=#{age}</if>
+            <if test="birthday != null">and birthday=#{birthday}</if>
+            <if test="address != null">and address=#{address}</if>
+            <if test="education != null">and education=#{education}</if>
+            <if test="email != null">and email=#{email}</if>
+            <if test="qq != null">and qq=#{qq}</if>
+            <if test="wechat != null">and wechat=#{wechat}</if>
+            <if test="mobile != null">and mobile=#{mobile}</if>
+            <if test="photo != null">and photo=#{photo}</if>
+            <if test="lastIp != null">and last_ip=#{lastIp}</if>
+            <if test="lastTime != null">and last_time=#{lastTime}</if>
+            <if test="status != null">and `status`=#{status}</if>
+            <if test="tenantId != null">and tenant_id=#{tenantId}</if>
+            <if test="remark != null">and remark=#{remark}</if>
+            <if test="version != null">and version=#{version}</if>
+            <if test="createBy != null">and create_by=#{createBy}</if>
+            <if test="createTime != null">and create_time=#{createTime}</if>
+            <if test="updateBy != null">and update_by=#{updateBy}</if>
+            <if test="updateTime != null">and update_time=#{updateTime}</if>
+            <if test="isDelete != null">and is_delete=#{isDelete}</if>
         </where>
     </select>
 </mapper>

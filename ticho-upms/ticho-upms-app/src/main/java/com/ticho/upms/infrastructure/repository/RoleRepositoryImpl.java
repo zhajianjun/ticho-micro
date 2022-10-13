@@ -19,7 +19,7 @@ import java.util.List;
  * 角色信息 repository实现
  *
  * @author zhajianjun
- * @date 2022-10-10 17:28
+ * @date 2022-10-13 09:08
  */
 @Slf4j
 @Service
@@ -38,11 +38,13 @@ public class RoleRepositoryImpl extends ServiceImpl<RoleMapper, Role> implements
     }
 
     @Transactional(rollbackFor = {Exception.class})
+    @Override
     public boolean saveBatch(Collection<Role> roles) {
         return this.saveBatch(roles, 200);
     }
 
     @Transactional(rollbackFor = {Exception.class})
+    @Override
     public boolean saveBatch(Collection<Role> roles, int batchSize) {
         if (CollUtil.isEmpty(roles)) {
             log.info("角色信息批量保存异常，集合为null或者大小为0");

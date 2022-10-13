@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ticho.upms.infrastructure.mapper.MenuFuncMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="MenuFunc_map" type="com.ticho.upms.infrastructure.entity.MenuFunc">
+        <result column="menu_id" property="menuId"/>
+        <result column="func_id" property="funcId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="MenuFunc_sql">
+        menu_id, func_id
+    </sql>
+
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="menu_id">
+        insert into sys_menu_func (menu_id, func_id) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.menuId},#{item.funcId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="menu_id">
+        INSERT INTO sys_menu_func
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">menu_id,</if>
+            <if test="funcId != null">func_id,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="menuId !=null">#{menuId},</if>
+            <if test="funcId !=null">#{funcId},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+            <if test="menuId != null">menu_id = values(menu_id),</if>
+            <if test="funcId != null">func_id = values(func_id)</if>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="menu_id">
+        insert into sys_menu_func (menu_id, func_id) values
+        <foreach collection="ew" item="item" separator=",">
+            (#{item.menuId},#{item.funcId})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        menu_id = values(menu_id),
+        func_id = values(func_id)
+    </insert>
+
+    <select id="selectByConditions" resultMap="MenuFunc_map">
+        SELECT
+        <include refid="MenuFunc_sql"/>
+        FROM sys_menu_func
+        <where>
+            <if test="menuId != null">and menu_id=#{menuId}</if>
+            <if test="funcId != null">and func_id=#{funcId}</if>
+        </where>
+    </select>
+</mapper>

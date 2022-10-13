@@ -1,6 +1,8 @@
 package com.ticho.upms.infrastructure.repository;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.infrastructure.entity.Tenant;
@@ -102,6 +104,16 @@ public class TenantRepositoryImpl extends ServiceImpl<TenantMapper, Tenant> impl
     @Override
     public List<Tenant> list(TenantQuery query) {
         return tenantMapper.selectByConditions(query);
+    }
+
+    @Override
+    public boolean exists(String tenantId) {
+        LambdaQueryWrapper<Tenant> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Tenant::getTenantId, tenantId);
+        wrapper.eq(Tenant::getStatus, 1);
+        wrapper.select(Tenant::getId);
+        wrapper.last("limit 1");
+        return !tenantMapper.selectList(wrapper).isEmpty();
     }
 
 }

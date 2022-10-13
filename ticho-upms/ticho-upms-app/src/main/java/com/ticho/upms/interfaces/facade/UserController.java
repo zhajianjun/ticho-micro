@@ -2,12 +2,10 @@ package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
-import com.ticho.boot.security.annotation.IgnoreAuth;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.UserProvider;
-import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import io.swagger.annotations.Api;
@@ -63,15 +61,6 @@ public class UserController implements UserProvider {
     public Result<Void> update(@RequestBody UserDTO userDTO) {
         userService.updateById(userDTO);
         return Result.ok();
-    }
-
-    @ApiOperation(value = "根据用户名查询用户")
-    @ApiOperationSupport(order = 40)
-    @GetMapping("getByUsername")
-    @IgnoreAuth(inner = true)
-    @Override
-    public Result<UpmsUserDTO> getByUsername(String username) {
-        return Result.ok(userService.getByUsername(username));
     }
 
     @ApiOperation(value = "主键查询用户信息")

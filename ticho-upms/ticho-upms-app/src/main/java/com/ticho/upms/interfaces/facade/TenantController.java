@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,12 +40,14 @@ public class TenantController {
 
     @ApiOperation(value = "保存租户信息")
     @ApiOperationSupport(order = 10)
+    @PreAuthorize("@pm.hasPerms('tenant:save')")
     @PostMapping
     public Result<Void> save(@RequestBody TenantDTO tenantDTO) {
         tenantService.save(tenantDTO);
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('tenant:remove')")
     @ApiOperation(value = "删除租户信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -54,6 +57,7 @@ public class TenantController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('tenant:update')")
     @ApiOperation(value = "修改租户信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -62,6 +66,7 @@ public class TenantController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('tenant:get')")
     @ApiOperation(value = "主键查询租户信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -70,6 +75,7 @@ public class TenantController {
         return Result.ok(tenantService.getById(id));
     }
 
+    @PreAuthorize("@pm.hasPerms('tenant:page')")
     @ApiOperation(value = "分页查询租户信息")
     @ApiOperationSupport(order = 50)
     @GetMapping("page")

@@ -6,21 +6,19 @@
     <resultMap id="Menu_map" type="com.ticho.upms.infrastructure.entity.Menu">
         <result column="id" property="id"/>
         <result column="parent_id" property="parentId"/>
-        <result column="parent_ids" property="parentIds"/>
-        <result column="title" property="title"/>
+        <result column="structure" property="structure"/>
         <result column="type" property="type"/>
-        <result column="permission" property="permission"/>
-        <result column="res_path" property="resPath"/>
-        <result column="http_method" property="httpMethod"/>
-        <result column="route_path" property="routePath"/>
-        <result column="component_name" property="componentName"/>
-        <result column="component_path" property="componentPath"/>
-        <result column="res_status" property="resStatus"/>
-        <result column="res_sort" property="resSort"/>
-        <result column="menu_ext_flag" property="menuExtFlag"/>
-        <result column="menu_cache_flag" property="menuCacheFlag"/>
-        <result column="menu_hidden_flag" property="menuHiddenFlag"/>
-        <result column="menu_icon" property="menuIcon"/>
+        <result column="name" property="name"/>
+        <result column="path" property="path"/>
+        <result column="component" property="component"/>
+        <result column="redirect" property="redirect"/>
+        <result column="ext_flag" property="extFlag"/>
+        <result column="cache_able" property="cacheAble"/>
+        <result column="invisible" property="invisible"/>
+        <result column="closable" property="closable"/>
+        <result column="icon" property="icon"/>
+        <result column="sort" property="sort"/>
+        <result column="status" property="status"/>
         <result column="remark" property="remark"/>
         <result column="version" property="version"/>
         <result column="create_by" property="createBy"/>
@@ -32,14 +30,14 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Menu_sql">
-        id, parent_id, parent_ids, title, `type`, permission, res_path, http_method, route_path, component_name, component_path, res_status, res_sort, menu_ext_flag, menu_cache_flag, menu_hidden_flag, menu_icon, remark, version, create_by, create_time, update_by, update_time, is_delete
+        id, parent_id, structure, `type`, `name`, path, component, redirect, ext_flag, cache_able, invisible, closable, icon, sort, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete
     </sql>
 
 
     <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_menu (id, parent_id, parent_ids, title, `type`, permission, res_path, http_method, route_path, component_name, component_path, res_status, res_sort, menu_ext_flag, menu_cache_flag, menu_hidden_flag, menu_icon, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        insert into sys_menu (id, parent_id, structure, `type`, `name`, path, component, redirect, ext_flag, cache_able, invisible, closable, icon, sort, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete) values
         <foreach collection="ew" item="item" separator=",">
-            (#{item.id},#{item.parentId},#{item.parentIds},#{item.title},#{item.type},#{item.permission},#{item.resPath},#{item.httpMethod},#{item.routePath},#{item.componentName},#{item.componentPath},#{item.resStatus},#{item.resSort},#{item.menuExtFlag},#{item.menuCacheFlag},#{item.menuHiddenFlag},#{item.menuIcon},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+            (#{item.id},#{item.parentId},#{item.structure},#{item.type},#{item.name},#{item.path},#{item.component},#{item.redirect},#{item.extFlag},#{item.cacheAble},#{item.invisible},#{item.closable},#{item.icon},#{item.sort},#{item.status},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
         </foreach>
     </insert>
 
@@ -48,21 +46,19 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="parentId != null">parent_id,</if>
-            <if test="parentIds != null and parentIds != ''">parent_ids,</if>
-            <if test="title != null and title != ''">title,</if>
-            <if test="type != null and type != ''">`type`,</if>
-            <if test="permission != null and permission != ''">permission,</if>
-            <if test="resPath != null and resPath != ''">res_path,</if>
-            <if test="httpMethod != null and httpMethod != ''">http_method,</if>
-            <if test="routePath != null and routePath != ''">route_path,</if>
-            <if test="componentName != null and componentName != ''">component_name,</if>
-            <if test="componentPath != null and componentPath != ''">component_path,</if>
-            <if test="resStatus != null and resStatus != ''">res_status,</if>
-            <if test="resSort != null">res_sort,</if>
-            <if test="menuExtFlag != null and menuExtFlag != ''">menu_ext_flag,</if>
-            <if test="menuCacheFlag != null and menuCacheFlag != ''">menu_cache_flag,</if>
-            <if test="menuHiddenFlag != null and menuHiddenFlag != ''">menu_hidden_flag,</if>
-            <if test="menuIcon != null and menuIcon != ''">menu_icon,</if>
+            <if test="structure != null and structure != ''">structure,</if>
+            <if test="type != null">`type`,</if>
+            <if test="name != null and name != ''">`name`,</if>
+            <if test="path != null and path != ''">path,</if>
+            <if test="component != null and component != ''">component,</if>
+            <if test="redirect != null and redirect != ''">redirect,</if>
+            <if test="extFlag != null">ext_flag,</if>
+            <if test="cacheAble != null">cache_able,</if>
+            <if test="invisible != null">invisible,</if>
+            <if test="closable != null and closable != ''">closable,</if>
+            <if test="icon != null and icon != ''">icon,</if>
+            <if test="sort != null">sort,</if>
+            <if test="status != null">`status`,</if>
             <if test="remark != null and remark != ''">remark,</if>
             <if test="version != null">version,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
@@ -74,21 +70,19 @@
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="id !=null">#{id},</if>
             <if test="parentId !=null">#{parentId},</if>
-            <if test="parentIds !=null and parentIds != ''">#{parentIds},</if>
-            <if test="title !=null and title != ''">#{title},</if>
-            <if test="type !=null and type != ''">#{type},</if>
-            <if test="permission !=null and permission != ''">#{permission},</if>
-            <if test="resPath !=null and resPath != ''">#{resPath},</if>
-            <if test="httpMethod !=null and httpMethod != ''">#{httpMethod},</if>
-            <if test="routePath !=null and routePath != ''">#{routePath},</if>
-            <if test="componentName !=null and componentName != ''">#{componentName},</if>
-            <if test="componentPath !=null and componentPath != ''">#{componentPath},</if>
-            <if test="resStatus !=null and resStatus != ''">#{resStatus},</if>
-            <if test="resSort !=null">#{resSort},</if>
-            <if test="menuExtFlag !=null and menuExtFlag != ''">#{menuExtFlag},</if>
-            <if test="menuCacheFlag !=null and menuCacheFlag != ''">#{menuCacheFlag},</if>
-            <if test="menuHiddenFlag !=null and menuHiddenFlag != ''">#{menuHiddenFlag},</if>
-            <if test="menuIcon !=null and menuIcon != ''">#{menuIcon},</if>
+            <if test="structure !=null and structure != ''">#{structure},</if>
+            <if test="type !=null">#{type},</if>
+            <if test="name !=null and name != ''">#{name},</if>
+            <if test="path !=null and path != ''">#{path},</if>
+            <if test="component !=null and component != ''">#{component},</if>
+            <if test="redirect !=null and redirect != ''">#{redirect},</if>
+            <if test="extFlag !=null">#{extFlag},</if>
+            <if test="cacheAble !=null">#{cacheAble},</if>
+            <if test="invisible !=null">#{invisible},</if>
+            <if test="closable !=null and closable != ''">#{closable},</if>
+            <if test="icon !=null and icon != ''">#{icon},</if>
+            <if test="sort !=null">#{sort},</if>
+            <if test="status !=null">#{status},</if>
             <if test="remark !=null and remark != ''">#{remark},</if>
             <if test="version !=null">#{version},</if>
             <if test="createBy !=null and createBy != ''">#{createBy},</if>
@@ -100,21 +94,19 @@
         ON DUPLICATE KEY UPDATE
             <if test="id != null">id = values(id),</if>
             <if test="parentId != null">parent_id = values(parent_id),</if>
-            <if test="parentIds != null and parentIds != ''">parent_ids = values(parent_ids),</if>
-            <if test="title != null and title != ''">title = values(title),</if>
-            <if test="type != null and type != ''">`type` = values(`type`),</if>
-            <if test="permission != null and permission != ''">permission = values(permission),</if>
-            <if test="resPath != null and resPath != ''">res_path = values(res_path),</if>
-            <if test="httpMethod != null and httpMethod != ''">http_method = values(http_method),</if>
-            <if test="routePath != null and routePath != ''">route_path = values(route_path),</if>
-            <if test="componentName != null and componentName != ''">component_name = values(component_name),</if>
-            <if test="componentPath != null and componentPath != ''">component_path = values(component_path),</if>
-            <if test="resStatus != null and resStatus != ''">res_status = values(res_status),</if>
-            <if test="resSort != null">res_sort = values(res_sort),</if>
-            <if test="menuExtFlag != null and menuExtFlag != ''">menu_ext_flag = values(menu_ext_flag),</if>
-            <if test="menuCacheFlag != null and menuCacheFlag != ''">menu_cache_flag = values(menu_cache_flag),</if>
-            <if test="menuHiddenFlag != null and menuHiddenFlag != ''">menu_hidden_flag = values(menu_hidden_flag),</if>
-            <if test="menuIcon != null and menuIcon != ''">menu_icon = values(menu_icon),</if>
+            <if test="structure != null and structure != ''">structure = values(structure),</if>
+            <if test="type != null">`type` = values(`type`),</if>
+            <if test="name != null and name != ''">`name` = values(`name`),</if>
+            <if test="path != null and path != ''">path = values(path),</if>
+            <if test="component != null and component != ''">component = values(component),</if>
+            <if test="redirect != null and redirect != ''">redirect = values(redirect),</if>
+            <if test="extFlag != null">ext_flag = values(ext_flag),</if>
+            <if test="cacheAble != null">cache_able = values(cache_able),</if>
+            <if test="invisible != null">invisible = values(invisible),</if>
+            <if test="closable != null and closable != ''">closable = values(closable),</if>
+            <if test="icon != null and icon != ''">icon = values(icon),</if>
+            <if test="sort != null">sort = values(sort),</if>
+            <if test="status != null">`status` = values(`status`),</if>
             <if test="remark != null and remark != ''">remark = values(remark),</if>
             <if test="version != null">version = values(version),</if>
             <if test="createBy != null and createBy != ''">create_by = values(create_by),</if>
@@ -125,28 +117,26 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_menu (id, parent_id, parent_ids, title, `type`, permission, res_path, http_method, route_path, component_name, component_path, res_status, res_sort, menu_ext_flag, menu_cache_flag, menu_hidden_flag, menu_icon, remark, version, create_by, create_time, update_by, update_time, is_delete) values
+        insert into sys_menu (id, parent_id, structure, `type`, `name`, path, component, redirect, ext_flag, cache_able, invisible, closable, icon, sort, `status`, remark, version, create_by, create_time, update_by, update_time, is_delete) values
         <foreach collection="ew" item="item" separator=",">
-            (#{item.id},#{item.parentId},#{item.parentIds},#{item.title},#{item.type},#{item.permission},#{item.resPath},#{item.httpMethod},#{item.routePath},#{item.componentName},#{item.componentPath},#{item.resStatus},#{item.resSort},#{item.menuExtFlag},#{item.menuCacheFlag},#{item.menuHiddenFlag},#{item.menuIcon},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
+            (#{item.id},#{item.parentId},#{item.structure},#{item.type},#{item.name},#{item.path},#{item.component},#{item.redirect},#{item.extFlag},#{item.cacheAble},#{item.invisible},#{item.closable},#{item.icon},#{item.sort},#{item.status},#{item.remark},#{item.version},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.isDelete})
         </foreach>
         ON DUPLICATE KEY UPDATE
         id = values(id),
         parent_id = values(parent_id),
-        parent_ids = values(parent_ids),
-        title = values(title),
+        structure = values(structure),
         `type` = values(`type`),
-        permission = values(permission),
-        res_path = values(res_path),
-        http_method = values(http_method),
-        route_path = values(route_path),
-        component_name = values(component_name),
-        component_path = values(component_path),
-        res_status = values(res_status),
-        res_sort = values(res_sort),
-        menu_ext_flag = values(menu_ext_flag),
-        menu_cache_flag = values(menu_cache_flag),
-        menu_hidden_flag = values(menu_hidden_flag),
-        menu_icon = values(menu_icon),
+        `name` = values(`name`),
+        path = values(path),
+        component = values(component),
+        redirect = values(redirect),
+        ext_flag = values(ext_flag),
+        cache_able = values(cache_able),
+        invisible = values(invisible),
+        closable = values(closable),
+        icon = values(icon),
+        sort = values(sort),
+        `status` = values(`status`),
         remark = values(remark),
         version = values(version),
         create_by = values(create_by),
@@ -163,21 +153,19 @@
         <where>
             <if test="id != null">and id=#{id}</if>
             <if test="parentId != null">and parent_id=#{parentId}</if>
-            <if test="parentIds != null">and parent_ids=#{parentIds}</if>
-            <if test="title != null">and title=#{title}</if>
+            <if test="structure != null">and structure=#{structure}</if>
             <if test="type != null">and `type`=#{type}</if>
-            <if test="permission != null">and permission=#{permission}</if>
-            <if test="resPath != null">and res_path=#{resPath}</if>
-            <if test="httpMethod != null">and http_method=#{httpMethod}</if>
-            <if test="routePath != null">and route_path=#{routePath}</if>
-            <if test="componentName != null">and component_name=#{componentName}</if>
-            <if test="componentPath != null">and component_path=#{componentPath}</if>
-            <if test="resStatus != null">and res_status=#{resStatus}</if>
-            <if test="resSort != null">and res_sort=#{resSort}</if>
-            <if test="menuExtFlag != null">and menu_ext_flag=#{menuExtFlag}</if>
-            <if test="menuCacheFlag != null">and menu_cache_flag=#{menuCacheFlag}</if>
-            <if test="menuHiddenFlag != null">and menu_hidden_flag=#{menuHiddenFlag}</if>
-            <if test="menuIcon != null">and menu_icon=#{menuIcon}</if>
+            <if test="name != null">and `name`=#{name}</if>
+            <if test="path != null">and path=#{path}</if>
+            <if test="component != null">and component=#{component}</if>
+            <if test="redirect != null">and redirect=#{redirect}</if>
+            <if test="extFlag != null">and ext_flag=#{extFlag}</if>
+            <if test="cacheAble != null">and cache_able=#{cacheAble}</if>
+            <if test="invisible != null">and invisible=#{invisible}</if>
+            <if test="closable != null">and closable=#{closable}</if>
+            <if test="icon != null">and icon=#{icon}</if>
+            <if test="sort != null">and sort=#{sort}</if>
+            <if test="status != null">and `status`=#{status}</if>
             <if test="remark != null">and remark=#{remark}</if>
             <if test="version != null">and version=#{version}</if>
             <if test="createBy != null">and create_by=#{createBy}</if>

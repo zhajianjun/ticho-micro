@@ -40,10 +40,11 @@ public interface UserService {
     /**
      * 根据用户名查询用户
      *
+     * @param tenantId 租户id
      * @param username 用户名
      * @return SecurityUser
      */
-    UpmsUserDTO getByUsername(String username);
+    UpmsUserDTO getByUsername(String tenantId, String username);
 
     /**
      * 根据id查询用户信息

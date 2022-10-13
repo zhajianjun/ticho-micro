@@ -17,6 +17,14 @@ import java.util.List;
 public interface UserRepository extends IService<User> {
 
     /**
+     * 查询租户id是否存在正常状态的
+     *
+     * @param tenantId 承租者id
+     * @return boolean
+     */
+    boolean exists(String tenantId);
+
+    /**
      * 保存用户信息
      *
      * @param user 用户信息 对象
@@ -64,10 +72,11 @@ public interface UserRepository extends IService<User> {
     /**
      * 根据用户名查询用户
      *
+     * @param tenantId 租户id
      * @param username 用户名
      * @return {@link User}
      */
-    User getByUsername(String username);
+    User getByUsername(String tenantId, String username);
 
     /**
      * 根据id查询用户信息

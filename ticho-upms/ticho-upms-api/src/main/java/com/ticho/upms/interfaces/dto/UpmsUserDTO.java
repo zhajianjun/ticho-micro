@@ -20,13 +20,16 @@ import java.util.List;
 public class UpmsUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "租户编号", position = 5)
+    private String tenantId;
+
     @ApiModelProperty(value = "账户", position = 10)
     private String username;
 
     @ApiModelProperty(value = "密码", position = 20)
     private String password;
 
-    @ApiModelProperty(value = "用户状态;1-正常,2-已失效,3-已被锁定,4-已过期", position = 30)
+    @ApiModelProperty(value = "用户状态;1-正常,2-未激活,3-已锁定,4-已注销", position = 30)
     private Integer status;
 
     @ApiModelProperty(value = "角色", position = 40)

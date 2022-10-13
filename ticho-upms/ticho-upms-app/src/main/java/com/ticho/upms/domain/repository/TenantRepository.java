@@ -78,5 +78,12 @@ public interface TenantRepository extends IService<Tenant> {
      */
     List<Tenant> list(TenantQuery query);
 
+    /**
+     * 查询租户id是否存在正常状态的
+     *
+     * @param tenantId 承租者id
+     * @return boolean
+     */
+    boolean exists(String tenantId);
 }
 

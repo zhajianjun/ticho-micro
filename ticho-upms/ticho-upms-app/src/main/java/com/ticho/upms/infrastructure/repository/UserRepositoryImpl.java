@@ -96,33 +96,10 @@ public class UserRepositoryImpl extends ServiceImpl<UserMapper, User> implements
         return userMapper.updateById(user) > 0;
     }
 
-    public User getByUsername(String username) {
+    public User getByUsername(String tenantId, String username) {
         LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper();
+        queryWrapper.eq(User::getTenantId, tenantId);
         queryWrapper.eq(User::getUsername, username);
-        return getOne(queryWrapper);
-    }
-
-    public User getByMobile(String mobile) {
-        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper();
-        queryWrapper.eq(User::getMobile, mobile);
-        return getOne(queryWrapper);
-    }
-
-    public User getByEmail(String email) {
-        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper();
-        queryWrapper.eq(User::getEmail, email);
-        return getOne(queryWrapper);
-    }
-
-    public User getByWechat(String wechat) {
-        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper();
-        queryWrapper.eq(User::getWechat, wechat);
-        return getOne(queryWrapper);
-    }
-
-    public User getByQq(String qq) {
-        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper();
-        queryWrapper.eq(User::getQq, qq);
         return getOne(queryWrapper);
     }
 

@@ -7,6 +7,7 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.util.Assert;
 import com.ticho.boot.web.util.valid.ValidUtil;
 import com.ticho.upms.application.service.UserService;
+import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private TenantRepository tenantRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -56,8 +60,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpmsUserDTO getByUsername(String username) {
-        User user = userRepository.getByUsername(username);
+    public UpmsUserDTO getByUsername(String tenantId, String username) {
+        User user = userRepository.getByUsername(tenantId, username);
         UpmsUserDTO securityUser = UserAssembler.INSTANCE.userToUmpsUsrDto(user);
         setAuthorities(securityUser);
         return securityUser;
@@ -86,8 +90,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signUp(SignUpDTO signUpDTO) {
         ValidUtil.valid(signUpDTO);
+        String tenantId = signUpDTO.getTenantId();
         String username = signUpDTO.getUsername();
         String password = signUpDTO.getPassword();
+        boolean exists = tenantRepository.exists(tenantId);
+        Assert.isTrue(exists, BizErrCode.FAIL, "租户不存在或者状态异常");
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));

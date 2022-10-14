@@ -3,6 +3,7 @@ package com.ticho.upms.domain.repository;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.interfaces.query.FuncQuery;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -33,6 +34,35 @@ public interface FuncRepository extends IService<Func> {
      */
     @Override
     boolean saveBatch(Collection<Func> func);
+
+
+    /**
+     * 保存或更新代码
+     *
+     * @param func 函数
+     * @return boolean
+     */
+    boolean saveOrUpdateByCode(Func func);
+
+    /**
+     * 保存或更新批处理代码
+     *
+     * @param entityList 实体列表
+     * @return boolean
+     */
+    @Transactional(rollbackFor = Exception.class)
+    default boolean saveOrUpdateBatchByCode(Collection<Func> entityList) {
+        return saveOrUpdateBatchByCode(entityList, 200);
+    }
+
+    /**
+     * 保存或更新批处理代码
+     *
+     * @param entityList 实体列表
+     * @param batchSize 批量大小
+     * @return boolean
+     */
+    boolean saveOrUpdateBatchByCode(Collection<Func> entityList, int batchSize);
 
     /**
      * 删除功能号信息
@@ -69,6 +99,14 @@ public interface FuncRepository extends IService<Func> {
      */
     @Override
     Func getById(Serializable id);
+
+    /**
+     * 通过编码查询
+     *
+     * @param code 代码
+     * @return {@link Func}
+     */
+    Func getByCode(String code);
 
     /**
      * 根据条件查询Func列表

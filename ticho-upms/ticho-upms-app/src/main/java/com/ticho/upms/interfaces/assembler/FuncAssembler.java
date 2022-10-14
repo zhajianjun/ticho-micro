@@ -5,6 +5,9 @@ import com.ticho.upms.interfaces.dto.FuncDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 功能号信息 转换
  *
@@ -22,6 +25,15 @@ public interface FuncAssembler {
      * @return {@link Func}
      */
     Func dtoToEntity(FuncDTO dto);
+
+
+    /**
+     * 功能号信息列表
+     *
+     * @param dtos dtos
+     * @return {@link List}<{@link Func}>
+     */
+    List<Func> dtoToEntitys(Collection<FuncDTO> dtos);
 
     /**
      * 功能号信息DTO

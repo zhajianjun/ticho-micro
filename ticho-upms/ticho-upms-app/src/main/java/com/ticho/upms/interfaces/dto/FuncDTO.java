@@ -1,12 +1,13 @@
 package com.ticho.upms.interfaces.dto;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 功能号信息DTO
@@ -22,7 +23,7 @@ public class FuncDTO implements Serializable {
 
     /** 主键编号 */
     @ApiModelProperty(value = "主键编号", position = 10)
-    private String id;
+    private Long id;
 
     /** 功能编码 */
     @ApiModelProperty(value = "功能编码", position = 20)

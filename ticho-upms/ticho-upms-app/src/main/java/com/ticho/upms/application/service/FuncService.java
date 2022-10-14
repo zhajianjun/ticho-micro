@@ -5,6 +5,7 @@ import com.ticho.upms.interfaces.dto.FuncDTO;
 import com.ticho.upms.interfaces.query.FuncQuery;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * 功能号信息 服务接口
@@ -19,6 +20,20 @@ public interface FuncService {
      * @param funcDTO 功能号信息DTO 对象
      */
     void save(FuncDTO funcDTO);
+
+    /**
+     * 保存或者更新功能号信息
+     *
+     * @param funcDTO 功能号信息DTO 对象
+     */
+    void saveOrUpdateByCode(FuncDTO funcDTO);
+
+    /**
+     * 批量保存或者更新功能号信息
+     *
+     * @param funcDTOs 功能号信息DTO 对象
+     */
+    void saveOrUpdateBatchByCode(Collection<FuncDTO> funcDTOs);
 
     /**
      * 删除功能号信息
@@ -49,6 +64,11 @@ public interface FuncService {
      * @return {@link PageResult}<{@link FuncDTO}>
      */
     PageResult<FuncDTO> page(FuncQuery query);
+
+    /**
+     * 初始化
+     */
+    void init();
 
 }
 

@@ -23,7 +23,7 @@ public class FuncQuery extends BasePageQuery implements Serializable {
 
     /** 主键编号 */
     @ApiModelProperty(value = "主键编号", position = 10)
-    private String id;
+    private Long id;
 
     /** 功能编码 */
     @ApiModelProperty(value = "功能编码", position = 20)

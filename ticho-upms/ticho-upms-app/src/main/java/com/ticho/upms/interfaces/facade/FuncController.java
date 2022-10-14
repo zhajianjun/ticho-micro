@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 功能号信息 控制器
@@ -37,6 +38,14 @@ public class FuncController {
     @Autowired
     private FuncService funcService;
 
+    @ApiOperation(value = "init")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("init")
+    public Result<Void> init() {
+        funcService.init();
+        return Result.ok();
+    }
+
     @ApiOperation(value = "保存功能号信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -45,8 +54,16 @@ public class FuncController {
         return Result.ok();
     }
 
-    @ApiOperation(value = "删除功能号信息")
+    @ApiOperation(value = "保存或者更新功能号信息")
     @ApiOperationSupport(order = 20)
+    @PostMapping("saveOrUpdate")
+    public Result<Void> saveOrUpdateBatchByCode(@RequestBody List<FuncDTO> funcDTOs) {
+        funcService.saveOrUpdateBatchByCode(funcDTOs);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "删除功能号信息")
+    @ApiOperationSupport(order = 30)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
     public Result<Void> removeById(@RequestParam("id") Serializable id) {
@@ -55,7 +72,7 @@ public class FuncController {
     }
 
     @ApiOperation(value = "修改功能号信息")
-    @ApiOperationSupport(order = 30)
+    @ApiOperationSupport(order = 40)
     @PutMapping
     public Result<Void> update(@RequestBody FuncDTO funcDTO) {
         funcService.updateById(funcDTO);
@@ -63,7 +80,7 @@ public class FuncController {
     }
 
     @ApiOperation(value = "主键查询功能号信息")
-    @ApiOperationSupport(order = 40)
+    @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
     public Result<FuncDTO> getById(@RequestParam("id") Serializable id) {
@@ -71,7 +88,7 @@ public class FuncController {
     }
 
     @ApiOperation(value = "分页查询功能号信息")
-    @ApiOperationSupport(order = 50)
+    @ApiOperationSupport(order = 60)
     @GetMapping("page")
     public Result<PageResult<FuncDTO>> page(FuncQuery query) {
         return Result.ok(funcService.page(query));

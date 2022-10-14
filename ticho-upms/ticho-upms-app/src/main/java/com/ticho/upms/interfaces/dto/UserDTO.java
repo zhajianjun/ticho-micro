@@ -1,14 +1,18 @@
 package com.ticho.upms.interfaces.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ticho.boot.web.util.valid.ValidGroup;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 用户信息DTO
@@ -24,15 +28,18 @@ public class UserDTO implements Serializable {
 
     /** 主键编号; */
     @ApiModelProperty(value = "主键编号;", position = 10)
+    @NotNull(message = "主键编号不能为空", groups = ValidGroup.Upd.class)
     private Long id;
 
     /** 账户;账户具有唯一性 */
     @ApiModelProperty(value = "账户;账户具有唯一性", position = 20)
+    @NotBlank(message = "账户不能为空")
     private String username;
 
     /** 密码 */
     @ApiModelProperty(value = "密码", position = 30)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotBlank(message = "密码不能为空", groups = ValidGroup.Add.class)
     private String password;
 
     /** 昵称 */

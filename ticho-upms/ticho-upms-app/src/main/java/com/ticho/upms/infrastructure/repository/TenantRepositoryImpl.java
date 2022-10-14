@@ -2,8 +2,10 @@ package com.ticho.upms.infrastructure.repository;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.infrastructure.entity.Tenant;
 import com.ticho.upms.infrastructure.mapper.TenantMapper;
@@ -97,8 +99,23 @@ public class TenantRepositoryImpl extends ServiceImpl<TenantMapper, Tenant> impl
     }
 
     @Override
+    public boolean updateByTenantId(Tenant tenant) {
+        LambdaUpdateWrapper<Tenant> wrapper = Wrappers.lambdaUpdate();
+        wrapper.eq(Tenant::getTenantId, tenant.getTenantId());
+        return SqlHelper.retBool(tenantMapper.update(tenant, wrapper));
+    }
+
+    @Override
     public Tenant getById(Serializable id) {
         return tenantMapper.selectById(id);
+    }
+
+    @Override
+    public Tenant getByTenantId(String tenantId) {
+        LambdaQueryWrapper<Tenant> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Tenant::getTenantId, tenantId);
+        wrapper.last("limit 1");
+        return tenantMapper.selectOne(wrapper);
     }
 
     @Override
@@ -107,10 +124,10 @@ public class TenantRepositoryImpl extends ServiceImpl<TenantMapper, Tenant> impl
     }
 
     @Override
-    public boolean exists(String tenantId) {
+    public boolean exists(String tenantId, List<Integer> status) {
         LambdaQueryWrapper<Tenant> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(Tenant::getTenantId, tenantId);
-        wrapper.eq(Tenant::getStatus, 1);
+        wrapper.in(CollUtil.isNotEmpty(status), Tenant::getStatus, status);
         wrapper.select(Tenant::getId);
         wrapper.last("limit 1");
         return !tenantMapper.selectList(wrapper).isEmpty();

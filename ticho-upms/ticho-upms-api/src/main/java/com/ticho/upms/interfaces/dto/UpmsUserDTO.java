@@ -20,22 +20,25 @@ import java.util.List;
 public class UpmsUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "租户编号", position = 5)
+    @ApiModelProperty(value = "主键编号;", position = 10)
+    private Long id;
+
+    @ApiModelProperty(value = "租户编号", position = 20)
     private String tenantId;
 
-    @ApiModelProperty(value = "账户", position = 10)
+    @ApiModelProperty(value = "账户", position = 30)
     private String username;
 
-    @ApiModelProperty(value = "密码", position = 20)
+    @ApiModelProperty(value = "密码", position = 40)
     private String password;
 
-    @ApiModelProperty(value = "用户状态;1-正常,2-未激活,3-已锁定,4-已注销", position = 30)
+    @ApiModelProperty(value = "用户状态;1-正常,2-未激活,3-已锁定,4-已注销", position = 50)
     private Integer status;
 
-    @ApiModelProperty(value = "角色", position = 40)
+    @ApiModelProperty(value = "角色", position = 60)
     private List<String> roleIds;
 
-    @ApiModelProperty(value = "部门", position = 50)
+    @ApiModelProperty(value = "部门", position = 70)
     private List<String> deptIds;
 
 }

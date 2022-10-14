@@ -62,6 +62,14 @@ public interface TenantRepository extends IService<Tenant> {
     boolean updateById(Tenant tenant);
 
     /**
+     * 根据租户id修改租户信息
+     *
+     * @param tenant 租户信息 对象
+     * @return boolean 是否修改成功
+     */
+    boolean updateByTenantId(Tenant tenant);
+
+    /**
      * 根据id查询租户信息
      *
      * @param id 主键
@@ -69,6 +77,14 @@ public interface TenantRepository extends IService<Tenant> {
      */
     @Override
     Tenant getById(Serializable id);
+
+    /**
+     * 根据租户id是查询
+     *
+     * @param tenantId 租户id
+     * @return boolean
+     */
+    Tenant getByTenantId(String tenantId);
 
     /**
      * 根据条件查询Tenant列表
@@ -81,9 +97,11 @@ public interface TenantRepository extends IService<Tenant> {
     /**
      * 查询租户id是否存在正常状态的
      *
-     * @param tenantId 承租者id
+     * @param tenantId 租户id
+     * @param status 租户状态列表，缺省则为查询全部
      * @return boolean
      */
-    boolean exists(String tenantId);
+    boolean exists(String tenantId, List<Integer> status);
+
 }
 

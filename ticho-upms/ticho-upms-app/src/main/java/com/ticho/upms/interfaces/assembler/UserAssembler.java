@@ -2,6 +2,7 @@ package com.ticho.upms.interfaces.assembler;
 
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.dto.UpmsUserDTO;
+import com.ticho.upms.interfaces.dto.UserAccountDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -43,4 +44,12 @@ public interface UserAssembler {
     @Mapping(target = "deptIds", ignore = true)
     UpmsUserDTO userToUmpsUsrDto(User user);
 
+    /**
+     * 用户转用户登录账号信息
+     *
+     * @param user 用户
+     * @return {@link UserAccountDTO}
+     */
+    @Mapping(target = "status", ignore = true)
+    UserAccountDTO entityToAccount(User user);
 }

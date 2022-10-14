@@ -1,10 +1,8 @@
 package com.ticho.upms.application.service;
 
-import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.view.core.PageResult;
-import com.ticho.upms.interfaces.dto.SignUpDTO;
-import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 
 import java.io.Serializable;
@@ -16,6 +14,21 @@ import java.io.Serializable;
  * @date 2022-10-13 09:08
  */
 public interface UserService {
+
+    /**
+     * 注册
+     *
+     * @param userSignUpDTO 注册dto
+     */
+    void signUp(UserSignUpDTO userSignUpDTO);
+
+    /**
+     * 注册确认
+     *
+     * @param username 账户名称
+     */
+    void confirm(String username);
+
     /**
      * 保存用户信息
      *
@@ -38,15 +51,6 @@ public interface UserService {
     void updateById(UserDTO userDTO);
 
     /**
-     * 根据用户名查询用户
-     *
-     * @param tenantId 租户id
-     * @param username 用户名
-     * @return SecurityUser
-     */
-    UpmsUserDTO getByUsername(String tenantId, String username);
-
-    /**
      * 根据id查询用户信息
      *
      * @param id 主键
@@ -62,12 +66,5 @@ public interface UserService {
      */
     PageResult<UserDTO> page(UserQuery query);
 
-
-    /**
-     * 注册
-     *
-     * @param signUpDTO 注册dto
-     */
-    void signUp(SignUpDTO signUpDTO);
 }
 

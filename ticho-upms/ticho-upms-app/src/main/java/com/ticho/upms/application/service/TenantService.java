@@ -2,6 +2,7 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.TenantDTO;
+import com.ticho.upms.interfaces.dto.TenantSignUpDTO;
 import com.ticho.upms.interfaces.query.TenantQuery;
 
 import java.io.Serializable;
@@ -13,6 +14,21 @@ import java.io.Serializable;
  * @date 2022-10-13 09:08
  */
 public interface TenantService {
+
+    /**
+     * 租户注册
+     *
+     * @param tenantSignUpDTO 租户签约dto
+     */
+    void signUp(TenantSignUpDTO tenantSignUpDTO);
+
+    /**
+     * 租户注册确认
+     *
+     * @param tenantId 租户id
+     */
+    void confirm(String tenantId);
+
     /**
      * 保存租户信息
      *

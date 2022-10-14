@@ -1,5 +1,6 @@
 package com.ticho.upms.interfaces.dto;
 
+import com.ticho.boot.security.dto.LoginRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,14 +8,14 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 /**
- * 注册DTO
+ * 登录DTO
  *
  * @author zhajianjun
- * @date 2022-10-13 13:31
+ * @date 2022-10-14 10:30
  */
 @Data
-@ApiModel(value = "注册DTO")
-public class SignUpDTO {
+@ApiModel(value = "登录DTO")
+public class UserLoginDTO extends LoginRequest {
 
     /** 租户编号 */
     @NotBlank(message = "租户编号不能为空")
@@ -30,5 +31,9 @@ public class SignUpDTO {
     @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码", position = 30)
     private String password;
+
+    /** 登录类型 */
+    @ApiModelProperty(value = "登录类型", position = 40)
+    private String type;
 
 }

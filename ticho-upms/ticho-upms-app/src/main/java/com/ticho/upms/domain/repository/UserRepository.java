@@ -2,6 +2,7 @@ package com.ticho.upms.domain.repository;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.interfaces.dto.UserAccountDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 
 import java.io.Serializable;
@@ -15,14 +16,6 @@ import java.util.List;
  * @date 2022-10-13 09:08
  */
 public interface UserRepository extends IService<User> {
-
-    /**
-     * 查询租户id是否存在正常状态的
-     *
-     * @param tenantId 承租者id
-     * @return boolean
-     */
-    boolean exists(String tenantId);
 
     /**
      * 保存用户信息
@@ -95,5 +88,12 @@ public interface UserRepository extends IService<User> {
      */
     List<User> list(UserQuery query);
 
+    /**
+     * 根据用户登录账号信息查询
+     *
+     * @param userAccountDTO 用户登录账号信息
+     * @return 用户信息
+     */
+    List<User> getByAccount(UserAccountDTO userAccountDTO);
 }
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.infrastructure.mapper.UserMapper;
+import com.ticho.upms.interfaces.dto.UserAccountDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,29 @@ public class UserRepositoryImpl extends ServiceImpl<UserMapper, User> implements
     @Override
     public List<User> list(UserQuery query) {
         return userMapper.selectByConditions(query);
+    }
+
+    @Override
+    public List<User> getByAccount(UserAccountDTO userAccountDTO) {
+        // @formatter:off
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
+        String tenantId = userAccountDTO.getTenantId();
+        String username = userAccountDTO.getUsername();
+        String email = userAccountDTO.getEmail();
+        String mobile = userAccountDTO.getMobile();
+        List<Integer> status = userAccountDTO.getStatus();
+        wrapper
+            .eq(User::getTenantId, tenantId)
+            .eq(CollUtil.isNotEmpty(status), User::getStatus, status)
+            .and(x->
+                x.eq(User::getUsername, username)
+                 .or()
+                 .eq(User::getEmail, email)
+                 .or()
+                 .eq(User::getMobile, mobile)
+            );
+        // @formatter:on
+        return userMapper.selectList(wrapper);
     }
 
 }

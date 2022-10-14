@@ -1,10 +1,10 @@
 package com.ticho.common.security.component;
 
 import cn.hutool.core.convert.Convert;
-import com.ticho.common.security.dto.SecurityUser;
 import com.ticho.boot.security.constant.OAuth2Const;
 import com.ticho.boot.security.constant.SecurityConst;
 import com.ticho.boot.security.filter.AbstractAuthTokenFilter;
+import com.ticho.common.security.dto.SecurityUser;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,9 +26,11 @@ public class DefaultAuthenticationTokenFilter extends AbstractAuthTokenFilter<Se
         String username = Optional.ofNullable(decodeAndVerify.get(SecurityConst.USERNAME)).map(Object::toString).orElse(null);
         List<String> authorities = Optional.ofNullable(decodeAndVerify.get(SecurityConst.AUTHORITIES)).map(x-> Convert.toList(String.class, x)).orElse(null);
         Integer status = Optional.ofNullable(decodeAndVerify.get("status")).map(Convert::toInt).orElse(null);
+        String tenantId = Optional.ofNullable(decodeAndVerify.get("tenantId")).map(Object::toString).orElse(null);
         SecurityUser user = new SecurityUser();
         user.setUsername(username);
         user.setRoleIds(authorities);
+        user.setTenantId(tenantId);
         user.setStatus(status);
         return user;
         // @formatter:on

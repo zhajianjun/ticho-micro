@@ -2,6 +2,7 @@ package com.ticho.upms.interfaces.assembler;
 
 import com.ticho.upms.infrastructure.entity.Tenant;
 import com.ticho.upms.interfaces.dto.TenantDTO;
+import com.ticho.upms.interfaces.dto.TenantSignUpDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -31,4 +32,11 @@ public interface TenantAssembler {
      */
     TenantDTO entityToDto(Tenant entity);
 
+    /**
+     * 租户信息
+     *
+     * @param tenantSignUpDTO 租户签约dto
+     * @return {@link Tenant}
+     */
+    Tenant signUpDtoToEntity(TenantSignUpDTO tenantSignUpDTO);
 }

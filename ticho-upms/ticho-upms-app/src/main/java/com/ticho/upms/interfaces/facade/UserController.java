@@ -55,7 +55,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @ApiOperation(value = "修改用户信息")
+    @ApiOperation(value = "修改用户信息", notes = "无法修改密码")
     @ApiOperationSupport(order = 30)
     @PutMapping
     public Result<Void> update(@RequestBody UserDTO userDTO) {

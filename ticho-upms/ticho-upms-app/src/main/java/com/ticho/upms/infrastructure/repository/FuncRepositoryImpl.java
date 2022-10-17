@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.boot.web.util.CloudIdUtil;
 import com.ticho.upms.domain.repository.FuncRepository;
 import com.ticho.upms.infrastructure.entity.Func;
@@ -30,18 +31,18 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class FuncRepositoryImpl extends ServiceImpl<FuncMapper, Func> implements FuncRepository {
+public class FuncRepositoryImpl extends RootServiceImpl<FuncMapper, Func> implements FuncRepository {
 
     @Autowired
     private FuncMapper funcMapper;
 
     @Override
-    public boolean save(Func func) {
-        if (func == null) {
+    public boolean save(Func entity) {
+        if (entity == null) {
             log.info("功能号信息保存异常，对象为null");
             return false;
         }
-        return funcMapper.insert(func) == 1;
+        return funcMapper.insert(entity) == 1;
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -64,7 +65,7 @@ public class FuncRepositoryImpl extends ServiceImpl<FuncMapper, Func> implements
         Integer total = split
             .stream()
             .map(funcMapper::insertBatch)
-            .reduce(1, Integer::sum);
+            .reduce(0, Integer::sum);
         return total == funcs.size();
     }
 
@@ -110,8 +111,6 @@ public class FuncRepositoryImpl extends ServiceImpl<FuncMapper, Func> implements
                 updates.add(func);
                 continue;
             }
-            func.setId(CloudIdUtil.getId());
-            func.setIsDelete(0);
             saves.add(func);
         }
         boolean result = true;
@@ -147,7 +146,7 @@ public class FuncRepositoryImpl extends ServiceImpl<FuncMapper, Func> implements
             batchSize = 200;
         }
         List<? extends List<? extends Serializable>> split = CollUtil.split(ids, batchSize);
-        Integer total = split.stream().map(funcMapper::deleteBatchIds).reduce(1, Integer::sum);
+        Integer total = split.stream().map(funcMapper::deleteBatchIds).reduce(0, Integer::sum);
         return total == ids.size();
     }
 

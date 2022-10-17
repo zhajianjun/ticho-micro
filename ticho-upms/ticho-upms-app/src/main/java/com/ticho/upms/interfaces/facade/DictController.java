@@ -1,7 +1,6 @@
 package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.DictService;
@@ -31,7 +30,6 @@ import java.io.Serializable;
 @RestController
 @RequestMapping("dict")
 @Api(tags = "数据字典")
-@ApiSort(80)
 public class DictController {
 
     @Autowired

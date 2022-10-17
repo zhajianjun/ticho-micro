@@ -101,7 +101,7 @@ public class FuncServiceImpl implements FuncService {
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
         boolean updated = funcRepository.saveOrUpdateBatchByCode(funcs);
-        Assert.isNull(updated, BizErrCode.FAIL, "更新功能号失败");
+        Assert.isTrue(updated, BizErrCode.FAIL, "更新功能号失败");
     }
 
     private Func getFunc(HandlerMethod handlerMethod) {

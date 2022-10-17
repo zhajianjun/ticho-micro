@@ -134,10 +134,10 @@ public class UserServiceImpl implements UserService {
         String email = userAccountDTO.getEmail();
         String mobile = userAccountDTO.getMobile();
         List<User> users = userRepository.getByAccount(userAccountDTO);
-        boolean isSaveOrUpdate = Objects.nonNull(updateId);
+        boolean isUpdate = Objects.nonNull(updateId);
         for (User item : users) {
             Long itemId = item.getId();
-            if (!isSaveOrUpdate && Objects.equals(updateId, itemId)) {
+            if (isUpdate && Objects.equals(updateId, itemId)) {
                 continue;
             }
             String itemUsername = item.getUsername();

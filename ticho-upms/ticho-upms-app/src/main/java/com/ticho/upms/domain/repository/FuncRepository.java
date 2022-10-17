@@ -1,6 +1,6 @@
 package com.ticho.upms.domain.repository;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.interfaces.query.FuncQuery;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author zhajianjun
  * @date 2022-10-13 09:08
  */
-public interface FuncRepository extends IService<Func> {
+public interface FuncRepository extends RootService<Func> {
 
     /**
      * 保存功能号信息

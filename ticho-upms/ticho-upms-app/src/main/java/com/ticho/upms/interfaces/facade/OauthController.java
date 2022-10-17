@@ -54,7 +54,7 @@ public class OauthController implements OauthProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:confirm')")
+    @PreAuthorize("@pm.hasPerms('oauth:confirm')")
     @ApiOperation(value = "用户注册确认", notes = "租户隔离")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "账户", name = "username", required = true)

@@ -2,10 +2,7 @@ package com.ticho.upms.infrastructure.mapper;
 
 import com.ticho.boot.datasource.mapper.RootMapper;
 import com.ticho.upms.infrastructure.entity.Tenant;
-import com.ticho.upms.interfaces.query.TenantQuery;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 租户信息 mapper

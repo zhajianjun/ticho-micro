@@ -4,8 +4,6 @@ import com.ticho.boot.datasource.mapper.RootMapper;
 import com.ticho.upms.infrastructure.entity.RoleRes;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * 角色和资源关联表 mapper
  *

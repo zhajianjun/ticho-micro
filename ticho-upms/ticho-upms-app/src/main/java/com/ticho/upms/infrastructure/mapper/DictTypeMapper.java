@@ -11,17 +11,9 @@ import java.util.List;
  * 数据字典类型 mapper
  *
  * @author zhajianjun
- * @date 2022-10-13 09:08
+ * @date 2022-10-18 09:08
  */
 @Repository
 public interface DictTypeMapper extends RootMapper<DictType> {
-
-    /**
-     * 根据条件查询 数据字典类型 列表
-     *
-     * @param query 查询条件
-     * @return {@link List}<{@link DictType}>
-     */
-    List<DictType> selectByConditions(DictTypeQuery query);
 
 }

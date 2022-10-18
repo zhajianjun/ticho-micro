@@ -1,5 +1,7 @@
 package com.ticho.upms.infrastructure.repository;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.upms.domain.repository.DictTypeRepository;
 import com.ticho.upms.infrastructure.entity.DictType;
@@ -26,7 +28,19 @@ public class DictTypeRepositoryImpl extends RootServiceImpl<DictTypeMapper, Dict
 
     @Override
     public List<DictType> list(DictTypeQuery query) {
-        return dictTypeMapper.selectByConditions(query);
+        LambdaQueryWrapper<DictType> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(DictType::getId, query.getId());
+        wrapper.eq(DictType::getCode, query.getCode());
+        wrapper.eq(DictType::getName, query.getName());
+        wrapper.eq(DictType::getIsSys, query.getIsSys());
+        wrapper.eq(DictType::getRemark, query.getRemark());
+        wrapper.eq(DictType::getVersion, query.getVersion());
+        wrapper.eq(DictType::getCreateBy, query.getCreateBy());
+        wrapper.eq(DictType::getCreateTime, query.getCreateTime());
+        wrapper.eq(DictType::getUpdateBy, query.getUpdateBy());
+        wrapper.eq(DictType::getUpdateTime, query.getUpdateTime());
+        wrapper.eq(DictType::getIsDelete, query.getIsDelete());
+        return list(wrapper);
     }
 
 }

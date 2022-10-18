@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.boot.web.util.CloudIdUtil;
 import com.ticho.upms.domain.repository.FuncRepository;
+import com.ticho.upms.infrastructure.entity.DictType;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.infrastructure.mapper.FuncMapper;
+import com.ticho.upms.interfaces.query.DictTypeQuery;
 import com.ticho.upms.interfaces.query.FuncQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,39 +37,6 @@ public class FuncRepositoryImpl extends RootServiceImpl<FuncMapper, Func> implem
 
     @Autowired
     private FuncMapper funcMapper;
-
-    @Override
-    public boolean save(Func entity) {
-        if (entity == null) {
-            log.info("功能号信息保存异常，对象为null");
-            return false;
-        }
-        return funcMapper.insert(entity) == 1;
-    }
-
-    @Transactional(rollbackFor = {Exception.class})
-    @Override
-    public boolean saveBatch(Collection<Func> funcs) {
-        return this.saveBatch(funcs, 200);
-    }
-
-    @Transactional(rollbackFor = {Exception.class})
-    @Override
-    public boolean saveBatch(Collection<Func> funcs, int batchSize) {
-        if (CollUtil.isEmpty(funcs)) {
-            log.info("功能号信息批量保存异常，集合为null或者大小为0");
-            return false;
-        }
-        if (batchSize <= 0 || batchSize > 1000) {
-            batchSize = 200;
-        }
-        List<List<Func>> split = CollUtil.split(funcs, batchSize);
-        Integer total = split
-            .stream()
-            .map(funcMapper::insertBatch)
-            .reduce(0, Integer::sum);
-        return total == funcs.size();
-    }
 
     @Override
     public boolean saveOrUpdateByCode(Func func) {
@@ -124,51 +93,6 @@ public class FuncRepositoryImpl extends RootServiceImpl<FuncMapper, Func> implem
     }
 
     @Override
-    public boolean removeById(Serializable id) {
-        if (id == null) {
-            log.info("功能号信息删除异常，主键ID为null");
-            return false;
-        }
-        return funcMapper.deleteById(id) > 0;
-    }
-
-    @Override
-    public boolean removeByIds(Collection<? extends Serializable> ids) {
-        return removeByIds(ids, 200);
-    }
-
-    public boolean removeByIds(Collection<? extends Serializable> ids, int batchSize) {
-        if (CollUtil.isEmpty(ids)) {
-            log.info("功能号信息批量删除异常，集合为null或者大小为0");
-            return false;
-        }
-        if (batchSize <= 0 || batchSize > 1000) {
-            batchSize = 200;
-        }
-        List<? extends List<? extends Serializable>> split = CollUtil.split(ids, batchSize);
-        Integer total = split.stream().map(funcMapper::deleteBatchIds).reduce(0, Integer::sum);
-        return total == ids.size();
-    }
-
-    @Override
-    public boolean updateById(Func func) {
-        if (func == null) {
-            log.info("功能号信息更新异常，角色为null");
-            return false;
-        }
-        return funcMapper.updateById(func) > 0;
-    }
-
-    @Override
-    public Func getById(Serializable id) {
-        if (id == null) {
-            log.info("功能号信息为空，主键ID为null");
-            return null;
-        }
-        return funcMapper.selectById(id);
-    }
-
-    @Override
     public Func getByCode(String code) {
         if (code == null) {
             log.info("功能号信息为空，功能编码为null");
@@ -182,7 +106,18 @@ public class FuncRepositoryImpl extends RootServiceImpl<FuncMapper, Func> implem
 
     @Override
     public List<Func> list(FuncQuery query) {
-        return funcMapper.selectByConditions(query);
+        LambdaQueryWrapper<Func> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Func::getId, query.getId());
+        wrapper.eq(Func::getCode, query.getCode());
+        wrapper.eq(Func::getName, query.getName());
+        wrapper.eq(Func::getRemark, query.getRemark());
+        wrapper.eq(Func::getVersion, query.getVersion());
+        wrapper.eq(Func::getCreateBy, query.getCreateBy());
+        wrapper.eq(Func::getCreateTime, query.getCreateTime());
+        wrapper.eq(Func::getUpdateBy, query.getUpdateBy());
+        wrapper.eq(Func::getUpdateTime, query.getUpdateTime());
+        wrapper.eq(Func::getIsDelete, query.getIsDelete());
+        return list(wrapper);
     }
 
 }

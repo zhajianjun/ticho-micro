@@ -48,7 +48,19 @@ public class TenantRepositoryImpl extends RootServiceImpl<TenantMapper, Tenant> 
 
     @Override
     public List<Tenant> list(TenantQuery query) {
-        return tenantMapper.selectByConditions(query);
+        LambdaQueryWrapper<Tenant> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Tenant::getId, query.getId());
+        wrapper.eq(Tenant::getTenantId, query.getTenantId());
+        wrapper.eq(Tenant::getTenantName, query.getTenantName());
+        wrapper.eq(Tenant::getRemark, query.getRemark());
+        wrapper.eq(Tenant::getStatus, query.getStatus());
+        wrapper.eq(Tenant::getVersion, query.getVersion());
+        wrapper.eq(Tenant::getCreateBy, query.getCreateBy());
+        wrapper.eq(Tenant::getCreateTime, query.getCreateTime());
+        wrapper.eq(Tenant::getUpdateBy, query.getUpdateBy());
+        wrapper.eq(Tenant::getUpdateTime, query.getUpdateTime());
+        wrapper.eq(Tenant::getIsDelete, query.getIsDelete());
+        return list(wrapper);
     }
 
     @Override

@@ -11,17 +11,9 @@ import java.util.List;
  * 功能号信息 mapper
  *
  * @author zhajianjun
- * @date 2022-10-13 09:08
+ * @date 2022-10-18 09:08
  */
 @Repository
 public interface FuncMapper extends RootMapper<Func> {
-
-    /**
-     * 根据条件查询 功能号信息 列表
-     *
-     * @param query 查询条件
-     * @return {@link List}<{@link Func}>
-     */
-    List<Func> selectByConditions(FuncQuery query);
 
 }

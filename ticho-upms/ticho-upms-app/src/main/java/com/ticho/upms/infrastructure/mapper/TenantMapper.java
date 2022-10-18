@@ -11,17 +11,9 @@ import java.util.List;
  * 租户信息 mapper
  *
  * @author zhajianjun
- * @date 2022-10-13 09:08
+ * @date 2022-10-18 09:08
  */
 @Repository
 public interface TenantMapper extends RootMapper<Tenant> {
-
-    /**
-     * 根据条件查询 租户信息 列表
-     *
-     * @param query 查询条件
-     * @return {@link List}<{@link Tenant}>
-     */
-    List<Tenant> selectByConditions(TenantQuery query);
 
 }

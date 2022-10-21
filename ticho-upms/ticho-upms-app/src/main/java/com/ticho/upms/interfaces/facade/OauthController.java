@@ -68,17 +68,17 @@ public class OauthController implements OauthProvider {
     @ApiOperation("登录")
     @ApiOperationSupport(order = 30)
     @PostMapping("token")
-    public Oauth2AccessToken token(UserLoginDTO userLoginDTO) {
+    public Result<Oauth2AccessToken> token(UserLoginDTO userLoginDTO) {
         ValidUtil.valid(userLoginDTO);
-        return loginUserHandle.token(userLoginDTO);
+        return Result.ok(loginUserHandle.token(userLoginDTO));
     }
 
     @IgnoreAuth
     @ApiOperation("刷新token")
     @ApiOperationSupport(order = 40)
     @PostMapping("refreshToken")
-    public Oauth2AccessToken refreshToken(String refreshToken) {
-        return loginUserHandle.refreshToken(refreshToken);
+    public Result<Oauth2AccessToken> refreshToken(String refreshToken) {
+        return Result.ok(loginUserHandle.refreshToken(refreshToken));
     }
 
     @ApiOperation(value = "用户信息查询")

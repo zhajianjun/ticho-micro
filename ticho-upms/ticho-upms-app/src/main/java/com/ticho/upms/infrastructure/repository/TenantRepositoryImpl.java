@@ -1,6 +1,7 @@
 package com.ticho.upms.infrastructure.repository;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 租户信息 repository实现
@@ -49,17 +51,17 @@ public class TenantRepositoryImpl extends RootServiceImpl<TenantMapper, Tenant> 
     @Override
     public List<Tenant> list(TenantQuery query) {
         LambdaQueryWrapper<Tenant> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(Tenant::getId, query.getId());
-        wrapper.eq(Tenant::getTenantId, query.getTenantId());
-        wrapper.eq(Tenant::getTenantName, query.getTenantName());
-        wrapper.eq(Tenant::getRemark, query.getRemark());
-        wrapper.eq(Tenant::getStatus, query.getStatus());
-        wrapper.eq(Tenant::getVersion, query.getVersion());
-        wrapper.eq(Tenant::getCreateBy, query.getCreateBy());
-        wrapper.eq(Tenant::getCreateTime, query.getCreateTime());
-        wrapper.eq(Tenant::getUpdateBy, query.getUpdateBy());
-        wrapper.eq(Tenant::getUpdateTime, query.getUpdateTime());
-        wrapper.eq(Tenant::getIsDelete, query.getIsDelete());
+        wrapper.eq(Objects.nonNull(query.getId()), Tenant::getId, query.getId());
+        wrapper.eq(StrUtil.isNotBlank(query.getTenantId()), Tenant::getTenantId, query.getTenantId());
+        wrapper.eq(StrUtil.isNotBlank(query.getTenantName()), Tenant::getTenantName, query.getTenantName());
+        wrapper.eq(StrUtil.isNotBlank(query.getRemark()), Tenant::getRemark, query.getRemark());
+        wrapper.eq(Objects.nonNull(query.getStatus()), Tenant::getStatus, query.getStatus());
+        wrapper.eq(Objects.nonNull(query.getVersion()), Tenant::getVersion, query.getVersion());
+        wrapper.eq(StrUtil.isNotBlank(query.getCreateBy()), Tenant::getCreateBy, query.getCreateBy());
+        wrapper.eq(Objects.nonNull(query.getCreateTime()), Tenant::getCreateTime, query.getCreateTime());
+        wrapper.eq(StrUtil.isNotBlank(query.getUpdateBy()), Tenant::getUpdateBy, query.getUpdateBy());
+        wrapper.eq(Objects.nonNull(query.getUpdateTime()), Tenant::getUpdateTime, query.getUpdateTime());
+        wrapper.eq(Objects.nonNull(query.getIsDelete()), Tenant::getIsDelete, query.getIsDelete());
         return list(wrapper);
     }
 

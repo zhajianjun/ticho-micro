@@ -1,12 +1,11 @@
 package com.ticho.upms.interfaces.dto;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * 菜单信息DTO
@@ -83,31 +82,5 @@ public class MenuDTO implements Serializable {
     /** 备注信息 */
     @ApiModelProperty(value = "备注信息", position = 160)
     private String remark;
-
-    /** 乐观锁;控制版本更改 */
-    @ApiModelProperty(value = "乐观锁;控制版本更改", position = 170)
-    private Long version;
-
-    /** 创建人 */
-    @ApiModelProperty(value = "创建人", position = 180)
-    private String createBy;
-
-    /** 创建时间 */
-    @ApiModelProperty(value = "创建时间", position = 190)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime createTime;
-
-    /** 更新人 */
-    @ApiModelProperty(value = "更新人", position = 200)
-    private String updateBy;
-
-    /** 更新时间 */
-    @ApiModelProperty(value = "更新时间", position = 210)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime updateTime;
-
-    /** 删除标识;0-未删除,1-已删除 */
-    @ApiModelProperty(value = "删除标识;0-未删除,1-已删除", position = 220)
-    private Integer isDelete;
 
 }

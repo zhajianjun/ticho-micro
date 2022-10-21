@@ -1,6 +1,7 @@
 package com.ticho.upms.infrastructure.repository;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -107,16 +109,16 @@ public class FuncRepositoryImpl extends RootServiceImpl<FuncMapper, Func> implem
     @Override
     public List<Func> list(FuncQuery query) {
         LambdaQueryWrapper<Func> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(Func::getId, query.getId());
-        wrapper.eq(Func::getCode, query.getCode());
-        wrapper.eq(Func::getName, query.getName());
-        wrapper.eq(Func::getRemark, query.getRemark());
-        wrapper.eq(Func::getVersion, query.getVersion());
-        wrapper.eq(Func::getCreateBy, query.getCreateBy());
-        wrapper.eq(Func::getCreateTime, query.getCreateTime());
-        wrapper.eq(Func::getUpdateBy, query.getUpdateBy());
-        wrapper.eq(Func::getUpdateTime, query.getUpdateTime());
-        wrapper.eq(Func::getIsDelete, query.getIsDelete());
+        wrapper.eq(Objects.nonNull(query.getId()), Func::getId, query.getId());
+        wrapper.eq(StrUtil.isNotBlank(query.getCode()), Func::getCode, query.getCode());
+        wrapper.eq(StrUtil.isNotBlank(query.getName()), Func::getName, query.getName());
+        wrapper.eq(Objects.nonNull(query.getRemark()), Func::getRemark, query.getRemark());
+        wrapper.eq(Objects.nonNull(query.getVersion()), Func::getVersion, query.getVersion());
+        wrapper.eq(StrUtil.isNotBlank(query.getCreateBy()), Func::getCreateBy, query.getCreateBy());
+        wrapper.eq(Objects.nonNull(query.getCreateTime()), Func::getCreateTime, query.getCreateTime());
+        wrapper.eq(StrUtil.isNotBlank(query.getUpdateBy()), Func::getUpdateBy, query.getUpdateBy());
+        wrapper.eq(Objects.nonNull(query.getUpdateTime()), Func::getUpdateTime, query.getUpdateTime());
+        wrapper.eq(Objects.nonNull(query.getIsDelete()), Func::getIsDelete, query.getIsDelete());
         return list(wrapper);
     }
 

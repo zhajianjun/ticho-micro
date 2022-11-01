@@ -1,9 +1,9 @@
 package com.ticho.upms.domain.service;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.ticho.boot.json.JsonUtil;
 import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.boot.security.constant.SecurityConst;
-import com.ticho.boot.web.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

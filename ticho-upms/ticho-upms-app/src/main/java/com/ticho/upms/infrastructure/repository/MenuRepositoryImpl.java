@@ -1,6 +1,8 @@
 package com.ticho.upms.infrastructure.repository;
 
+import cn.hutool.core.lang.func.Func1;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
@@ -49,6 +51,8 @@ public class MenuRepositoryImpl extends RootServiceImpl<MenuMapper, Menu> implem
         wrapper.eq(StrUtil.isNotBlank(query.getUpdateBy()), Menu::getUpdateBy, query.getUpdateBy());
         wrapper.eq(Objects.nonNull(query.getUpdateTime()), Menu::getUpdateTime, query.getUpdateTime());
         wrapper.eq(Objects.nonNull(query.getIsDelete()), Menu::getIsDelete, query.getIsDelete());
+        wrapper.orderByAsc(Menu::getParentId);
+        wrapper.orderByAsc(Menu::getSort);
         return list(wrapper);
     }
 

@@ -23,6 +23,14 @@ public interface DictRepository extends RootService<Dict> {
     List<Dict> list(DictQuery query);
 
     /**
+     * 根据类型id查询是否存在
+     *
+     * @param typeId id类型
+     * @return boolean
+     */
+    boolean existsByTypeId(Long typeId);
+
+    /**
      * 根据编号查询所有子孙节点的id
      *
      * @param id 主键id

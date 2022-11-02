@@ -25,7 +25,7 @@ public interface DictTypeService {
      *
      * @param id 主键
      */
-    void removeById(Serializable id);
+    void removeById(Long id);
 
     /**
      * 修改数据字典类型
@@ -40,7 +40,7 @@ public interface DictTypeService {
      * @param id 主键
      * @return {@link DictTypeDTO}
      */
-    DictTypeDTO getById(Serializable id);
+    DictTypeDTO getById(Long id);
 
     /**
      * 分页查询数据字典类型列表

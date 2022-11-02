@@ -48,6 +48,15 @@ public class DictRepositoryImpl extends RootServiceImpl<DictMapper, Dict> implem
     }
 
     @Override
+    public boolean existsByTypeId(Long typeId) {
+        LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery();
+        wrapper.select(Dict::getId);
+        wrapper.gt(Dict::getTypeId, typeId);
+        wrapper.last("limit 1");
+        return getOne(wrapper) != null;
+    }
+
+    @Override
     public List<Long> getDescendantIds(Long id) {
         if (id == null) {
             return Collections.emptyList();

@@ -1,10 +1,12 @@
 package com.ticho.upms.interfaces.dto;
 
+import com.ticho.boot.web.util.valid.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -21,6 +23,7 @@ public class DictTypeDTO implements Serializable {
 
     /** 主键编号 */
     @ApiModelProperty(value = "主键编号", position = 10)
+    @NotNull(message = "编号不能为空", groups = {ValidGroup.Upd.class})
     private Long id;
 
     /** 类型编码 */

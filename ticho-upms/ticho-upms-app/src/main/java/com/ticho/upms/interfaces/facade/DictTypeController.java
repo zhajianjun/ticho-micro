@@ -49,7 +49,7 @@ public class DictTypeController {
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
+    public Result<Void> removeById(@RequestParam("id") Long id) {
         dictTypeService.removeById(id);
         return Result.ok();
     }
@@ -66,7 +66,7 @@ public class DictTypeController {
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<DictTypeDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<DictTypeDTO> getById(@RequestParam("id") Long id) {
         return Result.ok(dictTypeService.getById(id));
     }
 

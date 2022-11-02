@@ -2,42 +2,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticho-upms-st
+  name: ticho-email
   labels:
-    app: ticho-upms-st
+    app: ticho-email
     version: v1
 spec:
   # 使用NodePort类型（替换默认ClusterIP，便于测试）
   type: NodePort
   sessionAffinity: None
   selector:
-    app: ticho-upms-st
+    app: ticho-email
     version: v1
   ports:
     - name: http-web
       protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 8010
+      nodePort: 8040
 ---
 # K8S工作负载定义
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: ticho-upms-st
+    app: ticho-email
     version: v1
-  name: ticho-upms-st
+  name: ticho-email
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ticho-upms-st
+      app: ticho-email
       version: v1
   template:
     metadata:
       labels:
-        app: ticho-upms-st
+        app: ticho-email
         version: v1
     spec:
       # 设置Docker仓库密钥（用于拉取镜像）
@@ -50,7 +50,7 @@ spec:
             path: /etc/localtime
             type: ''
       containers:
-        - name: ticho-upms-st
+        - name: ticho-email
           # 设置Docker镜像（同Jenkinsfile脚本中的环境变量）
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$MODULE-$PROFILE:SNAPSHOT-$BUILD_NUMBER
           imagePullPolicy: Always

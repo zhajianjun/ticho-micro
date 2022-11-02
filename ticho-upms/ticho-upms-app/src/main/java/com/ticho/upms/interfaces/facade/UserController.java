@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class UserController implements UserProvider {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("@pm.hasPerms('user:save')")
     @ApiOperation(value = "保存用户信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -46,6 +48,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('user:remove')")
     @ApiOperation(value = "删除用户信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -55,6 +58,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('user:update')")
     @ApiOperation(value = "修改用户信息", notes = "无法修改密码")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -63,6 +67,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('user:getById')")
     @ApiOperation(value = "主键查询用户信息")
     @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -71,6 +76,7 @@ public class UserController implements UserProvider {
         return Result.ok(userService.getById(id));
     }
 
+    @PreAuthorize("@pm.hasPerms('user:page')")
     @ApiOperation(value = "分页查询用户信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("page")

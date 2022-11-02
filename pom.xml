@@ -49,7 +49,7 @@
             <properties>
                 <spring.active>local</spring.active>
                 <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
-                <nacos.namespace>1568256815093776384</nacos.namespace>
+                <nacos.namespace>1568256815093776383</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
                 <nacos.username>ticho</nacos.username>
                 <nacos.password>ticho1511ticho.</nacos.password>
@@ -68,19 +68,6 @@
                 <nacos.username>ticho</nacos.username>
                 <nacos.password>ticho1511ticho.</nacos.password>
             </properties>
-        </profile>
-        <profile>
-            <id>st</id>
-            <properties>
-                <spring.active>st</spring.active>
-                <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
-                <nacos.namespace>1568256894051549184</nacos.namespace>
-                <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ticho</nacos.username>
-                <nacos.password>ticho1511ticho.</nacos.password>
-            </properties>
-            <activation>
-            </activation>
         </profile>
         <profile>
             <id>prod</id>

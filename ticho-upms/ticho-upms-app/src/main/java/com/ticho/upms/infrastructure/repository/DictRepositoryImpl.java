@@ -11,6 +11,7 @@ import com.ticho.upms.interfaces.query.DictQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +44,28 @@ public class DictRepositoryImpl extends RootServiceImpl<DictMapper, Dict> implem
         wrapper.eq(StrUtil.isNotBlank(query.getUpdateBy()), Dict::getUpdateBy, query.getUpdateBy());
         wrapper.eq(Objects.nonNull(query.getUpdateTime()), Dict::getUpdateTime, query.getUpdateTime());
         wrapper.eq(Objects.nonNull(query.getIsDelete()), Dict::getIsDelete, query.getIsDelete());
+        return list(wrapper);
+    }
+
+    @Override
+    public List<Long> getDescendantIds(Long id) {
+        if (id == null) {
+            return Collections.emptyList();
+        }
+        LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery();
+        wrapper.select(Dict::getId);
+        wrapper.gt(Dict::getId, id);
+        wrapper.like(Dict::getStructure, id);
+        return listObjs(wrapper, x -> Long.valueOf(x.toString()));
+    }
+
+    @Override
+    public List<Dict> getBrothers(Long id) {
+        if (id == null) {
+            return Collections.emptyList();
+        }
+        LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery();
+        wrapper.inSql(Dict::getPid, String.format("select pid from sys_dict where id = %s", id));
         return list(wrapper);
     }
 

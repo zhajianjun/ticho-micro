@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
-
 /**
  * 数据字典 控制器
  *
@@ -47,8 +45,8 @@ public class DictController {
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
-        dictService.removeById(id);
+    public Result<Void> removeById(Long id, Boolean isDelChilds) {
+        dictService.removeById(id, isDelChilds);
         return Result.ok();
     }
 
@@ -64,7 +62,7 @@ public class DictController {
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<DictDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<DictDTO> getById(Long id) {
         return Result.ok(dictService.getById(id));
     }
 

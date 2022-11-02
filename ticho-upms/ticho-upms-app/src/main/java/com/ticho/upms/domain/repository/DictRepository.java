@@ -22,5 +22,22 @@ public interface DictRepository extends RootService<Dict> {
      */
     List<Dict> list(DictQuery query);
 
+    /**
+     * 根据编号查询所有子孙节点的id
+     *
+     * @param id 主键id
+     *
+     * @return {@link List}<{@link Integer}>
+     */
+    List<Long> getDescendantIds(Long id);
+
+
+    /**
+     * 根据id查询兄弟节点，包括自己
+     *
+     * @param id  主键id
+     * @return {@link List}<{@link Dict}>
+     */
+    List<Dict> getBrothers(Long id);
 }
 

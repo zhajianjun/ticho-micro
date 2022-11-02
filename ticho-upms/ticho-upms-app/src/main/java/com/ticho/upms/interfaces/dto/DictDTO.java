@@ -1,10 +1,15 @@
 package com.ticho.upms.interfaces.dto;
 
+import com.ticho.boot.web.util.valid.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -21,26 +26,32 @@ public class DictDTO implements Serializable {
 
     /** 主键编号; */
     @ApiModelProperty(value = "主键编号;", position = 10)
-    private Integer id;
+    @NotBlank(message = "字典编号不能为空", groups = {ValidGroup.Upd.class})
+    private Long id;
 
     /** 父id */
     @ApiModelProperty(value = "父id", position = 20)
-    private Integer pid;
+    private Long pid;
 
     /** 字典类型id */
     @ApiModelProperty(value = "字典类型id", position = 30)
+    @NotNull(message = "字典类型编号不能为空", groups = {ValidGroup.Add.class})
     private Long typeId;
 
     /** 字典编码 */
     @ApiModelProperty(value = "字典编码", position = 40)
+    @Size(max = 50, message = "字典编码最大不能超过50个字符")
     private String code;
 
     /** 字典名称 */
     @ApiModelProperty(value = "字典名称", position = 50)
+    @NotBlank(message = "字典名称不能为空")
+    @Size(max = 50, message = "字典名称最大不能超过50个字符")
     private String name;
 
     /** 排序 */
     @ApiModelProperty(value = "排序", position = 60)
+    @Max(value = 65535, message = "排序最大值为65535")
     private Integer sort;
 
     /** 层级 */
@@ -57,6 +68,7 @@ public class DictDTO implements Serializable {
 
     /** 备注信息 */
     @ApiModelProperty(value = "备注信息", position = 100)
+    @Size(max = 1024, message = "备注信息最大不能超过1024个字符")
     private String remark;
 
 }

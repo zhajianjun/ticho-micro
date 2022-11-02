@@ -23,11 +23,11 @@ public class DictQuery extends BasePageQuery implements Serializable {
 
     /** 主键编号; */
     @ApiModelProperty(value = "主键编号;", position = 10)
-    private Integer id;
+    private Long id;
 
     /** 父id */
     @ApiModelProperty(value = "父id", position = 20)
-    private Integer pid;
+    private Long pid;
 
     /** 字典类型id */
     @ApiModelProperty(value = "字典类型id", position = 30)

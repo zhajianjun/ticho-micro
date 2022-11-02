@@ -23,9 +23,10 @@ public interface DictService {
     /**
      * 删除数据字典
      *
-     * @param id 主键
+     * @param id 编号
+     * @param isDelChilds 是否删除其子节点
      */
-    void removeById(Serializable id);
+    void removeById(Long id, Boolean isDelChilds);
 
     /**
      * 修改数据字典
@@ -40,7 +41,7 @@ public interface DictService {
      * @param id 主键
      * @return {@link DictDTO}
      */
-    DictDTO getById(Serializable id);
+    DictDTO getById(Long id);
 
     /**
      * 分页查询数据字典列表

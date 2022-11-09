@@ -12,9 +12,8 @@ import org.springframework.web.server.ServerWebExchange;
  * @author zhajianjun
  * @date 2021-10-18 22:57
  */
-@SuppressWarnings("rawtypes")
 @Component
-public class SwaggerHeaderFilter extends AbstractGatewayFilterFactory {
+public class SwaggerHeaderFilter extends AbstractGatewayFilterFactory<Object> {
     private static final String HEADER_NAME = "X-Forwarded-Prefix";
 
     private static final String URI = "/v2/api-docs";

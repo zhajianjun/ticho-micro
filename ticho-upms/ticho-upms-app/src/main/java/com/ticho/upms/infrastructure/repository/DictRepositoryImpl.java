@@ -29,7 +29,7 @@ public class DictRepositoryImpl extends RootServiceImpl<DictMapper, Dict> implem
     public List<Dict> list(DictQuery query) {
         LambdaQueryWrapper<Dict> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(Objects.nonNull(query.getId()), Dict::getId, query.getId());
-        wrapper.eq(Objects.nonNull(query.getPid()), Dict::getPid, query.getPid());
+        wrapper.eq(Objects.nonNull(query.getParentId()), Dict::getPid, query.getParentId());
         wrapper.eq(Objects.nonNull(query.getTypeId()), Dict::getTypeId, query.getTypeId());
         wrapper.eq(StrUtil.isNotBlank(query.getCode()), Dict::getCode, query.getCode());
         wrapper.eq(StrUtil.isNotBlank(query.getName()), Dict::getName, query.getName());

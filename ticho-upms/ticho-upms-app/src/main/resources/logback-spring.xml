@@ -2,7 +2,7 @@
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
     <!--日志根目录-->
     <property name="log.home" value="logs/@project.artifactId@"/>
-    <include optional="true" resource="./ticho-logback-common.xml"/>
+    <include optional="true" resource="ticho-logback-common.xml"/>
 
     <!-- 开发环境、测试环境 -->
     <springProfile name="local,dev,st,uat">

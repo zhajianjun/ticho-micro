@@ -2,7 +2,7 @@ package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
-import com.ticho.boot.security.annotation.IgnoreAuth;
+import com.ticho.boot.security.annotation.IgnoreJwtCheck;
 import com.ticho.boot.security.constant.OAuth2Const;
 import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
@@ -45,7 +45,7 @@ public class OauthController implements OauthProvider {
     @Autowired
     private UserService userService;
 
-    @IgnoreAuth
+    @IgnoreJwtCheck
     @ApiOperation("注册")
     @ApiOperationSupport(order = 10)
     @PostMapping("signUp")
@@ -64,7 +64,7 @@ public class OauthController implements OauthProvider {
         return Result.ok();
     }
 
-    @IgnoreAuth
+    @IgnoreJwtCheck
     @ApiOperation("登录")
     @ApiOperationSupport(order = 30)
     @PostMapping("token")
@@ -73,7 +73,7 @@ public class OauthController implements OauthProvider {
         return Result.ok(loginUserHandle.token(userLoginDTO));
     }
 
-    @IgnoreAuth
+    @IgnoreJwtCheck
     @ApiOperation("刷新token")
     @ApiOperationSupport(order = 40)
     @PostMapping("refreshToken")

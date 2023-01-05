@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-feign</artifactId>
+            <artifactId>ticho-starter-http</artifactId>
         </dependency>
 
         <dependency>

@@ -20,6 +20,7 @@ import com.ticho.upms.interfaces.dto.UserAccountDTO;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ import java.util.stream.Collectors;
  * @date 2022-10-13 09:08
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired

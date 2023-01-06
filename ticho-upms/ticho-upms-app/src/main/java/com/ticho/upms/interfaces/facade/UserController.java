@@ -81,7 +81,6 @@ public class UserController implements UserProvider {
     @ApiOperationSupport(order = 60)
     @GetMapping("page")
     public Result<PageResult<UserDTO>> page(UserQuery query) {
-        userService.test();
         return Result.ok(userService.page(query));
     }
 

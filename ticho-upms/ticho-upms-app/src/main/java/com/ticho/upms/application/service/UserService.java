@@ -66,7 +66,5 @@ public interface UserService {
      */
     PageResult<UserDTO> page(UserQuery query);
 
-    void test();
-
 }
 

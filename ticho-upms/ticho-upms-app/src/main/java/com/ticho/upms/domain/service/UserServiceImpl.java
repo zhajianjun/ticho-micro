@@ -21,9 +21,7 @@ import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -126,12 +124,6 @@ public class UserServiceImpl implements UserService {
             .collect(Collectors.toList());
         return new PageResult<>(page.getPageNum(), page.getPageSize(), page.getTotal(), userDTOs);
         // @formatter:on
-    }
-
-    @Async
-    public void test(){
-        log.error("test:{}", MDC.get("test"));
-        log.error("test:{}", MDC.getCopyOfContextMap());
     }
 
     /**

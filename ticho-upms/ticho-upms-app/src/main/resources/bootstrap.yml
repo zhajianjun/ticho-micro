@@ -25,4 +25,4 @@ spring:
           enabled: false
 
 tlog:
-  enable-invoke-time-print: true
+  pattern:

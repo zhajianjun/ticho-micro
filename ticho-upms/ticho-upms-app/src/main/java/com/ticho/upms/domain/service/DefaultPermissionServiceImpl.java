@@ -1,7 +1,7 @@
 package com.ticho.upms.domain.service;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.ticho.boot.json.JsonUtil;
+import com.ticho.boot.json.util.JsonUtil;
 import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.boot.security.constant.SecurityConst;
 import lombok.extern.slf4j.Slf4j;

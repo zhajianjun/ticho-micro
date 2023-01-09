@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
     <!--日志根目录-->
-    <property name="LOG_PATH" value="./logs//@parent.artifactId@"/>
+    <property name="log.path" value="./logs/@parent.artifactId@"/>
     <!--服务名称-->
     <property name="SERVICE_NAME" value="@project.artifactId@"/>
 

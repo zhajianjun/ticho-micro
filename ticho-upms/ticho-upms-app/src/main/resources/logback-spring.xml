@@ -7,32 +7,12 @@
 
     <include optional="true" resource="ticho-logback-common.xml"/>
 
-    <!-- 开发环境、测试环境 -->
-    <springProfile name="local">
-        <!--屏蔽 nacos包下的warn级别以上的日志 -->
-        <logger name="com.alibaba.nacos.client.naming" level="INFO" additivity="false"/>
-        <!-- Spring日志级别控制  -->
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ticho" level="INFO"/>
-    </springProfile>
-
-    <!-- 开发环境、测试环境 -->
-    <springProfile name="dev">
-        <!--屏蔽 nacos包下的warn级别以上的日志 -->
-        <logger name="com.alibaba.nacos.client.naming" level="INFO" additivity="false"/>
-        <!-- Spring日志级别控制  -->
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ticho" level="INFO"/>
-    </springProfile>
-
-
-    <!-- 生产环境 -->
-    <springProfile name="prod">
-        <!--屏蔽 nacos包下的warn级别以上的日志 -->
-        <logger name="com.alibaba.nacos.client.naming" level="INFO" additivity="false"/>
-        <!-- Spring日志级别控制  -->
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ticho" level="INFO"/>
+    <springProfile name="local,dev,test,st">
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
+        <logger name="io.undertow" level="ERROR"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="com.ticho.upms" level="INFO"/>
     </springProfile>
 
 </configuration>

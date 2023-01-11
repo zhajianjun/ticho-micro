@@ -12,6 +12,16 @@
         <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
         <logger name="io.undertow" level="ERROR"/>
         <logger name="org.springframework" level="ERROR"/>
+        <logger name="springfox.documentation" level="ERROR"/>
+        <logger name="com.ticho.upms" level="INFO"/>
+    </springProfile>
+
+    <springProfile name="uat,prod">
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
+        <logger name="io.undertow" level="ERROR"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.ticho.upms" level="INFO"/>
     </springProfile>
 

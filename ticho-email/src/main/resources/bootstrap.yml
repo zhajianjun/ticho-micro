@@ -1,5 +1,5 @@
 server:
-  port: 7040
+  port: 8040
 spring:
   profiles:
     active: @spring.active@

@@ -59,11 +59,6 @@
             <artifactId>ticho-starter-json</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>tlog-gateway-spring-boot-starter</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

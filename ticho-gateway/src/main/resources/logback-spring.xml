@@ -3,7 +3,7 @@
     <include optional="true" resource="ticho-logback-common.xml"/>
 
     <!--日志根目录-->
-    <property name="log.home" value="./logs/@parent.artifactId@"/>
+    <property name="log.home" value="./logs/@artifactId@"/>
     <!-- 开发环境、测试环境 -->
     <springProfile name="local,dev,st,uat">
         <!--屏蔽 nacos包下的warn级别以上的日志 -->

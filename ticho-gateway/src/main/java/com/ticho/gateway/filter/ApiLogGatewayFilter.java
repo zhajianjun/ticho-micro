@@ -2,7 +2,6 @@ package com.ticho.gateway.filter;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.ticho.boot.json.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -23,7 +22,6 @@ import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -55,6 +53,7 @@ import java.util.Optional;
  */
 @Slf4j
 //@Component
+@Deprecated
 public class ApiLogGatewayFilter implements WebFilter {
 
     private static final String UNKNOWN = "unknown";
@@ -73,7 +72,6 @@ public class ApiLogGatewayFilter implements WebFilter {
     @NonNull
     public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-
         // 请求路径
         String requestPath = request.getPath().pathWithinApplication().value();
 
@@ -90,7 +88,7 @@ public class ApiLogGatewayFilter implements WebFilter {
         gatewayLog.setTargetServer(targetServer);
         gatewayLog.setStartTime(new Date().getTime());
         gatewayLog.setIp(getIp(request));
-        gatewayLog.setRouteConfig(JSON.toJSONString(route));
+        gatewayLog.setRouteConfig(JsonUtil.objToString(route));
         Map<String, Object> headers = new HashMap<>();
         for (String key : request.getHeaders().keySet()) {
             headers.put(key, request.getHeaders().getFirst(key));

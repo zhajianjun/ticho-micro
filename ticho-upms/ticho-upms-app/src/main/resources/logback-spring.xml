@@ -2,8 +2,14 @@
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
     <!--日志根目录-->
     <property name="log.path" value="./logs/@parent.artifactId@"/>
-    <!--服务名称-->
-    <property name="SERVICE_NAME" value="@project.artifactId@"/>
+
+    <property name="appName" value="@parent.artifactId@"/>
+    <property name="env" value="@spring.active@"/>
+    <property name="redis.host" value="@redis.host@"/>
+    <property name="redis.port" value="@redis.port@"/>
+    <property name="redis.auth" value="@redis.auth@"/>
+    <property name="redis.db" value="@redis.db@"/>
+
 
     <include optional="true" resource="ticho-logback-common.xml"/>
 

@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <!--日志根目录-->
+    <property name="log.path" value="./logs/@artifactId@"/>
+
+    <property name="appName" value="@artifactId@"/>
+    <property name="env" value="@spring.active@"/>
+    <property name="redis.host" value="@redis.host@"/>
+    <property name="redis.port" value="@redis.port@"/>
+    <property name="redis.auth" value="@redis.auth@"/>
+    <property name="redis.db" value="@redis.db@"/>
+
+
     <include optional="true" resource="ticho-logback-common.xml"/>
 
-    <!--日志根目录-->
-    <property name="log.home" value="./logs/@artifactId@"/>
-    <!-- 开发环境、测试环境 -->
-    <springProfile name="local,dev,st,uat">
-        <!--屏蔽 nacos包下的warn级别以上的日志 -->
-        <logger name="com.alibaba.nacos.client.naming" level="INFO" additivity="false"/>
-        <!-- Spring日志级别控制  -->
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ticho" level="DEBUG"/>
+    <springProfile name="local,dev,test,st">
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
+        <logger name="io.undertow" level="ERROR"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="springfox.documentation" level="ERROR"/>
+        <logger name="com.ticho.gateway" level="INFO"/>
     </springProfile>
 
-
-    <!-- 生产环境 -->
-    <springProfile name="prod">
-        <!--屏蔽 nacos包下的warn级别以上的日志 -->
-        <logger name="com.alibaba.nacos.client.naming" level="INFO" additivity="false"/>
-        <!-- Spring日志级别控制  -->
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ticho" level="INFO"/>
+    <springProfile name="uat,prod">
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
+        <logger name="io.undertow" level="ERROR"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="springfox.documentation" level="ERROR"/>
+        <logger name="com.ticho.upms" level="INFO"/>
     </springProfile>
 
 </configuration>

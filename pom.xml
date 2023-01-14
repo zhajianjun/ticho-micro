@@ -60,10 +60,6 @@
                 <nacos.group>DEFAULT_GROUP</nacos.group>
                 <nacos.username>ticho</nacos.username>
                 <nacos.password>ticho1511ticho.</nacos.password>
-                <redis.host>122.112.164.156</redis.host>
-                <redis.port>10050</redis.port>
-                <redis.auth>1511ticho.</redis.auth>
-                <redis.db>1</redis.db>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -78,10 +74,6 @@
                 <nacos.group>DEFAULT_GROUP</nacos.group>
                 <nacos.username>ticho</nacos.username>
                 <nacos.password>ticho1511ticho.</nacos.password>
-                <redis.host>192.168.243.138</redis.host>
-                <redis.port>10050</redis.port>
-                <redis.auth>1511ticho.</redis.auth>
-                <redis.db>1</redis.db>
             </properties>
         </profile>
         <profile>
@@ -93,10 +85,6 @@
                 <nacos.group>DEFAULT_GROUP</nacos.group>
                 <nacos.username>ticho</nacos.username>
                 <nacos.password>ticho1511ticho.</nacos.password>
-                <redis.host>192.168.243.138</redis.host>
-                <redis.port>10050</redis.port>
-                <redis.auth>1511ticho.</redis.auth>
-                <redis.db>1</redis.db>
             </properties>
         </profile>
     </profiles>

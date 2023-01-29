@@ -1,14 +1,13 @@
 package com.ticho.upms.infrastructure.entity;
 
-import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * 菜单功能关联关系
@@ -25,7 +24,6 @@ public class MenuFunc extends Model<MenuFunc> implements Serializable {
 
     /** 菜单id */
     @ApiModelProperty(value = "菜单id", position = 10)
-    @TableId(value = "menu_id", type = IdType.ASSIGN_ID)
     private Long menuId;
 
     /** 角色id */

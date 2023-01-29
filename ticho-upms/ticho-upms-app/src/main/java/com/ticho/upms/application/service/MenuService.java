@@ -2,6 +2,7 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.MenuDTO;
+import com.ticho.upms.interfaces.dto.MenuFuncDTO;
 import com.ticho.upms.interfaces.query.MenuQuery;
 
 import java.io.Serializable;
@@ -49,6 +50,20 @@ public interface MenuService {
      * @return {@link PageResult}<{@link MenuDTO}>
      */
     PageResult<MenuDTO> page(MenuQuery query);
+
+    /**
+     * 菜单添加功能号
+     *
+     * @param menuFuncDTO 菜单功能号信息
+     */
+    void saveFunc(MenuFuncDTO menuFuncDTO);
+
+    /**
+     * 菜单移除功能号
+     *
+     * @param menuFuncDTO 菜单功能号信息
+     */
+    void removeFunc(MenuFuncDTO menuFuncDTO);
 
 }
 

@@ -1,14 +1,13 @@
 package com.ticho.upms.infrastructure.entity;
 
-import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * 角色功能关联关系
@@ -25,7 +24,6 @@ public class RoleFunc extends Model<RoleFunc> implements Serializable {
 
     /** 角色id */
     @ApiModelProperty(value = "角色id", position = 10)
-    @TableId(value = "role_id", type = IdType.ASSIGN_ID)
     private Long roleId;
 
     /** 功能id */

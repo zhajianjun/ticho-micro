@@ -20,7 +20,7 @@ import java.util.List;
 public class UpmsUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键编号;", position = 10)
+    @ApiModelProperty(value = "主键编号", position = 10)
     private Long id;
 
     @ApiModelProperty(value = "租户编号", position = 20)

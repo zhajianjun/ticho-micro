@@ -20,7 +20,7 @@ public class RoleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 主键编号; */
-    @ApiModelProperty(value = "主键编号;", position = 10)
+    @ApiModelProperty(value = "主键编号", position = 10)
     private Long id;
 
     /** 角色编码 */

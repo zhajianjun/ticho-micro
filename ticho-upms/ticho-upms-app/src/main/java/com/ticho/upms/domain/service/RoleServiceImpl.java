@@ -1,20 +1,27 @@
 package com.ticho.upms.domain.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.util.Assert;
 import com.ticho.upms.application.service.RoleService;
+import com.ticho.upms.domain.repository.RoleFuncRepository;
+import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.domain.repository.RoleRepository;
 import com.ticho.upms.infrastructure.entity.Role;
+import com.ticho.upms.infrastructure.entity.RoleFunc;
+import com.ticho.upms.infrastructure.entity.RoleMenu;
 import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.dto.RoleDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +36,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private RoleMenuRepository roleMenuRepository;
+
+    @Autowired
+    private RoleFuncRepository roleFuncRepository;
 
     @Override
     public void save(RoleDTO roleDTO) {
@@ -66,4 +79,18 @@ public class RoleServiceImpl implements RoleService {
         return new PageResult<>(page.getPageNum(), page.getPageSize(), page.getTotal(), roleDTOs);
         // @formatter:on
     }
+
+    @Override
+    public List<RoleMenuFuncDtlDTO> mergeMenuByRoleIds(List<Long> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return Collections.emptyList();
+        }
+        List<Role> roles = roleRepository.listByIds(roleIds);
+        List<RoleMenu> roleMenus = roleMenuRepository.listByRoleIds(roleIds);
+        List<RoleFunc> roleFuncs = roleFuncRepository.listByRoleIds(roleIds);
+        // TODO 2023年01月30日17:28:06
+        return null;
+    }
+
+
 }

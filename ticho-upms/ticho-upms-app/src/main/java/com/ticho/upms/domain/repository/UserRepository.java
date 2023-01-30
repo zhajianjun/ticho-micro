@@ -2,7 +2,7 @@ package com.ticho.upms.domain.repository;
 
 import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.User;
-import com.ticho.upms.interfaces.dto.UserAccountDTO;
+import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.query.UserQuery;
 
 import java.util.List;
@@ -36,9 +36,9 @@ public interface UserRepository extends RootService<User> {
     /**
      * 根据用户登录账号信息查询
      *
-     * @param userAccountDTO 用户登录账号信息
+     * @param userAccountQuery 用户登录账号信息
      * @return 用户信息
      */
-    List<User> getByAccount(UserAccountDTO userAccountDTO);
+    List<User> getByAccount(UserAccountQuery userAccountQuery);
 }
 

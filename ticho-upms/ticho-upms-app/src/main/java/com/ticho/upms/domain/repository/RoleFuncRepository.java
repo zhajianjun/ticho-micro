@@ -4,6 +4,7 @@ import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.RoleFunc;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 角色功能关联关系 repository接口
@@ -22,6 +23,15 @@ public interface RoleFuncRepository extends RootService<RoleFunc> {
      * @return boolean
      */
     boolean removeByMenuIdAndFuncIds(Long menuId, Collection<Long> funcIds);
+
+
+    /**
+     * 根据角色id列表查询
+     *
+     * @param roleIds 角色id
+     * @return {@link List}<{@link RoleFunc}>
+     */
+    List<RoleFunc> listByRoleIds(List<Long> roleIds);
 
 }
 

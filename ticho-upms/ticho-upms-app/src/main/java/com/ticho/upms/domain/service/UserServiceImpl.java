@@ -16,7 +16,7 @@ import com.ticho.upms.infrastructure.core.enums.TenantStatus;
 import com.ticho.upms.infrastructure.core.enums.UserStatus;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
-import com.ticho.upms.interfaces.dto.UserAccountDTO;
+import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setStatus(UserStatus.NOT_ACTIVE.code());
-        UserAccountDTO accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
+        UserAccountQuery accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
         preCheckRepeatUser(accountDTO, null);
         Assert.isTrue(userRepository.save(user), BizErrCode.FAIL, "注册失败");
     }
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         String password = userDTO.getPassword();
         userDTO.setPassword(passwordEncoder.encode(password));
         User user = UserAssembler.INSTANCE.dtoToEntity(userDTO);
-        UserAccountDTO accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
+        UserAccountQuery accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
         preCheckRepeatUser(accountDTO, null);
         Assert.isTrue(userRepository.save(user), BizErrCode.FAIL, "保存失败");
     }
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         ValidUtil.valid(userDTO, ValidGroup.Upd.class);
         userDTO.setPassword(null);
         User user = UserAssembler.INSTANCE.dtoToEntity(userDTO);
-        UserAccountDTO accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
+        UserAccountQuery accountDTO = UserAssembler.INSTANCE.entityToAccount(user);
         preCheckRepeatUser(accountDTO, userDTO.getId());
         Assert.isTrue(userRepository.updateById(user), BizErrCode.FAIL, "修改失败");
     }
@@ -129,13 +129,13 @@ public class UserServiceImpl implements UserService {
     /**
      * 保存或者修改用户信息重复数据判断，用户名称、邮箱、手机号保证其唯一性
      *
-     * @param userAccountDTO 用户登录账号信息
+     * @param userAccountQuery 用户登录账号信息
      */
-    private void preCheckRepeatUser(UserAccountDTO userAccountDTO, Long updateId) {
-        String username = userAccountDTO.getUsername();
-        String email = userAccountDTO.getEmail();
-        String mobile = userAccountDTO.getMobile();
-        List<User> users = userRepository.getByAccount(userAccountDTO);
+    private void preCheckRepeatUser(UserAccountQuery userAccountQuery, Long updateId) {
+        String username = userAccountQuery.getUsername();
+        String email = userAccountQuery.getEmail();
+        String mobile = userAccountQuery.getMobile();
+        List<User> users = userRepository.getByAccount(userAccountQuery);
         boolean isUpdate = Objects.nonNull(updateId);
         for (User item : users) {
             Long itemId = item.getId();

@@ -1,4 +1,4 @@
-package com.ticho.upms.interfaces.dto;
+package com.ticho.upms.interfaces.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,14 +7,14 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 用户登录账号信息
+ * 用户登录账号查询信息
  *
  * @author zhajianjun
  * @date 2022-10-14 13:17
  */
 @Data
-@ApiModel(value = "用户登录账号信息")
-public class UserAccountDTO {
+@ApiModel(value = "用户登录账号查询信息")
+public class UserAccountQuery {
 
     @ApiModelProperty(value = "租户ID", position = 10)
     private String tenantId;

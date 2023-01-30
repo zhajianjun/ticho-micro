@@ -2,9 +2,12 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.RoleDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 角色信息 服务接口
@@ -49,6 +52,14 @@ public interface RoleService {
      * @return {@link PageResult}<{@link RoleDTO}>
      */
     PageResult<RoleDTO> page(RoleQuery query);
+
+    /**
+     * 根据角色id列表合并菜单信息
+     *
+     * @param roleIds 角色id
+     * @return {@link List}<{@link UserRoleMenuFuncDtlDTO}>
+     */
+    List<RoleMenuFuncDtlDTO> mergeMenuByRoleIds(List<Long> roleIds);
 
 }
 

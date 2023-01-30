@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TreeUtil {
-    private static  final Consumer<?> consumer = t -> {};
 
     /**
      * 获取该id以及子节点id的集合

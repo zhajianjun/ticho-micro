@@ -8,7 +8,7 @@ import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.infrastructure.mapper.UserMapper;
-import com.ticho.upms.interfaces.dto.UserAccountDTO;
+import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.query.UserQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -71,14 +71,14 @@ public class UserRepositoryImpl extends RootServiceImpl<UserMapper, User> implem
     }
 
     @Override
-    public List<User> getByAccount(UserAccountDTO userAccountDTO) {
+    public List<User> getByAccount(UserAccountQuery userAccountQuery) {
         // @formatter:off
         LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
-        String tenantId = userAccountDTO.getTenantId();
-        String username = userAccountDTO.getUsername();
-        String email = userAccountDTO.getEmail();
-        String mobile = userAccountDTO.getMobile();
-        List<Integer> status = userAccountDTO.getStatus();
+        String tenantId = userAccountQuery.getTenantId();
+        String username = userAccountQuery.getUsername();
+        String email = userAccountQuery.getEmail();
+        String mobile = userAccountQuery.getMobile();
+        List<Integer> status = userAccountQuery.getStatus();
         wrapper
             .eq(User::getTenantId, tenantId)
             .eq(CollUtil.isNotEmpty(status), User::getStatus, status)

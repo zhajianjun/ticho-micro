@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.upms.domain.repository.RoleFuncRepository;
 import com.ticho.upms.infrastructure.entity.RoleFunc;
+import com.ticho.upms.infrastructure.entity.RoleMenu;
 import com.ticho.upms.infrastructure.mapper.RoleFuncMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,6 +35,16 @@ public class RoleFuncRepositoryImpl extends RootServiceImpl<RoleFuncMapper, Role
         wrapper.eq(RoleFunc::getMenuId, menuId);
         wrapper.in(RoleFunc::getFuncId, funcIds);
         return remove(wrapper);
+    }
+
+    @Override
+    public List<RoleFunc> listByRoleIds(List<Long> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return Collections.emptyList();
+        }
+        LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RoleFunc::getRoleId, roleIds);
+        return list(wrapper);
     }
 
 }

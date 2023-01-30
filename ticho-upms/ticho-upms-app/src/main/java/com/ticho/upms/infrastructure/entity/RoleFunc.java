@@ -26,8 +26,12 @@ public class RoleFunc extends Model<RoleFunc> implements Serializable {
     @ApiModelProperty(value = "角色id", position = 10)
     private Long roleId;
 
+    /** 菜单id */
+    @ApiModelProperty(value = "菜单id", position = 20)
+    private Long menuId;
+
     /** 功能id */
-    @ApiModelProperty(value = "功能id", position = 20)
+    @ApiModelProperty(value = "功能id", position = 30)
     private Long funcId;
 
 }

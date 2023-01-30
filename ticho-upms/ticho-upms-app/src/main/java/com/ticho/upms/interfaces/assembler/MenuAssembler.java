@@ -2,6 +2,7 @@ package com.ticho.upms.interfaces.assembler;
 
 import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.interfaces.dto.MenuDTO;
+import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -30,5 +31,7 @@ public interface MenuAssembler {
      * @return {@link MenuDTO}
      */
     MenuDTO entityToDto(Menu entity);
+
+    MenuFuncDtlDTO entityToDtlDto(Menu entity);
 
 }

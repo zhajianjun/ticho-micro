@@ -3,9 +3,11 @@ package com.ticho.upms.application.service;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.MenuDTO;
 import com.ticho.upms.interfaces.dto.MenuFuncDTO;
+import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.MenuQuery;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单信息 服务接口
@@ -42,6 +44,14 @@ public interface MenuService {
      * @return {@link MenuDTO}
      */
     MenuDTO getById(Serializable id);
+
+    /**
+     * 获取所有菜单信息
+     *
+     * @param containFunc 是否包含功能号信息
+     * @return {@link List}<{@link MenuFuncDtlDTO}>
+     */
+    List<MenuFuncDtlDTO> listAll(boolean containFunc);
 
     /**
      * 分页查询菜单信息列表

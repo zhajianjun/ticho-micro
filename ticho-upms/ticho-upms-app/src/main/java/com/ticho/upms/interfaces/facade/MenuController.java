@@ -6,6 +6,8 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.MenuService;
 import com.ticho.upms.interfaces.dto.MenuDTO;
+import com.ticho.upms.interfaces.dto.MenuFuncDTO;
+import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.MenuQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单信息 控制器
@@ -75,6 +78,29 @@ public class MenuController {
     @GetMapping("page")
     public Result<PageResult<MenuDTO>> page(MenuQuery query) {
         return Result.ok(menuService.page(query));
+    }
+
+    @ApiOperation(value = "菜单添加功能号")
+    @ApiOperationSupport(order = 60)
+    @PostMapping("saveFunc")
+    public Result<Void> saveFunc(@RequestBody MenuFuncDTO menuFuncDTO) {
+        menuService.saveFunc(menuFuncDTO);
+        return Result.ok();
+    }
+    
+    @ApiOperation(value = "菜单移除功能号")
+    @ApiOperationSupport(order = 70)
+    @DeleteMapping("removeFunc")
+    public Result<Void> removeFunc(MenuFuncDTO menuFuncDTO) {
+        menuService.removeFunc(menuFuncDTO);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "获取所有菜单信息")
+    @ApiOperationSupport(order = 80)
+    @GetMapping("listAll")
+    public Result<List<MenuFuncDtlDTO>> listAll(boolean containFunc) {
+        return Result.ok(menuService.listAll(containFunc));
     }
 
 }

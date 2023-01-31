@@ -33,4 +33,14 @@ public class UserRoleRepositoryImpl extends RootServiceImpl<UserRoleMapper, User
         return list(wrapper);
     }
 
+    @Override
+    public boolean removeByUserId(Long userId) {
+        if (Objects.isNull(userId)) {
+            return false;
+        }
+        LambdaQueryWrapper<UserRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserRole::getUserId, userId);
+        return remove(wrapper);
+    }
+
 }

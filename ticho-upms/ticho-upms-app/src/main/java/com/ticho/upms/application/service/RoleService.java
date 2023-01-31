@@ -2,7 +2,10 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.RoleDTO;
+import com.ticho.upms.interfaces.dto.RoleFuncDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleDTO;
 import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
@@ -61,5 +64,18 @@ public interface RoleService {
      */
     RoleMenuFuncDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll);
 
+    /**
+     * 绑定菜单
+     *
+     * @param roleMenuDTO 用户角色dto
+     */
+    void bindMenu(RoleMenuDTO roleMenuDTO);
+
+    /**
+     * 绑定功能号
+     *
+     * @param roleFuncDTO 角色功能号dto
+     */
+    void bindFunc(RoleFuncDTO roleFuncDTO);
 }
 

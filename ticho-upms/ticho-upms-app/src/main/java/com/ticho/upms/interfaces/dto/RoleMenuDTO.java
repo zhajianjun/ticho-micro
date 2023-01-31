@@ -11,25 +11,25 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 用户角色信息DTO
+ * 角色菜单关联关系
  *
  * @author zhajianjun
  * @date 2023-01-31 15:55
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "用户角色信息DTO")
-public class UserRoleDTO implements Serializable {
+@ApiModel(value = "角色菜单信息DTO")
+public class RoleMenuDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /** 用户id */
-    @ApiModelProperty(value = "用户id", position = 10)
-    @NotNull(message = "用户id不能为空")
-    private Long userId;
+    /** 角色id */
+    @ApiModelProperty(value = "角色id", position = 10)
+    @NotNull(message = "角色id不能为空")
+    private Long roleId;
 
-    /** 角色id列表 */
-    @ApiModelProperty(value = "角色id列表", position = 20)
-    @NotEmpty(message = "角色id不能为空")
-    private List<Long> roleIds;
+    /** 菜单id列表 */
+    @ApiModelProperty(value = "菜单id列表", position = 20)
+    @NotEmpty(message = "菜单id列表不能为空")
+    private List<Long> menuIds;
 
 }

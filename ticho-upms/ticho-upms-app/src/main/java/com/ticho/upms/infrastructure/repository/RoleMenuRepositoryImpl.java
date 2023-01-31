@@ -10,8 +10,10 @@ import com.ticho.upms.infrastructure.mapper.RoleMenuMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 角色菜单关联关系 repository实现
@@ -32,5 +34,17 @@ public class RoleMenuRepositoryImpl extends RootServiceImpl<RoleMenuMapper, Role
         wrapper.in(RoleMenu::getRoleId, roleIds);
         return list(wrapper);
     }
+
+    @Override
+    public boolean removeByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds) {
+        if (Objects.isNull(roleId) || CollUtil.isEmpty(menuIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleMenu> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(RoleMenu::getRoleId, roleId);
+        wrapper.in(RoleMenu::getMenuId, menuIds);
+        return remove(wrapper);
+    }
+
 
 }

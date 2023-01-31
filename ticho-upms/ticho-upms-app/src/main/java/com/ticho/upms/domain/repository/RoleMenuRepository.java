@@ -3,6 +3,7 @@ package com.ticho.upms.domain.repository;
 import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.RoleMenu;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,6 +21,15 @@ public interface RoleMenuRepository extends RootService<RoleMenu> {
      * @return {@link List}<{@link RoleMenu}>
      */
     List<RoleMenu> listByRoleIds(List<Long> roleIds);
+
+    /**
+     * 根据角色id和菜单id列表删除
+     *
+     * @param roleId 角色id
+     * @param menuIds 菜单id列表
+     * @return boolean
+     */
+    boolean removeByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds);
 
 }
 

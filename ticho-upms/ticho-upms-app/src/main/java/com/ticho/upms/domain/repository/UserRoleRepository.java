@@ -21,5 +21,13 @@ public interface UserRoleRepository extends RootService<UserRole> {
      */
     List<UserRole> listByUserId(Long userId);
 
+    /**
+     * 通过用户id删除
+     *
+     * @param userId 用户id
+     * @return boolean
+     */
+    boolean removeByUserId(Long userId);
+
 }
 

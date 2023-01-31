@@ -6,6 +6,8 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.RoleService;
 import com.ticho.upms.interfaces.dto.RoleDTO;
+import com.ticho.upms.interfaces.dto.RoleFuncDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -75,6 +77,22 @@ public class RoleController {
     @GetMapping("page")
     public Result<PageResult<RoleDTO>> page(RoleQuery query) {
         return Result.ok(roleService.page(query));
+    }
+
+    @ApiOperation(value = "角色绑定菜单信息")
+    @ApiOperationSupport(order = 60)
+    @PostMapping("bindMenu")
+    public Result<Void> bindMenu(@RequestBody RoleMenuDTO roleMenuDTO) {
+        roleService.bindMenu(roleMenuDTO);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "角色绑定功能号信息")
+    @ApiOperationSupport(order = 70)
+    @PostMapping("bindFunc")
+    public Result<Void> bindFunc(@RequestBody RoleFuncDTO roleFuncDTO) {
+        roleService.bindFunc(roleFuncDTO);
+        return Result.ok();
     }
 
 }

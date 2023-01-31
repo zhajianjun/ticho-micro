@@ -13,18 +13,22 @@ import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.domain.repository.UserRepository;
+import com.ticho.upms.domain.repository.UserRoleRepository;
 import com.ticho.upms.infrastructure.core.enums.TenantStatus;
 import com.ticho.upms.infrastructure.core.enums.UserStatus;
 import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
-import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserRoleDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
+import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.query.UserQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -50,6 +54,9 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Override
     public void signUp(UserSignUpDTO userSignUpDTO) {
@@ -125,6 +132,29 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
             .collect(Collectors.toList());
         return new PageResult<>(page.getPageNum(), page.getPageSize(), page.getTotal(), userDTOs);
         // @formatter:on
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void bindRole(UserRoleDTO userRoleDTO) {
+        // @formatter:off
+        ValidUtil.valid(userRoleDTO);
+        Long userId = userRoleDTO.getUserId();
+        List<Long> roleIds = userRoleDTO.getRoleIds();
+        userRoleRepository.removeByUserId(userId);
+        List<UserRole> userRoles = roleIds
+            .stream()
+            .map(x-> convertToUserRole(userId, x))
+            .collect(Collectors.toList());
+        userRoleRepository.saveBatch(userRoles);
+        // @formatter:off
+    }
+
+    private UserRole convertToUserRole(Long userId, Long roleId) {
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        userRole.setRoleId(roleId);
+        return userRole;
     }
 
     /**

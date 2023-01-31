@@ -5,8 +5,10 @@ import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.UserService;
+import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserRoleDTO;
 import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import io.swagger.annotations.Api;
@@ -91,6 +93,15 @@ public class UserController implements UserProvider {
     @GetMapping("getUserDtl")
     public Result<UserRoleMenuFuncDtlDTO> getUserDtl(String tenantId, String username) {
         return Result.ok(userService.getUserDtl(tenantId, username));
+    }
+
+    @PreAuthorize("@pm.hasPerms('upms:user:bindRole')")
+    @ApiOperation(value = "用户绑定角色信息")
+    @ApiOperationSupport(order = 80)
+    @PostMapping
+    public Result<Void> bindRole(@RequestBody UserRoleDTO userRoleDTO) {
+        userService.bindRole(userRoleDTO);
+        return Result.ok();
     }
 
 }

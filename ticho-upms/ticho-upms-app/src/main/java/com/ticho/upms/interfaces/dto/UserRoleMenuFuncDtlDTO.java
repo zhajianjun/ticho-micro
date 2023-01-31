@@ -111,7 +111,7 @@ public class UserRoleMenuFuncDtlDTO implements Serializable {
 
     /** 角色code列表 */
     @ApiModelProperty(value = "角色code列表", position = 230)
-    private List<Long> roleCodes;
+    private List<String> roleCodes;
 
     /** 菜单id列表 */
     @ApiModelProperty(value = "菜单id列表", position = 240)

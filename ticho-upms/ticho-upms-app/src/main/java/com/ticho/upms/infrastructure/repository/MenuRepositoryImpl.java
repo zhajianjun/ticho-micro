@@ -1,5 +1,6 @@
 package com.ticho.upms.infrastructure.repository;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.func.Func1;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
@@ -13,6 +14,9 @@ import com.ticho.upms.interfaces.query.MenuQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,6 +58,14 @@ public class MenuRepositoryImpl extends RootServiceImpl<MenuMapper, Menu> implem
         wrapper.orderByAsc(Menu::getParentId);
         wrapper.orderByAsc(Menu::getSort);
         return list(wrapper);
+    }
+
+    @Override
+    public List<Menu> listByIds(Collection<? extends Serializable> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return super.listByIds(ids);
     }
 
 }

@@ -10,6 +10,7 @@ import com.ticho.boot.web.util.valid.ValidUtil;
 import com.ticho.common.security.dto.SecurityUser;
 import com.ticho.common.security.util.SecurityUtil;
 import com.ticho.upms.application.service.UserService;
+import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.infrastructure.core.enums.TenantStatus;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends UpmsHandle implements UserService {
 
     @Autowired
     private UserRepository userRepository;

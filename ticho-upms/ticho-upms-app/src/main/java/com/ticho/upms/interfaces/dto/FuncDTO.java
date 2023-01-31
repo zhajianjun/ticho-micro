@@ -35,4 +35,8 @@ public class FuncDTO implements Serializable {
     @ApiModelProperty(value = "备注信息", position = 40)
     private Long remark;
 
+    /** 是否选中 */
+    @ApiModelProperty(value = "是否选中;true-选中,false-未选中", position = 50)
+    private Boolean checkbox;
+
 }

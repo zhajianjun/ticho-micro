@@ -3,6 +3,8 @@ package com.ticho.upms.domain.repository;
 import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.UserRole;
 
+import java.util.List;
+
 /**
  * 用户角色关联关系 repository接口
  *
@@ -10,6 +12,14 @@ import com.ticho.upms.infrastructure.entity.UserRole;
  * @date 2022-10-13 09:08
  */
 public interface UserRoleRepository extends RootService<UserRole> {
+
+    /**
+     * 通过用户id查询
+     *
+     * @param userId 菜单id
+     * @return {@link List}<{@link UserRole}>
+     */
+    List<UserRole> listByUserId(Long userId);
 
 }
 

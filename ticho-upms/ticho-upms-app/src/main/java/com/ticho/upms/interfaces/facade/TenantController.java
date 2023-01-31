@@ -39,7 +39,7 @@ public class TenantController {
     @Autowired
     private TenantService tenantService;
 
-    @PreAuthorize("@pm.hasPerms('tenant:signUp')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:signUp')")
     @ApiOperation(value = "租户注册", notes = "注册成功需要超级管理员确认")
     @ApiOperationSupport(order = 10)
     @PostMapping("signUp")
@@ -48,7 +48,7 @@ public class TenantController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:confirm')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:confirm')")
     @ApiOperation(value = "租户注册确认")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "租户id", name = "tenantId", required = true)
@@ -58,7 +58,7 @@ public class TenantController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:save')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:save')")
     @ApiOperation(value = "保存租户信息")
     @ApiOperationSupport(order = 30)
     @PostMapping
@@ -67,7 +67,7 @@ public class TenantController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:remove')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:remove')")
     @ApiOperation(value = "删除租户信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -77,7 +77,7 @@ public class TenantController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:update')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:update')")
     @ApiOperation(value = "修改租户信息")
     @ApiOperationSupport(order = 50)
     @PutMapping
@@ -86,7 +86,7 @@ public class TenantController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:get')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:get')")
     @ApiOperation(value = "主键查询租户信息")
     @ApiOperationSupport(order = 60)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -95,7 +95,7 @@ public class TenantController {
         return Result.ok(tenantService.getById(id));
     }
 
-    @PreAuthorize("@pm.hasPerms('tenant:page')")
+    @PreAuthorize("@pm.hasPerms('upms:tenant:page')")
     @ApiOperation(value = "分页查询租户信息")
     @ApiOperationSupport(order = 70)
     @GetMapping("page")

@@ -7,6 +7,7 @@ import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,7 +40,7 @@ public class UserController implements UserProvider {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("@pm.hasPerms('user:save')")
+    @PreAuthorize("@pm.hasPerms('upms:user:save')")
     @ApiOperation(value = "保存用户信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -48,7 +49,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('user:remove')")
+    @PreAuthorize("@pm.hasPerms('upms:user:remove')")
     @ApiOperation(value = "删除用户信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -58,7 +59,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('user:update')")
+    @PreAuthorize("@pm.hasPerms('upms:user:update')")
     @ApiOperation(value = "修改用户信息", notes = "无法修改密码")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -67,7 +68,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('user:getById')")
+    @PreAuthorize("@pm.hasPerms('upms:user:getById')")
     @ApiOperation(value = "主键查询用户信息")
     @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -76,12 +77,20 @@ public class UserController implements UserProvider {
         return Result.ok(userService.getById(id));
     }
 
-    @PreAuthorize("@pm.hasPerms('user:page')")
+    @PreAuthorize("@pm.hasPerms('upms:user:page')")
     @ApiOperation(value = "分页查询用户信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("page")
     public Result<PageResult<UserDTO>> page(UserQuery query) {
         return Result.ok(userService.page(query));
+    }
+
+    @PreAuthorize("@pm.hasPerms('upms:user:getUserDtl')")
+    @ApiOperation(value = "查询用户角色菜单功能号信息")
+    @ApiOperationSupport(order = 70)
+    @GetMapping("getUserDtl")
+    public Result<UserRoleMenuFuncDtlDTO> getUserDtl(String tenantId, String username) {
+        return Result.ok(userService.getUserDtl(tenantId, username));
     }
 
 }

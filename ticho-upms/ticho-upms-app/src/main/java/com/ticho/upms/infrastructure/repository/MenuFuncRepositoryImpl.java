@@ -9,8 +9,6 @@ import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.infrastructure.entity.MenuFunc;
 import com.ticho.upms.infrastructure.mapper.FuncMapper;
 import com.ticho.upms.infrastructure.mapper.MenuFuncMapper;
-import com.ticho.upms.interfaces.assembler.FuncAssembler;
-import com.ticho.upms.interfaces.dto.FuncDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +45,12 @@ public class MenuFuncRepositoryImpl extends RootServiceImpl<MenuFuncMapper, Menu
     }
 
     @Override
-    public Map<Long, List<FuncDTO>> listByMenuIds(List<Long> menuIds) {
-        // @formatter:off
+    public Map<Long, List<Func>> getMenuFuncMap() {
+        return getMenuFuncMap(list());
+    }
+
+    @Override
+    public Map<Long, List<Func>> getMenuFuncMapByMenuIds(List<Long> menuIds) {
         if (CollUtil.isEmpty(menuIds)) {
             return Collections.emptyMap();
         }
@@ -56,26 +58,31 @@ public class MenuFuncRepositoryImpl extends RootServiceImpl<MenuFuncMapper, Menu
         LambdaQueryWrapper<MenuFunc> wrapper = Wrappers.lambdaQuery();
         wrapper.in(MenuFunc::getMenuId, menuIds);
         List<MenuFunc> list = list(wrapper);
-        if (list.isEmpty()) {
+        return getMenuFuncMap(list);
+    }
+
+    private Map<Long, List<Func>> getMenuFuncMap(List<MenuFunc> menuFuncs) {
+        // @formatter:off
+        if (menuFuncs.isEmpty()) {
             return Collections.emptyMap();
         }
         // 提取关联关系所有的功能号id
-        List<Long> funcIds = list.stream().map(MenuFunc::getFuncId).collect(Collectors.toList());
+        List<Long> funcIds = menuFuncs.stream().map(MenuFunc::getFuncId).collect(Collectors.toList());
         // 查询所有功能号信息，并转为key为id的map
         List<Func> funcs = funcMapper.selectBatchIds(funcIds);
-        Map<Long, FuncDTO> funcMap = funcs
+        Map<Long, Func> funcMap = funcs
             .stream()
-            .map(FuncAssembler.INSTANCE::entityToDto)
-            .collect(Collectors.toMap(FuncDTO::getId, Function.identity()));
+            .collect(Collectors.toMap(Func::getId, Function.identity()));
         // 根据关联关系进行分组，并根据功能号map提取功能号信息替换关联关系的功能号id
-        return list.stream()
+        return menuFuncs
+            .stream()
             .collect(Collectors.groupingBy(MenuFunc::getMenuId,
                 Collectors.mapping(x-> getFuncDTO(funcMap, x), Collectors.toList()))
             );
         // @formatter:on
     }
 
-    private FuncDTO getFuncDTO(Map<Long, FuncDTO> funcMap, MenuFunc menuFunc) {
+    private Func getFuncDTO(Map<Long, Func> funcMap, MenuFunc menuFunc) {
         Long funcId = menuFunc.getFuncId();
         return funcMap.get(funcId);
     }

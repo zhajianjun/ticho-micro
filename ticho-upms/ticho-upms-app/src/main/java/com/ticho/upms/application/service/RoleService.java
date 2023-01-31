@@ -57,9 +57,9 @@ public interface RoleService {
      * 根据角色id列表合并菜单信息
      *
      * @param roleIds 角色id
-     * @return {@link List}<{@link UserRoleMenuFuncDtlDTO}>
+     * @return {@link RoleMenuFuncDtlDTO}
      */
-    List<RoleMenuFuncDtlDTO> mergeMenuByRoleIds(List<Long> roleIds);
+    RoleMenuFuncDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll);
 
 }
 

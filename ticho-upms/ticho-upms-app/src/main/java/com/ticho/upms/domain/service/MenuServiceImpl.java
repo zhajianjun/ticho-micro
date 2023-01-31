@@ -6,14 +6,15 @@ import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.util.Assert;
 import com.ticho.upms.application.service.MenuService;
+import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.domain.repository.MenuFuncRepository;
 import com.ticho.upms.domain.repository.MenuRepository;
 import com.ticho.upms.domain.repository.RoleFuncRepository;
 import com.ticho.upms.infrastructure.core.util.TreeUtil;
+import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.infrastructure.entity.MenuFunc;
 import com.ticho.upms.interfaces.assembler.MenuAssembler;
-import com.ticho.upms.interfaces.dto.FuncDTO;
 import com.ticho.upms.interfaces.dto.MenuDTO;
 import com.ticho.upms.interfaces.dto.MenuFuncDTO;
 import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
@@ -23,11 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +35,7 @@ import java.util.stream.Collectors;
  * @date 2022-10-13 09:08
  */
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends UpmsHandle implements MenuService {
 
     @Autowired
     private MenuRepository menuRepository;
@@ -73,35 +71,15 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuFuncDtlDTO> listAll(boolean containFunc) {
-        // @formatter:off
-        List<Menu> list = menuRepository.list();
-        List<Long> menuIds = new ArrayList<>();
-        List<MenuFuncDtlDTO> menuFuncDtls = list
-            .stream()
-            .peek(x-> menuIds.add(x.getId()))
-            .sorted(Comparator.comparing(Menu::getParentId).thenComparing(Comparator.nullsLast(Comparator.comparing(Menu::getSort))))
-            .map(MenuAssembler.INSTANCE::entityToDtlDto)
-            .collect(Collectors.toList());
+        List<Menu> menus = menuRepository.list();
+        List<MenuFuncDtlDTO> menuFuncDtls = getMenuFuncDtls(menus, y-> true, z-> {});
         if (containFunc) {
-            Map<Long, List<FuncDTO>> menuFuncMap = menuFuncRepository.listByMenuIds(menuIds);
-            return TreeUtil.tree(menuFuncDtls, 0L, x -> setFuncs(menuFuncMap, x));
+            List<Long> menuIds = menus.stream().map(Menu::getId).collect(Collectors.toList());
+            Map<Long, List<Func>> menuFuncMap = menuFuncRepository.getMenuFuncMapByMenuIds(menuIds);
+            return TreeUtil.tree(menuFuncDtls, 0L, x -> setFuncs(menuFuncMap, x, (a, b)-> true, (c, d)-> {}));
         }
         return TreeUtil.tree(menuFuncDtls, 0L, null);
         // @formatter:on
-    }
-
-    private void setFuncs(Map<Long, List<FuncDTO>> menuFuncMap, MenuFuncDtlDTO menuFuncDtl) {
-        Long menuId = menuFuncDtl.getId();
-        List<FuncDTO> funcs = Optional.ofNullable(menuFuncMap.get(menuId)).orElseGet(ArrayList::new);
-        List<Long> funcIds = new ArrayList<>();
-        List<String> funcCodes = new ArrayList<>();
-        for (FuncDTO func : funcs) {
-            funcIds.add(func.getId());
-            funcCodes.add(func.getCode());
-        }
-        menuFuncDtl.setFuncs(funcs);
-        menuFuncDtl.setFuncIds(funcIds);
-        menuFuncDtl.setFuncCodes(funcCodes);
     }
 
     @Override

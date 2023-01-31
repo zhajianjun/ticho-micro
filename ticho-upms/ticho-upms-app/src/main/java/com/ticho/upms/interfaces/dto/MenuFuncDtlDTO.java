@@ -81,6 +81,10 @@ public class MenuFuncDtlDTO extends TreeNode<MenuFuncDtlDTO> implements Serializ
     @ApiModelProperty(value = "备注信息", position = 160)
     private String remark;
 
+    /** 是否选中 */
+    @ApiModelProperty(value = "是否选中;true-选中,false-未选中", position = 161)
+    private Boolean checkbox;
+
     /** 功能号id列表 */
     @ApiModelProperty(value = "功能号id列表", position = 20)
     private List<Long> funcIds;

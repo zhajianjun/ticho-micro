@@ -3,7 +3,6 @@ package com.ticho.upms.domain.repository;
 import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.infrastructure.entity.MenuFunc;
-import com.ticho.upms.interfaces.dto.FuncDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,14 +25,21 @@ public interface MenuFuncRepository extends RootService<MenuFunc> {
      */
     List<MenuFunc> listByMenuId(Long menuId);
 
+    /**
+     * 通过菜单id列表查询功能号信息
+     *
+     * @return {@link Map}<{@link Long}, {@link List}<{@link Func}>>
+     */
+    Map<Long, List<Func>> getMenuFuncMap();
 
     /**
      * 通过菜单id列表查询功能号信息
      *
      * @param menuIds 菜单id
-     * @return {@link Map}<{@link Long}, {@link List}<{@link FuncDTO}>>
+     * @return {@link Map}<{@link Long}, {@link List}<{@link Func}>>
      */
-    Map<Long, List<FuncDTO>> listByMenuIds(List<Long> menuIds);
+    Map<Long, List<Func>> getMenuFuncMapByMenuIds(List<Long> menuIds);
+
 
     /**
      * 根据菜单id删除

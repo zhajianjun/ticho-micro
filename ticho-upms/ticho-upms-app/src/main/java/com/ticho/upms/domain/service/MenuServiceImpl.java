@@ -10,6 +10,7 @@ import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.domain.repository.MenuFuncRepository;
 import com.ticho.upms.domain.repository.MenuRepository;
 import com.ticho.upms.domain.repository.RoleFuncRepository;
+import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.infrastructure.core.util.TreeUtil;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.infrastructure.entity.Menu;
@@ -23,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,6 +47,9 @@ public class MenuServiceImpl extends UpmsHandle implements MenuService {
     @Autowired
     private RoleFuncRepository roleFuncRepository;
 
+    @Autowired
+    private  RoleMenuRepository roleMenuRepository;
+
     @Override
     public void save(MenuDTO menuDTO) {
         Menu menu = MenuAssembler.INSTANCE.dtoToEntity(menuDTO);
@@ -53,8 +57,13 @@ public class MenuServiceImpl extends UpmsHandle implements MenuService {
     }
 
     @Override
-    public void removeById(Serializable id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void removeById(Long id) {
         Assert.isTrue(menuRepository.removeById(id), BizErrCode.FAIL, "删除失败");
+        List<Long> menuIds = Collections.singletonList(id);
+        roleMenuRepository.removeByMenuIds(menuIds);
+        menuFuncRepository.removeByMenuIds(menuIds);
+        roleFuncRepository.removeByMenuIds(menuIds);
     }
 
     @Override
@@ -64,7 +73,7 @@ public class MenuServiceImpl extends UpmsHandle implements MenuService {
     }
 
     @Override
-    public MenuDTO getById(Serializable id) {
+    public MenuDTO getById(Long id) {
         Menu menu = menuRepository.getById(id);
         return MenuAssembler.INSTANCE.entityToDto(menu);
     }

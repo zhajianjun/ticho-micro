@@ -9,6 +9,8 @@ import com.ticho.boot.view.util.Assert;
 import com.ticho.boot.web.util.SpringContext;
 import com.ticho.upms.application.service.FuncService;
 import com.ticho.upms.domain.repository.FuncRepository;
+import com.ticho.upms.domain.repository.MenuFuncRepository;
+import com.ticho.upms.domain.repository.RoleFuncRepository;
 import com.ticho.upms.infrastructure.entity.Func;
 import com.ticho.upms.interfaces.assembler.FuncAssembler;
 import com.ticho.upms.interfaces.dto.FuncDTO;
@@ -17,12 +19,13 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,6 +42,12 @@ public class FuncServiceImpl implements FuncService {
 
     @Autowired
     private FuncRepository funcRepository;
+
+    @Autowired
+    private MenuFuncRepository menuFuncRepository;
+
+    @Autowired
+    private RoleFuncRepository roleFuncRepository;
 
     @Override
     public void save(FuncDTO funcDTO) {
@@ -59,8 +68,12 @@ public class FuncServiceImpl implements FuncService {
     }
 
     @Override
-    public void removeById(Serializable id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void removeById(Long id) {
         Assert.isTrue(funcRepository.removeById(id), BizErrCode.FAIL, "删除失败");
+        List<Long> funcIds = Collections.singletonList(id);
+        menuFuncRepository.removeByFuncIds(funcIds);
+        roleFuncRepository.removeByFuncIds(funcIds);
     }
 
     @Override
@@ -70,7 +83,7 @@ public class FuncServiceImpl implements FuncService {
     }
 
     @Override
-    public FuncDTO getById(Serializable id) {
+    public FuncDTO getById(Long id) {
         Func func = funcRepository.getById(id);
         return FuncAssembler.INSTANCE.entityToDto(func);
     }

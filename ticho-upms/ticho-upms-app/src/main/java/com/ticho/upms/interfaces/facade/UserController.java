@@ -5,7 +5,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.UserService;
-import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserRoleDTO;
@@ -56,7 +55,7 @@ public class UserController implements UserProvider {
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
+    public Result<Void> removeById(@RequestParam("id") Long id) {
         userService.removeById(id);
         return Result.ok();
     }
@@ -98,7 +97,7 @@ public class UserController implements UserProvider {
     @PreAuthorize("@pm.hasPerms('upms:user:bindRole')")
     @ApiOperation(value = "用户绑定角色信息")
     @ApiOperationSupport(order = 80)
-    @PostMapping
+    @PostMapping("bindRole")
     public Result<Void> bindRole(@RequestBody UserRoleDTO userRoleDTO) {
         userService.bindRole(userRoleDTO);
         return Result.ok();

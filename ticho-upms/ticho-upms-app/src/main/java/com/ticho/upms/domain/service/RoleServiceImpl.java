@@ -8,10 +8,14 @@ import com.ticho.boot.view.util.Assert;
 import com.ticho.boot.web.util.valid.ValidUtil;
 import com.ticho.upms.application.service.RoleService;
 import com.ticho.upms.domain.handle.UpmsHandle;
+import com.ticho.upms.domain.repository.MenuFuncRepository;
 import com.ticho.upms.domain.repository.RoleFuncRepository;
 import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.domain.repository.RoleRepository;
+import com.ticho.upms.domain.repository.UserRoleRepository;
+import com.ticho.upms.infrastructure.entity.MenuFunc;
 import com.ticho.upms.infrastructure.entity.Role;
+import com.ticho.upms.infrastructure.entity.RoleFunc;
 import com.ticho.upms.infrastructure.entity.RoleMenu;
 import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.dto.RoleDTO;
@@ -45,6 +49,12 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
     @Autowired
     private RoleFuncRepository roleFuncRepository;
 
+    @Autowired
+    private MenuFuncRepository menuFuncRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
     @Override
     public void save(RoleDTO roleDTO) {
         Role role = RoleAssembler.INSTANCE.dtoToEntity(roleDTO);
@@ -52,8 +62,13 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
     }
 
     @Override
-    public void removeById(Serializable id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void removeById(Long id) {
         Assert.isTrue(roleRepository.removeById(id), BizErrCode.FAIL, "删除失败");
+        List<Long> roleIds = Collections.singletonList(id);
+        userRoleRepository.removeByRoleIds(roleIds);
+        roleMenuRepository.removeByRoleIds(roleIds);
+        roleFuncRepository.removeByRoleIds(roleIds);
     }
 
     @Override
@@ -112,9 +127,33 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void bindFunc(RoleFuncDTO roleFuncDTO) {
+        // @formatter:off
         ValidUtil.valid(roleFuncDTO);
-        // TODO
+        Long menuId = roleFuncDTO.getMenuId();
+        Long roleId = roleFuncDTO.getRoleId();
+        List<Long> funcIds = roleFuncDTO.getFuncIds();
+        // 查询菜单下所有的功能号
+        List<MenuFunc> menuFuncs = menuFuncRepository.listByMenuId(menuId);
+        List<Long> selectFuncIds = menuFuncs.stream().map(MenuFunc::getFuncId).collect(Collectors.toList());
+        // 角色菜单绑定的功能号必须在该菜单下的功能号之内
+        Assert.isTrue(selectFuncIds.containsAll(funcIds), BizErrCode.FAIL, "包含该菜单不存在的功能号");
+        roleFuncRepository.removeByRoleIdAndMenuIds(roleId, Collections.singletonList(menuId));
+        List<RoleFunc> roleFuncs = funcIds
+            .stream()
+            .map(x-> convertToRoleFunc(roleId, menuId, x))
+            .collect(Collectors.toList());
+        roleFuncRepository.saveBatch(roleFuncs);
+        // @formatter:on
+    }
+
+    private RoleFunc convertToRoleFunc(Long roleId, Long menuId, Long funcId) {
+        RoleFunc roleFunc = new RoleFunc();
+        roleFunc.setRoleId(roleId);
+        roleFunc.setMenuId(menuId);
+        roleFunc.setFuncId(funcId);
+        return roleFunc;
     }
 
     private RoleMenu convertToRoleMenu(Long roleId, Long x) {

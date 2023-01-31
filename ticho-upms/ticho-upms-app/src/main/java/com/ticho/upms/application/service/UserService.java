@@ -7,8 +7,6 @@ import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 
-import java.io.Serializable;
-
 /**
  * 用户信息 服务接口
  *
@@ -43,7 +41,7 @@ public interface UserService {
      *
      * @param id 主键
      */
-    void removeById(Serializable id);
+    void removeById(Long id);
 
     /**
      * 修改用户信息
@@ -58,7 +56,7 @@ public interface UserService {
      * @param id 主键
      * @return {@link UserDTO}
      */
-    UserDTO getById(Serializable id);
+    UserDTO getById(Long id);
 
     /**
      * 分页查询用户信息列表

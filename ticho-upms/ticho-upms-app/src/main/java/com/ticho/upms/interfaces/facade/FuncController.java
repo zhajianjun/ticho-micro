@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -66,7 +65,7 @@ public class FuncController {
     @ApiOperationSupport(order = 30)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
+    public Result<Void> removeById(@RequestParam("id") Long id) {
         funcService.removeById(id);
         return Result.ok();
     }
@@ -83,7 +82,7 @@ public class FuncController {
     @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<FuncDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<FuncDTO> getById(@RequestParam("id") Long id) {
         return Result.ok(funcService.getById(id));
     }
 

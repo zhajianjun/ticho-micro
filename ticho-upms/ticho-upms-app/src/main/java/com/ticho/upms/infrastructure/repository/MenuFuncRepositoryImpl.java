@@ -88,12 +88,22 @@ public class MenuFuncRepositoryImpl extends RootServiceImpl<MenuFuncMapper, Menu
     }
 
     @Override
-    public boolean removeByMenuId(Long menuId) {
-        if (Objects.isNull(menuId)) {
+    public boolean removeByMenuIds(Collection<Long> menuIds) {
+        if (CollUtil.isEmpty(menuIds)) {
             return false;
         }
         LambdaQueryWrapper<MenuFunc> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(MenuFunc::getMenuId, menuId);
+        wrapper.in(MenuFunc::getMenuId, menuIds);
+        return remove(wrapper);
+    }
+
+    @Override
+    public boolean removeByFuncIds(Collection<Long> funcIds) {
+        if (CollUtil.isEmpty(funcIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<MenuFunc> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(MenuFunc::getFuncId, funcIds);
         return remove(wrapper);
     }
 

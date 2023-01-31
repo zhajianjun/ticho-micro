@@ -30,7 +30,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -100,8 +99,9 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
     }
 
     @Override
-    public void removeById(Serializable id) {
+    public void removeById(Long id) {
         Assert.isTrue(userRepository.removeById(id), BizErrCode.FAIL, "删除失败");
+        userRoleRepository.removeByUserId(id);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
     }
 
     @Override
-    public UserDTO getById(Serializable id) {
+    public UserDTO getById(Long id) {
         User user = userRepository.getById(id);
         return UserAssembler.INSTANCE.entityToDto(user);
     }

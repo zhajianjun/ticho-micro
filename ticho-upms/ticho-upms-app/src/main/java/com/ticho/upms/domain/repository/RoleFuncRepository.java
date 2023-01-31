@@ -15,6 +15,14 @@ import java.util.List;
 public interface RoleFuncRepository extends RootService<RoleFunc> {
 
     /**
+     * 根据角色id列表删除
+     *
+     * @param roleIds 角色id列表
+     * @return boolean
+     */
+    boolean removeByRoleIds(Collection<Long> roleIds);
+
+    /**
      * 根据角色id和菜单id列表删除
      *
      * @param roleId 角色id
@@ -22,6 +30,14 @@ public interface RoleFuncRepository extends RootService<RoleFunc> {
      * @return boolean
      */
     boolean removeByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds);
+
+    /**
+     * 根据菜单id列表删除
+     *
+     * @param menuIds 菜单id列表
+     * @return boolean
+     */
+    boolean removeByMenuIds(Collection<Long> menuIds);
 
     /**
      * 根据菜单id和功能号id删除
@@ -41,5 +57,12 @@ public interface RoleFuncRepository extends RootService<RoleFunc> {
      */
     List<RoleFunc> listByRoleIds(List<Long> roleIds);
 
+    /**
+     * 根据功能号id列表删除
+     *
+     * @param funcIds 功能号id列表
+     * @return boolean
+     */
+    boolean removeByFuncIds(Collection<Long> funcIds);
 }
 

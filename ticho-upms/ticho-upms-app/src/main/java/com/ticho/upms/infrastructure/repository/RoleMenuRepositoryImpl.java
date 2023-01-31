@@ -36,6 +36,26 @@ public class RoleMenuRepositoryImpl extends RootServiceImpl<RoleMenuMapper, Role
     }
 
     @Override
+    public boolean removeByRoleIds(Collection<Long> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleMenu> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RoleMenu::getRoleId, roleIds);
+        return remove(wrapper);
+    }
+
+    @Override
+    public boolean removeByMenuIds(Collection<Long> menuIds) {
+        if (CollUtil.isEmpty(menuIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleMenu> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RoleMenu::getMenuId, menuIds);
+        return remove(wrapper);
+    }
+
+    @Override
     public boolean removeByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds) {
         if (Objects.isNull(roleId) || CollUtil.isEmpty(menuIds)) {
             return false;

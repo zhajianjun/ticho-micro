@@ -23,6 +23,22 @@ public interface RoleMenuRepository extends RootService<RoleMenu> {
     List<RoleMenu> listByRoleIds(List<Long> roleIds);
 
     /**
+     * 根据角色id列表删除
+     *
+     * @param roleIds 角色id列表
+     * @return boolean
+     */
+    boolean removeByRoleIds(Collection<Long> roleIds);
+
+    /**
+     * 根据菜单id列表删除
+     *
+     * @param menuIds 菜单id列表
+     * @return boolean
+     */
+    boolean removeByMenuIds(Collection<Long> menuIds);
+
+    /**
      * 根据角色id和菜单id列表删除
      *
      * @param roleId 角色id

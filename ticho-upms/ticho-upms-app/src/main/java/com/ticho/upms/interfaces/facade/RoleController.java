@@ -51,7 +51,7 @@ public class RoleController {
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
+    public Result<Void> removeById(@RequestParam("id") Long id) {
         roleService.removeById(id);
         return Result.ok();
     }

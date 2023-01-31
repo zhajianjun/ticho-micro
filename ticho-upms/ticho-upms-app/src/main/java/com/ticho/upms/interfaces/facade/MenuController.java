@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -52,7 +51,7 @@ public class MenuController {
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Serializable id) {
+    public Result<Void> removeById(@RequestParam("id") Long id) {
         menuService.removeById(id);
         return Result.ok();
     }
@@ -69,7 +68,7 @@ public class MenuController {
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<MenuDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<MenuDTO> getById(@RequestParam("id") Long id) {
         return Result.ok(menuService.getById(id));
     }
 

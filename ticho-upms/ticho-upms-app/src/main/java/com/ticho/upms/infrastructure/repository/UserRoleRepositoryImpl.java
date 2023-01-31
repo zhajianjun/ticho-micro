@@ -1,5 +1,6 @@
 package com.ticho.upms.infrastructure.repository;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
@@ -9,6 +10,7 @@ import com.ticho.upms.infrastructure.mapper.UserRoleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +42,16 @@ public class UserRoleRepositoryImpl extends RootServiceImpl<UserRoleMapper, User
         }
         LambdaQueryWrapper<UserRole> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserRole::getUserId, userId);
+        return remove(wrapper);
+    }
+
+    @Override
+    public boolean removeByRoleIds(Collection<Long> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<UserRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(UserRole::getRoleId, roleIds);
         return remove(wrapper);
     }
 

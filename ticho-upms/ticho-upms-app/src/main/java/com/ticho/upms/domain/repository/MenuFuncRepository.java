@@ -42,18 +42,26 @@ public interface MenuFuncRepository extends RootService<MenuFunc> {
 
 
     /**
-     * 根据菜单id删除
+     * 根据菜单id列表删除
      *
-     * @param menuId 菜单id
+     * @param menuIds 菜单id列表
      * @return boolean
      */
-    boolean removeByMenuId(Long menuId);
+    boolean removeByMenuIds(Collection<Long> menuIds);
 
     /**
-     * 根据菜单id和功能号id删除
+     * 根据功能号id列表删除
+     *
+     * @param funcIds 功能号id列表
+     * @return boolean
+     */
+    boolean removeByFuncIds(Collection<Long> funcIds);
+
+    /**
+     * 根据菜单id和功能号id列表删除
      *
      * @param menuId 菜单id
-     * @param funcIds 功能号id
+     * @param funcIds 功能号id列表
      * @return boolean
      */
     boolean removeByMenuIdAndFuncIds(Long menuId, Collection<Long> funcIds);

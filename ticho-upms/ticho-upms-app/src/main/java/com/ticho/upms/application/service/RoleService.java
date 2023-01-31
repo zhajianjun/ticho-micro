@@ -5,8 +5,6 @@ import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.dto.RoleFuncDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
-import com.ticho.upms.interfaces.dto.UserRoleDTO;
-import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
 import java.io.Serializable;
@@ -31,7 +29,7 @@ public interface RoleService {
      *
      * @param id 主键
      */
-    void removeById(Serializable id);
+    void removeById(Long id);
 
     /**
      * 修改角色信息

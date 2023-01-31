@@ -4,7 +4,6 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.FuncDTO;
 import com.ticho.upms.interfaces.query.FuncQuery;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -40,7 +39,7 @@ public interface FuncService {
      *
      * @param id 主键
      */
-    void removeById(Serializable id);
+    void removeById(Long id);
 
     /**
      * 修改功能号信息
@@ -55,7 +54,7 @@ public interface FuncService {
      * @param id 主键
      * @return {@link FuncDTO}
      */
-    FuncDTO getById(Serializable id);
+    FuncDTO getById(Long id);
 
     /**
      * 分页查询功能号信息列表

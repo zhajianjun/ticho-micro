@@ -28,7 +28,7 @@ public interface MenuService {
      *
      * @param id 主键
      */
-    void removeById(Serializable id);
+    void removeById(Long id);
 
     /**
      * 修改菜单信息
@@ -43,7 +43,7 @@ public interface MenuService {
      * @param id 主键
      * @return {@link MenuDTO}
      */
-    MenuDTO getById(Serializable id);
+    MenuDTO getById(Long id);
 
     /**
      * 获取所有菜单信息

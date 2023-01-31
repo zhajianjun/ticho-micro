@@ -3,6 +3,7 @@ package com.ticho.upms.domain.repository;
 import com.ticho.boot.datasource.service.RootService;
 import com.ticho.upms.infrastructure.entity.UserRole;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,6 +29,14 @@ public interface UserRoleRepository extends RootService<UserRole> {
      * @return boolean
      */
     boolean removeByUserId(Long userId);
+
+    /**
+     * 通过角色id列表删除
+     *
+     * @param roleIds 角色id列表
+     * @return boolean
+     */
+    boolean removeByRoleIds(Collection<Long> roleIds);
 
 }
 

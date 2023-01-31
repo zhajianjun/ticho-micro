@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ticho.boot.datasource.service.impl.RootServiceImpl;
 import com.ticho.upms.domain.repository.RoleFuncRepository;
+import com.ticho.upms.infrastructure.entity.MenuFunc;
 import com.ticho.upms.infrastructure.entity.RoleFunc;
 import com.ticho.upms.infrastructure.mapper.RoleFuncMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,32 @@ import java.util.Objects;
 public class RoleFuncRepositoryImpl extends RootServiceImpl<RoleFuncMapper, RoleFunc> implements RoleFuncRepository {
 
     @Override
+    public boolean removeByRoleIds(Collection<Long> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RoleFunc::getRoleId, roleIds);
+        return remove(wrapper);
+    }
+
+    @Override
     public boolean removeByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds) {
         if (Objects.isNull(roleId) || CollUtil.isEmpty(menuIds)) {
             return false;
         }
         LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(RoleFunc::getRoleId, roleId);
+        wrapper.in(RoleFunc::getMenuId, menuIds);
+        return remove(wrapper);
+    }
+
+    @Override
+    public boolean removeByMenuIds(Collection<Long> menuIds) {
+        if (CollUtil.isEmpty(menuIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
         wrapper.in(RoleFunc::getMenuId, menuIds);
         return remove(wrapper);
     }
@@ -55,6 +76,16 @@ public class RoleFuncRepositoryImpl extends RootServiceImpl<RoleFuncMapper, Role
         LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
         wrapper.in(RoleFunc::getRoleId, roleIds);
         return list(wrapper);
+    }
+
+    @Override
+    public boolean removeByFuncIds(Collection<Long> funcIds) {
+        if (CollUtil.isEmpty(funcIds)) {
+            return false;
+        }
+        LambdaQueryWrapper<RoleFunc> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(RoleFunc::getFuncId, funcIds);
+        return remove(wrapper);
     }
 
 }

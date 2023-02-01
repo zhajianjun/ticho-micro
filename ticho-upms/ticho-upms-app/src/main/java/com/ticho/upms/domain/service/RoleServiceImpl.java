@@ -21,6 +21,7 @@ import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.dto.RoleFuncDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,6 +147,11 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
             .collect(Collectors.toList());
         roleFuncRepository.saveBatch(roleFuncs);
         // @formatter:on
+    }
+
+    @Override
+    public RoleMenuFuncDtlDTO getRoleDtl(Long roleId, boolean showAll) {
+        return mergeMenuByRoleIds(Collections.singletonList(roleId), showAll);
     }
 
     private RoleFunc convertToRoleFunc(Long roleId, Long menuId, Long funcId) {

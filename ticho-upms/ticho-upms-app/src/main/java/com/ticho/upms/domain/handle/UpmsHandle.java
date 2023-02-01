@@ -90,7 +90,7 @@ public class UpmsHandle {
         userRoleMenuFuncDtlDTO.setRoleCodes(roleMenuFuncDtl.getRoleCodes());
         userRoleMenuFuncDtlDTO.setMenuIds(roleMenuFuncDtl.getMenuIds());
         userRoleMenuFuncDtlDTO.setRoles(roleMenuFuncDtl.getRoles());
-        userRoleMenuFuncDtlDTO.setMenuFuncs(roleMenuFuncDtl.getMenuFuncs());
+        userRoleMenuFuncDtlDTO.setMenus(roleMenuFuncDtl.getMenus());
         return userRoleMenuFuncDtlDTO;
     }
 
@@ -157,7 +157,7 @@ public class UpmsHandle {
         BiConsumer<Long,FuncDTO> finalFuncPeek = funcPeek;
         List<MenuFuncDtlDTO> tree = TreeUtil.tree(menuFuncDtls, 0L, x -> setFuncs(menuFuncMap, x, finalFuncFilter, finalFuncPeek));
         roleMenuFuncDtlDTO.setRoleIds(roleIds);
-        roleMenuFuncDtlDTO.setMenuFuncs(tree);
+        roleMenuFuncDtlDTO.setMenus(tree);
         roleMenuFuncDtlDTO.setMenuIds(menuIds);
         roleMenuFuncDtlDTO.setRoleCodes(roleCodes);
         roleMenuFuncDtlDTO.setRoles(roleDtos);

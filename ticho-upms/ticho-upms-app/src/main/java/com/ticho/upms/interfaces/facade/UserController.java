@@ -74,7 +74,7 @@ public class UserController implements UserProvider {
     @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<UserDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<UserDTO> getById(@RequestParam("id") Long id) {
         return Result.ok(userService.getById(id));
     }
 

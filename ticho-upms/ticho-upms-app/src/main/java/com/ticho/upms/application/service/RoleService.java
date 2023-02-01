@@ -75,5 +75,14 @@ public interface RoleService {
      * @param roleFuncDTO 角色功能号dto
      */
     void bindFunc(RoleFuncDTO roleFuncDTO);
+
+    /**
+     * 用户角色菜单功能号详情
+     *
+     * @param roleId 角色id
+     * @param showAll 是否展示全部
+     * @return {@link RoleMenuFuncDtlDTO}
+     */
+    RoleMenuFuncDtlDTO getRoleDtl(Long roleId, boolean showAll);
 }
 

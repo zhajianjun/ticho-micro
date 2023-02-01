@@ -36,8 +36,8 @@ public class RoleMenuFuncDtlDTO implements Serializable {
     @ApiModelProperty(value = "菜单功能号信息", position = 250)
     private List<RoleDTO> roles;
 
-    /** 菜单功能号信息 */
-    @ApiModelProperty(value = "菜单功能号信息", position = 260)
-    private List<MenuFuncDtlDTO> menuFuncs;
+    /** 菜单信息 */
+    @ApiModelProperty(value = "菜单信息", position = 260)
+    private List<MenuFuncDtlDTO> menus;
 
 }

@@ -3,7 +3,7 @@ package com.ticho.upms.application.service;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserRoleDTO;
-import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 
@@ -71,9 +71,9 @@ public interface UserService {
      *
      * @param tenantId 租户id
      * @param username 用户名
-     * @return {@link UserRoleMenuFuncDtlDTO}
+     * @return {@link UserRoleMenuDtlDTO}
      */
-    UserRoleMenuFuncDtlDTO getUserDtl(String tenantId, String username);
+    UserRoleMenuDtlDTO getUserDtl(String tenantId, String username);
 
     /**
      * 绑定角色

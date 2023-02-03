@@ -8,7 +8,7 @@ import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import com.ticho.upms.interfaces.dto.UserRoleDTO;
-import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.Serializable;
 
 /**
  * 用户信息 控制器
@@ -87,10 +85,10 @@ public class UserController implements UserProvider {
     }
 
     @PreAuthorize("@pm.hasPerms('upms:user:getUserDtl')")
-    @ApiOperation(value = "查询用户角色菜单功能号信息")
+    @ApiOperation(value = "查询用户角色菜单权限标识信息")
     @ApiOperationSupport(order = 70)
     @GetMapping("getUserDtl")
-    public Result<UserRoleMenuFuncDtlDTO> getUserDtl(String tenantId, String username) {
+    public Result<UserRoleMenuDtlDTO> getUserDtl(String tenantId, String username) {
         return Result.ok(userService.getUserDtl(tenantId, username));
     }
 

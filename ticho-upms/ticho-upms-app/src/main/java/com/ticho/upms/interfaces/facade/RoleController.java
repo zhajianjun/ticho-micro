@@ -6,9 +6,8 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.RoleService;
 import com.ticho.upms.interfaces.dto.RoleDTO;
-import com.ticho.upms.interfaces.dto.RoleFuncDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
-import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -88,18 +87,10 @@ public class RoleController {
         return Result.ok();
     }
 
-    @ApiOperation(value = "角色绑定功能号信息")
+    @ApiOperation(value = "查询角色菜单权限标识信息")
     @ApiOperationSupport(order = 70)
-    @PostMapping("bindFunc")
-    public Result<Void> bindFunc(@RequestBody RoleFuncDTO roleFuncDTO) {
-        roleService.bindFunc(roleFuncDTO);
-        return Result.ok();
-    }
-
-    @ApiOperation(value = "查询角色菜单功能号信息")
-    @ApiOperationSupport(order = 70)
-    @GetMapping("getUserDtl")
-    public Result<RoleMenuFuncDtlDTO> getUserDtl(Long roleId, boolean showAll) {
+    @GetMapping("getRoleDtl")
+    public Result<RoleMenuDtlDTO> getRoleDtl(Long roleId, boolean showAll) {
         return Result.ok(roleService.getRoleDtl(roleId, showAll));
     }
 

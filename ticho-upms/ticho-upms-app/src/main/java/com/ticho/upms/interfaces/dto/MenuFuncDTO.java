@@ -9,14 +9,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 菜单功能号信息
+ * 菜单权限标识信息
  *
  * @author zhajianjun
  * @date 2022-10-13 09:08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "菜单功能号信息")
+@ApiModel(value = "菜单权限标识信息")
 public class MenuFuncDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

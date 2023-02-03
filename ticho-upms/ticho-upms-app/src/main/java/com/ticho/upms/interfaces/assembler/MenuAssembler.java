@@ -1,9 +1,11 @@
 package com.ticho.upms.interfaces.assembler;
 
+import cn.hutool.core.util.StrUtil;
 import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.interfaces.dto.MenuDTO;
-import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.MenuDtlDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -12,7 +14,7 @@ import org.mapstruct.factory.Mappers;
  * @author zhajianjun
  * @date 2022-10-13 09:08
  */
-@Mapper
+@Mapper(imports = {StrUtil.class})
 public interface MenuAssembler {
     MenuAssembler INSTANCE = Mappers.getMapper(MenuAssembler.class);
 
@@ -32,6 +34,8 @@ public interface MenuAssembler {
      */
     MenuDTO entityToDto(Menu entity);
 
-    MenuFuncDtlDTO entityToDtlDto(Menu entity);
+    @Mapping(target = "perms", expression = "java(StrUtil.split(entity.getPerms(), ','))")
+    MenuDtlDTO entityToDtlDto(Menu entity);
+
 
 }

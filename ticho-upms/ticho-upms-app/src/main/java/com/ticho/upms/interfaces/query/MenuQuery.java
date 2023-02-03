@@ -33,9 +33,13 @@ public class MenuQuery extends BasePageQuery implements Serializable {
     @ApiModelProperty(value = "结构", position = 30)
     private String structure;
 
-    /** 类型;1-目录,2-菜单 */
-    @ApiModelProperty(value = "类型;1-目录,2-菜单", position = 40)
+    /** 类型;1-目录,2-菜单,3-权限 */
+    @ApiModelProperty(value = "类型;1-目录,2-菜单,3-权限", position = 40)
     private Integer type;
+
+    /** 权限标识 */
+    @ApiModelProperty(value = "权限标识", position = 45)
+    private String perms;
 
     /** 标题;目录名称、菜单名称 */
     @ApiModelProperty(value = "标题;目录名称、菜单名称", position = 50)

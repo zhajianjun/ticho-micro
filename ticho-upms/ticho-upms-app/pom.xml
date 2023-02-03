@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-rabbitmq</artifactId>
+            <artifactId>ticho-starter-redis</artifactId>
         </dependency>
 
         <dependency>

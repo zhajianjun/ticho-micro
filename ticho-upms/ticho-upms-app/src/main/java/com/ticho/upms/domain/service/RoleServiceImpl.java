@@ -8,20 +8,15 @@ import com.ticho.boot.view.util.Assert;
 import com.ticho.boot.web.util.valid.ValidUtil;
 import com.ticho.upms.application.service.RoleService;
 import com.ticho.upms.domain.handle.UpmsHandle;
-import com.ticho.upms.domain.repository.MenuFuncRepository;
-import com.ticho.upms.domain.repository.RoleFuncRepository;
 import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.domain.repository.RoleRepository;
 import com.ticho.upms.domain.repository.UserRoleRepository;
-import com.ticho.upms.infrastructure.entity.MenuFunc;
 import com.ticho.upms.infrastructure.entity.Role;
-import com.ticho.upms.infrastructure.entity.RoleFunc;
 import com.ticho.upms.infrastructure.entity.RoleMenu;
 import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.dto.RoleDTO;
-import com.ticho.upms.interfaces.dto.RoleFuncDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
-import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,12 +43,6 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
     private RoleMenuRepository roleMenuRepository;
 
     @Autowired
-    private RoleFuncRepository roleFuncRepository;
-
-    @Autowired
-    private MenuFuncRepository menuFuncRepository;
-
-    @Autowired
     private UserRoleRepository userRoleRepository;
 
     @Override
@@ -69,7 +58,6 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
         List<Long> roleIds = Collections.singletonList(id);
         userRoleRepository.removeByRoleIds(roleIds);
         roleMenuRepository.removeByRoleIds(roleIds);
-        roleFuncRepository.removeByRoleIds(roleIds);
     }
 
     @Override
@@ -120,47 +108,17 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
             .collect(Collectors.toList());
         // 删除角色绑定的菜单
         roleMenuRepository.removeByRoleIdAndMenuIds(roleId, removeMenuIds);
-        // 删除角色绑定菜单下的功能号
-        roleFuncRepository.removeByRoleIdAndMenuIds(roleId, removeMenuIds);
         // 保存角色绑定的菜单
         roleMenuRepository.saveBatch(addRoleMenus);
         // @formatter:on
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void bindFunc(RoleFuncDTO roleFuncDTO) {
-        // @formatter:off
-        ValidUtil.valid(roleFuncDTO);
-        Long menuId = roleFuncDTO.getMenuId();
-        Long roleId = roleFuncDTO.getRoleId();
-        List<Long> funcIds = roleFuncDTO.getFuncIds();
-        // 查询菜单下所有的功能号
-        List<MenuFunc> menuFuncs = menuFuncRepository.listByMenuId(menuId);
-        List<Long> selectFuncIds = menuFuncs.stream().map(MenuFunc::getFuncId).collect(Collectors.toList());
-        // 角色菜单绑定的功能号必须在该菜单下的功能号之内
-        Assert.isTrue(selectFuncIds.containsAll(funcIds), BizErrCode.FAIL, "包含该菜单不存在的功能号");
-        roleFuncRepository.removeByRoleIdAndMenuIds(roleId, Collections.singletonList(menuId));
-        List<RoleFunc> roleFuncs = funcIds
-            .stream()
-            .map(x-> convertToRoleFunc(roleId, menuId, x))
-            .collect(Collectors.toList());
-        roleFuncRepository.saveBatch(roleFuncs);
-        // @formatter:on
-    }
 
     @Override
-    public RoleMenuFuncDtlDTO getRoleDtl(Long roleId, boolean showAll) {
+    public RoleMenuDtlDTO getRoleDtl(Long roleId, boolean showAll) {
         return mergeMenuByRoleIds(Collections.singletonList(roleId), showAll);
     }
 
-    private RoleFunc convertToRoleFunc(Long roleId, Long menuId, Long funcId) {
-        RoleFunc roleFunc = new RoleFunc();
-        roleFunc.setRoleId(roleId);
-        roleFunc.setMenuId(menuId);
-        roleFunc.setFuncId(funcId);
-        return roleFunc;
-    }
 
     private RoleMenu convertToRoleMenu(Long roleId, Long x) {
         RoleMenu roleMenu = new RoleMenu();

@@ -25,6 +25,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-redis</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.ticho</groupId>
             <artifactId>ticho-upms-api</artifactId>
         </dependency>

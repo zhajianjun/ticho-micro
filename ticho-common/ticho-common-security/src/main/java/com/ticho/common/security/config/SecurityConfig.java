@@ -1,8 +1,11 @@
 package com.ticho.common.security.config;
 
-import com.ticho.upms.interfaces.api.OauthProvider;
+import com.ticho.boot.redis.util.RedisUtil;
 import com.ticho.boot.security.handle.jwt.JwtSigner;
 import com.ticho.boot.security.prop.TichoOauthProperty;
+import com.ticho.common.security.component.PermRedisCacheEvent;
+import com.ticho.common.security.handle.PermHandle;
+import com.ticho.upms.interfaces.api.OauthProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +23,16 @@ public class SecurityConfig {
     @ConditionalOnMissingBean(TichoOauthProperty.class)
     public JwtSigner jwtSigner(OauthProvider oauthProvider) {
         return new JwtSigner(oauthProvider.publicKey().getData());
+    }
+
+    @Bean
+    public PermHandle permHandle(RedisUtil<String, String> redisUtil) {
+        return new PermHandle(redisUtil);
+    }
+
+    @Bean
+    public PermRedisCacheEvent permRedisCacheEvent(PermHandle permHandle) {
+        return new PermRedisCacheEvent(permHandle);
     }
 
 }

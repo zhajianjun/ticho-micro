@@ -2,9 +2,8 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.RoleDTO;
-import com.ticho.upms.interfaces.dto.RoleFuncDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
-import com.ticho.upms.interfaces.dto.RoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
 import java.io.Serializable;
@@ -58,9 +57,9 @@ public interface RoleService {
      * 根据角色id列表合并菜单信息
      *
      * @param roleIds 角色id
-     * @return {@link RoleMenuFuncDtlDTO}
+     * @return {@link RoleMenuDtlDTO}
      */
-    RoleMenuFuncDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll);
+    RoleMenuDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll);
 
     /**
      * 绑定菜单
@@ -70,19 +69,12 @@ public interface RoleService {
     void bindMenu(RoleMenuDTO roleMenuDTO);
 
     /**
-     * 绑定功能号
-     *
-     * @param roleFuncDTO 角色功能号dto
-     */
-    void bindFunc(RoleFuncDTO roleFuncDTO);
-
-    /**
      * 用户角色菜单功能号详情
      *
      * @param roleId 角色id
      * @param showAll 是否展示全部
-     * @return {@link RoleMenuFuncDtlDTO}
+     * @return {@link RoleMenuDtlDTO}
      */
-    RoleMenuFuncDtlDTO getRoleDtl(Long roleId, boolean showAll);
+    RoleMenuDtlDTO getRoleDtl(Long roleId, boolean showAll);
 }
 

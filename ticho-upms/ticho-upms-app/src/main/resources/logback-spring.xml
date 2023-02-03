@@ -10,6 +10,7 @@
         <logger name="io.undertow" level="ERROR"/>
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
+        <logger name="com.baomidou.mybatisplus" level="ERROR"/>
         <logger name="com.ticho.upms" level="INFO"/>
     </springProfile>
 
@@ -19,6 +20,7 @@
         <logger name="io.undertow" level="ERROR"/>
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
+        <logger name="com.baomidou.mybatisplus" level="ERROR"/>
         <logger name="com.ticho.upms" level="INFO"/>
     </springProfile>
 

@@ -2,7 +2,7 @@ package com.ticho.upms.interfaces.assembler;
 
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.interfaces.dto.UpmsUserDTO;
-import com.ticho.upms.interfaces.dto.UserRoleMenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.UserAccountQuery;
 import com.ticho.upms.interfaces.dto.UserDTO;
 import org.mapstruct.Mapper;
@@ -54,5 +54,5 @@ public interface UserAssembler {
     @Mapping(target = "status", ignore = true)
     UserAccountQuery entityToAccount(User user);
 
-    UserRoleMenuFuncDtlDTO entityToDtl(User user);
+    UserRoleMenuDtlDTO entityToDtl(User user);
 }

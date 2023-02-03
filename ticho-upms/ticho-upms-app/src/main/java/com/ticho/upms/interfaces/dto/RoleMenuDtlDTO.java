@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "用户角色菜单功能号详情")
-public class RoleMenuFuncDtlDTO implements Serializable {
+public class RoleMenuDtlDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 角色id列表 */
@@ -32,12 +32,12 @@ public class RoleMenuFuncDtlDTO implements Serializable {
     @ApiModelProperty(value = "菜单id列表", position = 240)
     private List<Long> menuIds;
 
-    /** 菜单功能号信息 */
-    @ApiModelProperty(value = "菜单功能号信息", position = 250)
+    /** 菜单权限标识信息 */
+    @ApiModelProperty(value = "菜单权限标识信息", position = 250)
     private List<RoleDTO> roles;
 
     /** 菜单信息 */
     @ApiModelProperty(value = "菜单信息", position = 260)
-    private List<MenuFuncDtlDTO> menus;
+    private List<MenuDtlDTO> menus;
 
 }

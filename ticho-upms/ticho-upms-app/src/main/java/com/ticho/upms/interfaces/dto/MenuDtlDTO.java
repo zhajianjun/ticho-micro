@@ -17,8 +17,8 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "菜单功能号详情信息")
-public class MenuFuncDtlDTO extends TreeNode<MenuFuncDtlDTO> implements Serializable {
+@ApiModel(value = "菜单详情信息")
+public class MenuDtlDTO extends TreeNode<MenuDtlDTO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 菜单id */
@@ -29,9 +29,13 @@ public class MenuFuncDtlDTO extends TreeNode<MenuFuncDtlDTO> implements Serializ
     @ApiModelProperty(value = "父级id", position = 20)
     private Long parentId;
 
-    /** 类型;1-目录,2-菜单 */
-    @ApiModelProperty(value = "类型;1-目录,2-菜单", position = 40)
+    /** 类型;1-目录,2-菜单,3-权限 */
+    @ApiModelProperty(value = "类型;1-目录,2-菜单,3-权限", position = 40)
     private Integer type;
+
+    /** 权限标识 */
+    @ApiModelProperty(value = "权限标识", position = 45)
+    private List<String> perms;
 
     /** 标题;目录名称、菜单名称 */
     @ApiModelProperty(value = "标题;目录名称、菜单名称", position = 50)
@@ -82,19 +86,7 @@ public class MenuFuncDtlDTO extends TreeNode<MenuFuncDtlDTO> implements Serializ
     private String remark;
 
     /** 是否选中 */
-    @ApiModelProperty(value = "是否选中;true-选中,false-未选中", position = 161)
+    @ApiModelProperty(value = "是否选中;true-选中,false-未选中", position = 170)
     private Boolean checkbox;
-
-    /** 功能号id列表 */
-    @ApiModelProperty(value = "功能号id列表", position = 20)
-    private List<Long> funcIds;
-
-    /** 功能号编码列表 */
-    @ApiModelProperty(value = "功能号编码列表", position = 30)
-    private List<String> funcCodes;
-
-    /** 功能号id列表 */
-    @ApiModelProperty(value = "功能号详情列表", position = 50)
-    private List<FuncDTO> funcs;
 
 }

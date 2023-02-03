@@ -2,11 +2,9 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.MenuDTO;
-import com.ticho.upms.interfaces.dto.MenuFuncDTO;
-import com.ticho.upms.interfaces.dto.MenuFuncDtlDTO;
+import com.ticho.upms.interfaces.dto.MenuDtlDTO;
 import com.ticho.upms.interfaces.query.MenuQuery;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -48,10 +46,10 @@ public interface MenuService {
     /**
      * 获取所有菜单信息
      *
-     * @param containFunc 是否包含功能号信息
-     * @return {@link List}<{@link MenuFuncDtlDTO}>
+     * @param containFunc 是否包含权限标识信息
+     * @return {@link List}<{@link MenuDtlDTO}>
      */
-    List<MenuFuncDtlDTO> listAll(boolean containFunc);
+    List<MenuDtlDTO> listAll(boolean containFunc);
 
     /**
      * 分页查询菜单信息列表
@@ -60,20 +58,6 @@ public interface MenuService {
      * @return {@link PageResult}<{@link MenuDTO}>
      */
     PageResult<MenuDTO> page(MenuQuery query);
-
-    /**
-     * 菜单添加功能号
-     *
-     * @param menuFuncDTO 菜单功能号信息
-     */
-    void saveFunc(MenuFuncDTO menuFuncDTO);
-
-    /**
-     * 菜单移除功能号
-     *
-     * @param menuFuncDTO 菜单功能号信息
-     */
-    void removeFunc(MenuFuncDTO menuFuncDTO);
 
 }
 

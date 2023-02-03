@@ -23,27 +23,3 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
-  zipkin:
-    sender:
-      type: rabbit
-    rabbitmq:
-      queue: zipkin
-      addresses: 192.168.243.138:10041
-  sleuth:
-    sampler:
-      probability: 1
-
-ticho:
-  rabbitmq:
-    host: 192.168.243.138
-    port: 10041
-    publisher-returns: true
-    username: guest
-    password: 1511ticho.
-    listener:
-      simple:
-        acknowledge-mode: manual
-        retry:
-          enabled: true
-          initial-interval: 5000
-          max-attempts: 3

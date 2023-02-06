@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 接口权限实现
@@ -30,7 +31,16 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
             return false;
         }
         SecurityUser currentUser = SecurityUtil.getCurrentUser();
+        if (Objects.isNull(currentUser)) {
+            return false;
+        }
         List<String> roleCodes = currentUser.getRoleIds();
+        if (CollUtil.isEmpty(roleCodes)) {
+            return false;
+        }
+        if (roleCodes.contains("admin")) {
+            return true;
+        }
         RoleMenuDtlDTO roleMenuDtlDTO = mergeMenuByRoleCodes(roleCodes, false);
         List<String> perms = roleMenuDtlDTO.getPerms();
         if (CollUtil.isEmpty(perms)) {

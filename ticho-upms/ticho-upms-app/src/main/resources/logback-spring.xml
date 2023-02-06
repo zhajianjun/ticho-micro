@@ -11,7 +11,7 @@
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.baomidou.mybatisplus" level="ERROR"/>
-        <logger name="com.ticho.upms" level="INFO"/>
+        <logger name="com.ticho.upms" level="DEBUG"/>
     </springProfile>
 
     <springProfile name="uat,prod">

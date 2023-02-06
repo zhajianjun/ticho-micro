@@ -26,7 +26,7 @@ import java.util.Objects;
 public class DefaultPermissionServiceImpl extends UpmsHandle implements PermissionService {
 
     public boolean hasPerms(String... permissions) {
-        log.info("权限校验，permissions = {}", String.join(",", permissions));
+        log.debug("权限校验，permissions = {}", String.join(",", permissions));
         if (ArrayUtil.isEmpty(permissions)) {
             return false;
         }

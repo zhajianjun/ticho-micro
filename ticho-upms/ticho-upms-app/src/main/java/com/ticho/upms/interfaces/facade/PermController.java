@@ -8,6 +8,7 @@ import com.ticho.common.security.handle.PermHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class PermController {
     @Autowired
     private PermHandle permHandle;
 
+    @PreAuthorize("@pm.hasPerms('upms:perm:list')")
     @ApiOperation(value = "查询所有权限标识信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("list")

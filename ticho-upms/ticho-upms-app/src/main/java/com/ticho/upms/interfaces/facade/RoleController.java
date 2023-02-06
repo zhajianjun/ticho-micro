@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @PreAuthorize("@pm.hasPerms('upms:role:save')")
     @ApiOperation(value = "保存角色信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -47,15 +49,17 @@ public class RoleController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:role:remove')")
     @ApiOperation(value = "删除角色信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Long id) {
+    public Result<Void> remove(@RequestParam("id") Long id) {
         roleService.removeById(id);
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:role:update')")
     @ApiOperation(value = "修改角色信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -64,14 +68,16 @@ public class RoleController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:role:get')")
     @ApiOperation(value = "主键查询角色信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<RoleDTO> getById(@RequestParam("id") Serializable id) {
+    public Result<RoleDTO> get(@RequestParam("id") Serializable id) {
         return Result.ok(roleService.getById(id));
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:role:page')")
     @ApiOperation(value = "分页查询角色信息")
     @ApiOperationSupport(order = 50)
     @GetMapping("page")
@@ -79,6 +85,7 @@ public class RoleController {
         return Result.ok(roleService.page(query));
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:role:bindMenu')")
     @ApiOperation(value = "角色绑定菜单信息")
     @ApiOperationSupport(order = 60)
     @PostMapping("bindMenu")
@@ -87,7 +94,8 @@ public class RoleController {
         return Result.ok();
     }
 
-    @ApiOperation(value = "查询角色菜单权限标识信息")
+    @PreAuthorize("@pm.hasPerms('upms:role:getRoleDtl')")
+    @ApiOperation(value = "查询角色菜单信息")
     @ApiOperationSupport(order = 70)
     @GetMapping("getRoleDtl")
     public Result<RoleMenuDtlDTO> getRoleDtl(Long roleId, boolean showAll) {

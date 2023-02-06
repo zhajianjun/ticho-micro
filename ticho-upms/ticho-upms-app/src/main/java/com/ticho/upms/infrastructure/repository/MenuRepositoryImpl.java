@@ -12,6 +12,7 @@ import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.infrastructure.mapper.MenuMapper;
 import com.ticho.upms.interfaces.query.MenuQuery;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -66,6 +67,11 @@ public class MenuRepositoryImpl extends RootServiceImpl<MenuMapper, Menu> implem
             return Collections.emptyList();
         }
         return super.listByIds(ids);
+    }
+
+    @Override
+    public List<Menu> list() {
+        return list();
     }
 
 }

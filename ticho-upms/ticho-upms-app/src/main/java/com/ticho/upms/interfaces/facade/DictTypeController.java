@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.Serializable;
 
 /**
  * 数据字典类型 控制器
@@ -37,6 +36,7 @@ public class DictTypeController {
     @Autowired
     private DictTypeService dictTypeService;
 
+    @PreAuthorize("@pm.hasPerms('upms:dictType:save')")
     @ApiOperation(value = "保存数据字典类型")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -45,6 +45,7 @@ public class DictTypeController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:dictType:remove')")
     @ApiOperation(value = "删除数据字典类型")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -54,6 +55,7 @@ public class DictTypeController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:dictType:update')")
     @ApiOperation(value = "修改数据字典类型")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -62,14 +64,16 @@ public class DictTypeController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:dictType:get')")
     @ApiOperation(value = "主键查询数据字典类型")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<DictTypeDTO> getById(@RequestParam("id") Long id) {
+    public Result<DictTypeDTO> get(@RequestParam("id") Long id) {
         return Result.ok(dictTypeService.getById(id));
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:dictType:page')")
     @ApiOperation(value = "分页查询数据字典类型")
     @ApiOperationSupport(order = 50)
     @GetMapping("page")

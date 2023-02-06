@@ -1,11 +1,14 @@
 package com.ticho.upms.interfaces.dto;
 
+import com.ticho.boot.web.util.valid.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单信息DTO
@@ -21,10 +24,12 @@ public class MenuDTO implements Serializable {
 
     /** 主键编号; */
     @ApiModelProperty(value = "主键编号", position = 10)
+    @NotNull(message = "id不能为空", groups = {ValidGroup.Upd.class})
     private Long id;
 
     /** 父级id */
     @ApiModelProperty(value = "父级id", position = 20)
+    @NotNull(message = "父id不能为空", groups = {ValidGroup.Add.class})
     private Long parentId;
 
     /** 结构 */
@@ -33,14 +38,16 @@ public class MenuDTO implements Serializable {
 
     /** 类型;1-目录,2-菜单,3-权限 */
     @ApiModelProperty(value = "类型;1-目录,2-菜单,3-权限", position = 40)
+    @NotNull(message = "类型不能为空", groups = {ValidGroup.Add.class})
     private Integer type;
 
     /** 权限标识 */
     @ApiModelProperty(value = "权限标识", position = 45)
-    private String perms;
+    private List<String> perms;
 
     /** 标题;目录名称、菜单名称 */
     @ApiModelProperty(value = "标题;目录名称、菜单名称", position = 50)
+    @NotNull(message = "标题不能为空", groups = {ValidGroup.Add.class})
     private String name;
 
     /** 路由地址 */
@@ -77,6 +84,7 @@ public class MenuDTO implements Serializable {
 
     /** 排序 */
     @ApiModelProperty(value = "排序", position = 140)
+    @NotNull(message = "排序不能为空", groups = {ValidGroup.Add.class})
     private Integer sort;
 
     /** 状态;1-正常,0-禁用 */

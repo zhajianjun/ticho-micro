@@ -1,13 +1,18 @@
 package com.ticho.upms.domain.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
-import com.ticho.boot.json.util.JsonUtil;
 import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.boot.security.constant.SecurityConst;
+import com.ticho.common.security.dto.SecurityUser;
+import com.ticho.common.security.util.SecurityUtil;
+import com.ticho.upms.domain.handle.UpmsHandle;
+import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 接口权限实现
@@ -17,19 +22,21 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service(SecurityConst.PM)
-public class DefaultPermissionServiceImpl implements PermissionService {
+public class DefaultPermissionServiceImpl extends UpmsHandle implements PermissionService {
 
     public boolean hasPerms(String... permissions) {
+        log.info("权限校验，permissions = {}", String.join(",", permissions));
         if (ArrayUtil.isEmpty(permissions)) {
             return false;
         }
-        log.info("权限校验，permissions = {}", String.join(",", permissions));
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
+        SecurityUser currentUser = SecurityUtil.getCurrentUser();
+        List<String> roleCodes = currentUser.getRoleIds();
+        RoleMenuDtlDTO roleMenuDtlDTO = mergeMenuByRoleCodes(roleCodes, false);
+        List<String> perms = roleMenuDtlDTO.getPerms();
+        if (CollUtil.isEmpty(perms)) {
             return false;
         }
-        log.info("权限用户信息，user = {}", JsonUtil.toJsonString(authentication.getPrincipal()));
-        return true;
+        return Arrays.stream(permissions).anyMatch(perms::contains);
     }
 
 }

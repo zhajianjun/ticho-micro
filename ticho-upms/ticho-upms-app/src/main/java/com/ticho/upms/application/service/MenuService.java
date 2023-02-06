@@ -1,9 +1,7 @@
 package com.ticho.upms.application.service;
 
-import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.MenuDTO;
 import com.ticho.upms.interfaces.dto.MenuDtlDTO;
-import com.ticho.upms.interfaces.query.MenuQuery;
 
 import java.util.List;
 
@@ -46,18 +44,9 @@ public interface MenuService {
     /**
      * 获取所有菜单信息
      *
-     * @param containFunc 是否包含权限标识信息
      * @return {@link List}<{@link MenuDtlDTO}>
      */
-    List<MenuDtlDTO> listAll(boolean containFunc);
-
-    /**
-     * 分页查询菜单信息列表
-     *
-     * @param query 查询
-     * @return {@link PageResult}<{@link MenuDTO}>
-     */
-    PageResult<MenuDTO> page(MenuQuery query);
+    List<MenuDtlDTO> list();
 
 }
 

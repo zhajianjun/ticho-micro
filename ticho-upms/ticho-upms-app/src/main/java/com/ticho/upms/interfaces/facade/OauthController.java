@@ -54,7 +54,7 @@ public class OauthController implements OauthProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('oauth:confirm')")
+    @PreAuthorize("@pm.hasPerms('upms:oauth:confirm')")
     @ApiOperation(value = "用户注册确认", notes = "租户隔离")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "账户", name = "username", required = true)
@@ -81,11 +81,11 @@ public class OauthController implements OauthProvider {
         return Result.ok(loginUserHandle.refreshToken(refreshToken));
     }
 
-    @ApiOperation(value = "用户信息查询")
+    @ApiOperation(value = "token信息查询")
     @ApiOperationSupport(order = 50)
     @GetMapping
-    public Principal principal() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    public Result<Principal> principal() {
+        return Result.ok(SecurityContextHolder.getContext().getAuthentication());
     }
 
     @ApiOperation("获取公钥")
@@ -95,14 +95,5 @@ public class OauthController implements OauthProvider {
     public Result<String> publicKey() {
         return Result.ok(loginUserHandle.publicKey());
     }
-
-    @ApiOperation("测试权限")
-    @PreAuthorize("@pm.hasPerms('test')")
-    @ApiOperationSupport(order = 1000)
-    @GetMapping("test")
-    public Result<String> test() {
-        return Result.ok(loginUserHandle.publicKey());
-    }
-
 
 }

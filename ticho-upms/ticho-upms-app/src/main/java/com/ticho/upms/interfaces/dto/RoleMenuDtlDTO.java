@@ -32,12 +32,16 @@ public class RoleMenuDtlDTO implements Serializable {
     @ApiModelProperty(value = "菜单id列表", position = 240)
     private List<Long> menuIds;
 
+    /** 权限标识 */
+    @ApiModelProperty(value = "权限标识", position = 250)
+    private List<String> perms;
+
     /** 菜单权限标识信息 */
-    @ApiModelProperty(value = "菜单权限标识信息", position = 250)
+    @ApiModelProperty(value = "菜单权限标识信息", position = 260)
     private List<RoleDTO> roles;
 
     /** 菜单信息 */
-    @ApiModelProperty(value = "菜单信息", position = 260)
+    @ApiModelProperty(value = "菜单信息", position = 270)
     private List<MenuDtlDTO> menus;
 
 }

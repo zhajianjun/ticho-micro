@@ -1,7 +1,6 @@
 package com.ticho.upms.domain.handle;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.ticho.upms.domain.repository.MenuRepository;
 import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.domain.repository.RoleRepository;
@@ -23,7 +22,6 @@ import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -84,19 +82,42 @@ public class UpmsHandle {
     /**
      * 合并菜单按角色id
      *
+     * @param roleCodes 角色code列表
+     * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
+     * @return {@link RoleMenuDtlDTO}
+     */
+    public RoleMenuDtlDTO mergeMenuByRoleCodes(List<String> roleCodes, boolean showAll) {
+        if (CollUtil.isEmpty(roleCodes)) {
+            return null;
+        }
+        // 根据角色id列表 查询角色信息
+        List<Role> roles = roleRepository.listByCodes(roleCodes);
+        return getRoleMenuDtl(roles, showAll);
+    }
+
+    /**
+     * 合并菜单按角色id
+     *
      * @param roleIds 角色id列表
      * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
      * @return {@link RoleMenuDtlDTO}
      */
     public RoleMenuDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll) {
-        // @formatter:off
         if (CollUtil.isEmpty(roleIds)) {
             return null;
         }
-        RoleMenuDtlDTO roleMenuDtlDTO = new RoleMenuDtlDTO();
         // 1.根据角色id列表查询角色信息、菜单信息、角色菜单信息、角色权限标识信息、菜单权限标识信息
         // 根据角色id列表 查询角色信息
         List<Role> roles = roleRepository.listByIds(roleIds);
+        return getRoleMenuDtl(roles, showAll);
+    }
+
+    private RoleMenuDtlDTO getRoleMenuDtl(List<Role> roles, boolean showAll) {
+        // @formatter:off
+        List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
+        if (CollUtil.isEmpty(roleIds)) {
+            return null;
+        }
         // 根据角色id列表 查询角色菜单关联信息
         List<RoleMenu> roleMenus = roleMenuRepository.listByRoleIds(roleIds);
         // 合并的角色后所有的菜单
@@ -113,24 +134,30 @@ public class UpmsHandle {
             roleCodes.add(role.getCode());
             roleDtos.add(roleDTO);
         }
+        List<String> perms = new ArrayList<>();
         // 菜单信息过滤规则
         Predicate<MenuDtlDTO> menuFilter = null;
         // 菜单信息操作
-        Consumer<MenuDtlDTO> menuPeek = null;
+        Consumer<MenuDtlDTO> menuPeek = x-> perms.addAll(x.getPerms());
         // 如果展示全部字段，匹配的数据进行填充checkbox=true
         if (showAll) {
             menuFilter = x -> true;
-            menuPeek = x -> x.setCheckbox(menuIds.contains(x.getId()));
+            menuPeek = x -> {
+                perms.addAll(x.getPerms());
+                x.setCheckbox(menuIds.contains(x.getId()));
+            };
         }
         // 根据菜单信息，填充权限标识信息
         List<MenuDtlDTO> menuFuncDtls = getMenuDtls(menus, menuFilter, menuPeek);
         // 菜单信息规整为树结构
         List<MenuDtlDTO> tree = TreeUtil.tree(menuFuncDtls, 0L, x -> {});
+        RoleMenuDtlDTO roleMenuDtlDTO = new RoleMenuDtlDTO();
         roleMenuDtlDTO.setRoleIds(roleIds);
         roleMenuDtlDTO.setMenus(tree);
         roleMenuDtlDTO.setMenuIds(menuIds);
         roleMenuDtlDTO.setRoleCodes(roleCodes);
         roleMenuDtlDTO.setRoles(roleDtos);
+        roleMenuDtlDTO.setPerms(perms);
         return roleMenuDtlDTO;
         // @formatter:on
     }

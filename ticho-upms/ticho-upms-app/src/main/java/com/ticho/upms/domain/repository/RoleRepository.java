@@ -22,5 +22,12 @@ public interface RoleRepository extends RootService<Role> {
      */
     List<Role> list(RoleQuery query);
 
+    /**
+     * 根据角色code查询Role列表
+     *
+     * @param codes 角色代码
+     * @return {@link List}<{@link Role}>
+     */
+    List<Role> listByCodes(List<String> codes);
 }
 

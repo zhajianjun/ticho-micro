@@ -2,16 +2,15 @@ package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
-import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.MenuService;
 import com.ticho.upms.interfaces.dto.MenuDTO;
 import com.ticho.upms.interfaces.dto.MenuDtlDTO;
-import com.ticho.upms.interfaces.query.MenuQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +37,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @PreAuthorize("@pm.hasPerms('upms:menu:save')")
     @ApiOperation(value = "保存菜单信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -46,15 +46,17 @@ public class MenuController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:menu:remove')")
     @ApiOperation(value = "删除菜单信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @DeleteMapping
-    public Result<Void> removeById(@RequestParam("id") Long id) {
+    public Result<Void> remove(@RequestParam("id") Long id) {
         menuService.removeById(id);
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:menu:update')")
     @ApiOperation(value = "修改菜单信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -63,26 +65,21 @@ public class MenuController {
         return Result.ok();
     }
 
+    @PreAuthorize("@pm.hasPerms('upms:menu:get')")
     @ApiOperation(value = "主键查询菜单信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
     @GetMapping
-    public Result<MenuDTO> getById(@RequestParam("id") Long id) {
+    public Result<MenuDTO> get(@RequestParam("id") Long id) {
         return Result.ok(menuService.getById(id));
     }
 
-    @ApiOperation(value = "分页查询菜单信息")
-    @ApiOperationSupport(order = 50)
-    @GetMapping("page")
-    public Result<PageResult<MenuDTO>> page(MenuQuery query) {
-        return Result.ok(menuService.page(query));
-    }
-
-    @ApiOperation(value = "获取所有菜单信息")
+    @PreAuthorize("@pm.hasPerms('upms:menu:list')")
+    @ApiOperation(value = "查询所有菜单信息")
     @ApiOperationSupport(order = 80)
-    @GetMapping("listAll")
-    public Result<List<MenuDtlDTO>> listAll(boolean containFunc) {
-        return Result.ok(menuService.listAll(containFunc));
+    @GetMapping("list")
+    public Result<List<MenuDtlDTO>> list() {
+        return Result.ok(menuService.list());
     }
 
 }

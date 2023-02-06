@@ -1,5 +1,6 @@
 package com.ticho.upms.infrastructure.repository;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -11,6 +12,7 @@ import com.ticho.upms.interfaces.query.RoleQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +40,16 @@ public class RoleRepositoryImpl extends RootServiceImpl<RoleMapper, Role> implem
         wrapper.eq(StrUtil.isNotBlank(query.getUpdateBy()), Role::getUpdateBy, query.getUpdateBy());
         wrapper.eq(Objects.nonNull(query.getUpdateTime()), Role::getUpdateTime, query.getUpdateTime());
         wrapper.eq(Objects.nonNull(query.getIsDelete()), Role::getIsDelete, query.getIsDelete());
+        return list(wrapper);
+    }
+
+    @Override
+    public List<Role> listByCodes(List<String> codes) {
+        if(CollUtil.isEmpty(codes)) {
+            return Collections.emptyList();
+        }
+        LambdaQueryWrapper<Role> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Role::getCode, codes);
         return list(wrapper);
     }
 

@@ -1,7 +1,7 @@
 package com.ticho.upms.infrastructure.core.component;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.ticho.boot.security.util.TichoSecurityUtil;
+import com.ticho.boot.security.util.BaseSecurityUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class MateMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("createBy", TichoSecurityUtil.getCurrentUsername(), metaObject);
+        this.setFieldValByName("createBy", BaseSecurityUtil.getCurrentUsername(), metaObject);
         this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
         this.setFieldValByName("isDelete", 0, metaObject);
 
@@ -28,7 +28,7 @@ public class MateMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         //// 针对非主键的字段,只有该表注解了fill 并且 字段名和字段属性 能匹配到才会进行填充(就算有值，也会被覆盖)
-        this.setFieldValByName("updateBy", TichoSecurityUtil.getCurrentUsername(), metaObject);
+        this.setFieldValByName("updateBy", BaseSecurityUtil.getCurrentUsername(), metaObject);
         this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
     }
 

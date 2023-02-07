@@ -1,6 +1,6 @@
 package com.ticho.common.security.dto;
 
-import com.ticho.boot.view.core.TichoSecurityUser;
+import com.ticho.boot.view.core.BaseSecurityUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SecurityUser extends TichoSecurityUser {
+public class SecurityUser extends BaseSecurityUser {
 
     @ApiModelProperty(value = "租户ID", position = 20)
     private String tenantId;

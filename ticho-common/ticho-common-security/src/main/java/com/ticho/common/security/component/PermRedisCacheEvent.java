@@ -1,6 +1,6 @@
 package com.ticho.common.security.component;
 
-import com.ticho.boot.web.event.TichoApplicationReadyEvent;
+import com.ticho.boot.web.event.BaseApplicationReadyEvent;
 import com.ticho.common.security.handle.PermHandle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -9,7 +9,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 
 /**
  * 程序启动成功把当前应用的权限标识缓存到redis中
@@ -39,7 +38,7 @@ public class PermRedisCacheEvent implements ApplicationListener<ApplicationReady
         permHandle.pushCurrentAppPerms();
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
         Environment env = applicationContext.getEnvironment();
-        String property = env.getProperty(TichoApplicationReadyEvent.SPRING_APPLICATION_NAME_KEY, "application");
+        String property = env.getProperty(BaseApplicationReadyEvent.SPRING_APPLICATION_NAME_KEY, "application");
         log.info("{} perms is cached", property);
     }
 }

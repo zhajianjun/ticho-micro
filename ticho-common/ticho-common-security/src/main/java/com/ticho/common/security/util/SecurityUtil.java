@@ -1,6 +1,6 @@
 package com.ticho.common.security.util;
 
-import com.ticho.boot.security.util.TichoSecurityUtil;
+import com.ticho.boot.security.util.BaseSecurityUtil;
 import com.ticho.common.security.dto.SecurityUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,11 @@ public class SecurityUtil {
 
 
     public static SecurityUser getCurrentUser() {
-        return TichoSecurityUtil.getCurrentUser();
+        return BaseSecurityUtil.getCurrentUser();
     }
 
     public static String getCurrentUsername() {
-        return TichoSecurityUtil.getCurrentUsername();
+        return BaseSecurityUtil.getCurrentUsername();
     }
 
 }

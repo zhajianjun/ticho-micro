@@ -82,6 +82,7 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         if (userUpdDto == null) {
             return;
         }
+        // TODO
         userUpdDto.setRoleIds(Collections.singletonList("admin"));
     }
 

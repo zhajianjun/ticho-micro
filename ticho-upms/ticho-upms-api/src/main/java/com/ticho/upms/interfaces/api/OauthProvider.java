@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author zhajianjun
  * @date 2022-09-22 14:49
  */
-@FeignClient(value = "ticho-upms-app", contextId = "OauthService", path = "oauth")
+@FeignClient(value = "ticho-upms", contextId = "OauthService", path = "oauth")
 public interface OauthProvider {
 
 

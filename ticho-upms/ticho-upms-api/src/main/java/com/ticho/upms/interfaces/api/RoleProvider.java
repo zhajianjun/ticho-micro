@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author zhajianjun
  * @date 2022-09-22 14:49
  */
-@FeignClient(value = "ticho-upms-app", contextId = "RoleService", path = "role")
+@FeignClient(value = "ticho-upms", contextId = "RoleService", path = "role")
 public interface RoleProvider {
 
     /**

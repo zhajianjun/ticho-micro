@@ -4,7 +4,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.view.core.Result;
 import com.ticho.common.security.dto.PermDTO;
-import com.ticho.common.security.handle.PermHandle;
+import com.ticho.common.security.handle.CacheHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,14 @@ import java.util.List;
 public class PermController {
 
     @Autowired
-    private PermHandle permHandle;
+    private CacheHandle cacheHandle;
 
     @PreAuthorize("@pm.hasPerms('upms:perm:list')")
     @ApiOperation(value = "查询所有权限标识信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("list")
     public Result<List<PermDTO>> listAll() {
-        return Result.ok(permHandle.listAllAppPerms());
+        return Result.ok(cacheHandle.listAllAppPerms());
     }
 
 }

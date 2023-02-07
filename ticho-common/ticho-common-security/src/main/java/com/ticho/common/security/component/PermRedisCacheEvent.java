@@ -1,7 +1,7 @@
 package com.ticho.common.security.component;
 
 import com.ticho.boot.web.event.BaseApplicationReadyEvent;
-import com.ticho.common.security.handle.PermHandle;
+import com.ticho.common.security.handle.CacheHandle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -21,10 +21,10 @@ import org.springframework.scheduling.annotation.Async;
 @Slf4j
 public class PermRedisCacheEvent implements ApplicationListener<ApplicationReadyEvent> {
 
-    private final PermHandle permHandle;
+    private final CacheHandle cacheHandle;
 
-    public PermRedisCacheEvent(PermHandle permHandle) {
-        this.permHandle = permHandle;
+    public PermRedisCacheEvent(CacheHandle cacheHandle) {
+        this.cacheHandle = cacheHandle;
     }
 
     /**
@@ -35,7 +35,7 @@ public class PermRedisCacheEvent implements ApplicationListener<ApplicationReady
     @Override
     @Async
     public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {
-        permHandle.pushCurrentAppPerms();
+        cacheHandle.pushCurrentAppPerms();
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
         Environment env = applicationContext.getEnvironment();
         String property = env.getProperty(BaseApplicationReadyEvent.SPRING_APPLICATION_NAME_KEY, "application");

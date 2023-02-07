@@ -88,6 +88,7 @@ public class OauthController implements OauthProvider {
         return Result.ok(SecurityContextHolder.getContext().getAuthentication());
     }
 
+    @IgnoreJwtCheck
     @ApiOperation("获取公钥")
     @ApiOperationSupport(order = 60)
     @GetMapping("publicKey")

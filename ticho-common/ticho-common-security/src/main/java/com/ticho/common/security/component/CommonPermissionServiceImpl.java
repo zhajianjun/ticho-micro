@@ -3,7 +3,6 @@ package com.ticho.common.security.component;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.ticho.boot.security.auth.PermissionService;
-import com.ticho.boot.security.constant.BaseSecurityConst;
 import com.ticho.boot.view.core.Result;
 import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
@@ -13,7 +12,6 @@ import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,11 +24,13 @@ import java.util.Objects;
  * @date 2022-09-26 17:31:58
  */
 @Slf4j
-@Service(BaseSecurityConst.PM)
 public class CommonPermissionServiceImpl implements PermissionService {
 
-    @Autowired
-    private RoleProvider roleProvider;
+    private final RoleProvider roleProvider;
+
+    public CommonPermissionServiceImpl(RoleProvider roleProvider){
+        this.roleProvider = roleProvider;
+    }
 
     public boolean hasPerms(String... permissions) {
         log.debug("权限校验，permissions = {}", String.join(",", permissions));

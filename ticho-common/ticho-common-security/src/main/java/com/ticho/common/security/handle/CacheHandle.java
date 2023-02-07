@@ -21,16 +21,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 权限处理
+ * 缓存处理
  *
  * @author zhajianjun
  * @date 2023-02-03 15:36
  */
-public class PermHandle {
+public class CacheHandle {
 
     private final RedisUtil<String, String> redisUtil;
 
-    public PermHandle(RedisUtil<String, String> redisUtil) {
+    public CacheHandle(RedisUtil<String, String> redisUtil) {
         this.redisUtil = redisUtil;
     }
 

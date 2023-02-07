@@ -4,6 +4,7 @@ import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
+import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import com.ticho.upms.interfaces.query.RoleQuery;
 
 import java.io.Serializable;
@@ -69,12 +70,19 @@ public interface RoleService {
     void bindMenu(RoleMenuDTO roleMenuDTO);
 
     /**
-     * 用户角色菜单功能号详情
+     * 角色菜单详情查询
      *
-     * @param roleId 角色id
-     * @param showAll 是否展示全部
+     * @param roleDtlQuery 迪泰查询角色
      * @return {@link RoleMenuDtlDTO}
      */
-    RoleMenuDtlDTO getRoleDtl(Long roleId, boolean showAll);
+    RoleMenuDtlDTO listByCodes(RoleDtlQuery roleDtlQuery);
+
+    /**
+     * 角色菜单详情查询
+     *
+     * @param roleDtlQuery 迪泰查询角色
+     * @return {@link RoleMenuDtlDTO}
+     */
+    RoleMenuDtlDTO listByIds(RoleDtlQuery roleDtlQuery);
 }
 

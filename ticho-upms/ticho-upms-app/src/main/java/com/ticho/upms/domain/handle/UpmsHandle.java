@@ -1,12 +1,16 @@
 package com.ticho.upms.domain.handle;
 
 import cn.hutool.core.collection.CollUtil;
+import com.ticho.boot.web.util.TreeUtil;
+import com.ticho.upms.interfaces.dto.MenuDtlDTO;
+import com.ticho.upms.interfaces.dto.RoleDTO;
+import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
+import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.domain.repository.MenuRepository;
 import com.ticho.upms.domain.repository.RoleMenuRepository;
 import com.ticho.upms.domain.repository.RoleRepository;
 import com.ticho.upms.domain.repository.UserRepository;
 import com.ticho.upms.domain.repository.UserRoleRepository;
-import com.ticho.upms.infrastructure.core.util.TreeUtil;
 import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.infrastructure.entity.Role;
 import com.ticho.upms.infrastructure.entity.RoleMenu;
@@ -15,10 +19,6 @@ import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.assembler.MenuAssembler;
 import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
-import com.ticho.upms.interfaces.dto.MenuDtlDTO;
-import com.ticho.upms.interfaces.dto.RoleDTO;
-import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
-import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class UpmsHandle {
 
 
     /**
-     * 合并菜单按角色id
+     * 合并菜单按角色code列表
      *
      * @param roleCodes 角色code列表
      * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
@@ -123,7 +123,7 @@ public class UpmsHandle {
         // 合并的角色后所有的菜单
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
         // 菜单信息
-        List<Menu> menus = showAll ? menuRepository.list() : menuRepository.listByIds(menuIds);
+        List<Menu> menus = menuRepository.list();
         // 查询到的角色信息组装填充
         List<RoleDTO> roleDtos = new ArrayList<>();
         roleIds = new ArrayList<>();
@@ -141,7 +141,7 @@ public class UpmsHandle {
         Consumer<MenuDtlDTO> menuPeek = x-> perms.addAll(x.getPerms());
         // 如果展示全部字段，匹配的数据进行填充checkbox=true
         if (showAll) {
-            menuFilter = x -> true;
+            menuFilter = x -> menuIds.contains(x.getId());
             menuPeek = x -> {
                 perms.addAll(x.getPerms());
                 x.setCheckbox(menuIds.contains(x.getId()));

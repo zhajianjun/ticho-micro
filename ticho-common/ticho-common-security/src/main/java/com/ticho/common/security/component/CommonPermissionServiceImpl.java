@@ -1,16 +1,18 @@
-package com.ticho.upms.domain.service;
+package com.ticho.common.security.component;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.boot.security.constant.BaseSecurityConst;
+import com.ticho.boot.view.core.Result;
 import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
 import com.ticho.common.security.util.SecurityUtil;
-import com.ticho.upms.domain.handle.UpmsHandle;
+import com.ticho.upms.interfaces.api.RoleProvider;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
+import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -25,8 +27,10 @@ import java.util.Objects;
  */
 @Slf4j
 @Service(BaseSecurityConst.PM)
-@Primary
-public class DefaultPermissionServiceImpl extends UpmsHandle implements PermissionService {
+public class CommonPermissionServiceImpl implements PermissionService {
+
+    @Autowired
+    private RoleProvider roleProvider;
 
     public boolean hasPerms(String... permissions) {
         log.debug("权限校验，permissions = {}", String.join(",", permissions));
@@ -44,7 +48,14 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
         if (roleCodes.contains(SecurityConst.ADMIN_USERNAME)) {
             return true;
         }
-        RoleMenuDtlDTO roleMenuDtlDTO = mergeMenuByRoleCodes(roleCodes, false);
+        return hasPerms(roleCodes, permissions);
+    }
+
+    protected boolean hasPerms(List<String> roleCodes, String[] permissions) {
+        RoleDtlQuery roleDtlQuery = new RoleDtlQuery();
+        roleDtlQuery.setRoleCodes(roleCodes);
+        Result<RoleMenuDtlDTO> result = roleProvider.listByCodes(roleDtlQuery);
+        RoleMenuDtlDTO roleMenuDtlDTO = result.getData();
         List<String> perms = roleMenuDtlDTO.getPerms();
         if (CollUtil.isEmpty(perms)) {
             return false;

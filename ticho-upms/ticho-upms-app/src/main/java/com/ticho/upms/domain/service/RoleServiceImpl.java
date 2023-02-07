@@ -17,6 +17,7 @@ import com.ticho.upms.interfaces.assembler.RoleAssembler;
 import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
+import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,10 +55,12 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void removeById(Long id) {
-        Assert.isTrue(roleRepository.removeById(id), BizErrCode.FAIL, "删除失败");
         List<Long> roleIds = Collections.singletonList(id);
-        userRoleRepository.removeByRoleIds(roleIds);
-        roleMenuRepository.removeByRoleIds(roleIds);
+        boolean userRoleExists = userRoleRepository.existsByRoleIds(roleIds);
+        Assert.isTrue(!userRoleExists, BizErrCode.FAIL, "删除失败,请解绑所有的用户角色");
+        boolean roleMenuExists = roleMenuRepository.existsByRoleIds(roleIds);
+        Assert.isTrue(!roleMenuExists, BizErrCode.FAIL, "删除失败,请解绑所有的角色菜单");
+        Assert.isTrue(roleRepository.removeById(id), BizErrCode.FAIL, "删除失败");
     }
 
     @Override
@@ -113,12 +116,15 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
         // @formatter:on
     }
 
-
     @Override
-    public RoleMenuDtlDTO getRoleDtl(Long roleId, boolean showAll) {
-        return mergeMenuByRoleIds(Collections.singletonList(roleId), showAll);
+    public RoleMenuDtlDTO listByCodes(RoleDtlQuery roleDtlQuery) {
+        return mergeMenuByRoleCodes(roleDtlQuery.getRoleCodes(), roleDtlQuery.getShowAll());
     }
 
+    @Override
+    public RoleMenuDtlDTO listByIds(RoleDtlQuery roleDtlQuery) {
+        return mergeMenuByRoleIds(roleDtlQuery.getRoleIds(), roleDtlQuery.getShowAll());
+    }
 
     private RoleMenu convertToRoleMenu(Long roleId, Long x) {
         RoleMenu roleMenu = new RoleMenu();

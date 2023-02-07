@@ -1,6 +1,6 @@
 package com.ticho.upms.infrastructure.core.component;
 
-import com.ticho.boot.security.constant.SecurityConst;
+import com.ticho.boot.security.constant.BaseSecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;
 import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.HttpErrCode;
@@ -31,7 +31,7 @@ import java.util.Objects;
  * @author zhajianjun
  * @date 2022-09-22 11:17
  */
-@Component(SecurityConst.LOAD_USER_TYPE_USERNAME)
+@Component(BaseSecurityConst.LOAD_USER_TYPE_USERNAME)
 @Primary
 @Slf4j
 public class DefaultUsernameLoadUserService implements LoadUserService {
@@ -72,7 +72,7 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         securityUser.setTenantId(upmsUserDTO.getTenantId());
         securityUser.setUsername(upmsUserDTO.getUsername());
         securityUser.setPassword(upmsUserDTO.getPassword());
-        securityUser.setRoleIds(upmsUserDTO.getRoleIds());
+        securityUser.setRoleCodes(upmsUserDTO.getRoleIds());
         securityUser.setStatus(upmsUserDTO.getStatus());
         return securityUser;
         // @formatter:on

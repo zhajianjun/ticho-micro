@@ -3,7 +3,7 @@ package com.ticho.upms.interfaces.facade;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.security.annotation.IgnoreJwtCheck;
-import com.ticho.boot.security.constant.OAuth2Const;
+import com.ticho.boot.security.constant.BaseOAuth2Const;
 import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
 import com.ticho.boot.view.core.Result;
@@ -33,7 +33,7 @@ import java.security.Principal;
  * @author zhajianjun
  * @date 2022-09-22 15:36
  */
-@RestController(OAuth2Const.OAUTH2_CONTROLLER)
+@RestController(BaseOAuth2Const.OAUTH2_CONTROLLER)
 @RequestMapping("oauth")
 @ApiSort(20)
 @Api(tags = "权限登录")

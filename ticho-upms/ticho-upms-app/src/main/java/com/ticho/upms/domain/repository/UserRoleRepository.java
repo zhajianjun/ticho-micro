@@ -23,20 +23,20 @@ public interface UserRoleRepository extends RootService<UserRole> {
     List<UserRole> listByUserId(Long userId);
 
     /**
+     * 根据角色id列表查询是否存在
+     *
+     * @param roleIds 角色id
+     * @return boolean
+     */
+    boolean existsByRoleIds(Collection<Long> roleIds);
+
+    /**
      * 通过用户id删除
      *
      * @param userId 用户id
      * @return boolean
      */
     boolean removeByUserId(Long userId);
-
-    /**
-     * 通过角色id列表删除
-     *
-     * @param roleIds 角色id列表
-     * @return boolean
-     */
-    boolean removeByRoleIds(Collection<Long> roleIds);
 
 }
 

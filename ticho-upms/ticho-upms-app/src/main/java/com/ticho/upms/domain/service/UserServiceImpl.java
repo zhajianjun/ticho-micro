@@ -100,8 +100,12 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
 
     @Override
     public void removeById(Long id) {
-        Assert.isTrue(userRepository.removeById(id), BizErrCode.FAIL, "删除失败");
-        userRoleRepository.removeByUserId(id);
+        User user = userRepository.getById(id);
+        Assert.isNotNull(user, BizErrCode.FAIL, "注销失败,用户不存在");
+        // 账户注销
+        user.setStatus(4);
+        boolean b = userRepository.updateById(user);
+        Assert.isNotNull(b, BizErrCode.FAIL, "注销失败");
     }
 
     @Override

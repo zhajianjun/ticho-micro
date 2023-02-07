@@ -6,7 +6,7 @@ import com.ticho.upms.application.service.MenuService;
 import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.domain.repository.MenuRepository;
 import com.ticho.upms.domain.repository.RoleMenuRepository;
-import com.ticho.upms.infrastructure.core.util.TreeUtil;
+import com.ticho.boot.web.util.TreeUtil;
 import com.ticho.upms.infrastructure.entity.Menu;
 import com.ticho.upms.interfaces.assembler.MenuAssembler;
 import com.ticho.upms.interfaces.dto.MenuDTO;
@@ -42,9 +42,10 @@ public class MenuServiceImpl extends UpmsHandle implements MenuService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void removeById(Long id) {
-        Assert.isTrue(menuRepository.removeById(id), BizErrCode.FAIL, "删除失败");
         List<Long> menuIds = Collections.singletonList(id);
-        roleMenuRepository.removeByMenuIds(menuIds);
+        boolean existsByMenuIds = roleMenuRepository.existsByMenuIds(menuIds);
+        Assert.isTrue(!existsByMenuIds, BizErrCode.FAIL, "删除失败,请解绑所有的角色菜单");
+        Assert.isTrue(menuRepository.removeById(id), BizErrCode.FAIL, "删除失败");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ticho.upms.interfaces.dto;
 
-import com.ticho.upms.infrastructure.core.util.TreeNode;
+import com.ticho.boot.web.util.TreeNode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

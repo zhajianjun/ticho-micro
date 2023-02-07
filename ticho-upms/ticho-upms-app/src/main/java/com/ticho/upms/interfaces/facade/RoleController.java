@@ -5,9 +5,11 @@ import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.RoleService;
+import com.ticho.upms.interfaces.api.RoleProvider;
 import com.ticho.upms.interfaces.dto.RoleDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDTO;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
+import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import com.ticho.upms.interfaces.query.RoleQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,7 +37,7 @@ import java.io.Serializable;
 @RequestMapping("role")
 @Api(tags = "角色信息")
 @ApiSort(40)
-public class RoleController {
+public class RoleController implements RoleProvider {
 
     @Autowired
     private RoleService roleService;
@@ -94,12 +96,20 @@ public class RoleController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:getRoleDtl')")
-    @ApiOperation(value = "查询角色菜单信息")
+    @PreAuthorize("@pm.hasPerms('upms:role:listByCodes')")
+    @ApiOperation(value = "根据角色code查询角色菜单信息")
     @ApiOperationSupport(order = 70)
-    @GetMapping("getRoleDtl")
-    public Result<RoleMenuDtlDTO> getRoleDtl(Long roleId, boolean showAll) {
-        return Result.ok(roleService.getRoleDtl(roleId, showAll));
+    @PostMapping("listByCodes")
+    public Result<RoleMenuDtlDTO> listByCodes(@RequestBody RoleDtlQuery roleDtlQuery) {
+        return Result.ok(roleService.listByCodes(roleDtlQuery));
+    }
+
+    @PreAuthorize("@pm.hasPerms('upms:role:listByIds')")
+    @ApiOperation(value = "根据角色id查询角色菜单信息")
+    @ApiOperationSupport(order = 80)
+    @PostMapping("listByIds")
+    public Result<RoleMenuDtlDTO> listByIds(@RequestBody RoleDtlQuery roleDtlQuery) {
+        return Result.ok(roleService.listByIds(roleDtlQuery));
     }
 
 }

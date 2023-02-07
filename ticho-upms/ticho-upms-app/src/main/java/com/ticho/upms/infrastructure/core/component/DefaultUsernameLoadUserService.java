@@ -6,12 +6,16 @@ import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.HttpErrCode;
 import com.ticho.boot.view.util.Assert;
 import com.ticho.common.security.dto.SecurityUser;
+import com.ticho.upms.domain.repository.RoleRepository;
 import com.ticho.upms.domain.repository.TenantRepository;
 import com.ticho.upms.domain.repository.UserRepository;
+import com.ticho.upms.domain.repository.UserRoleRepository;
 import com.ticho.upms.infrastructure.core.enums.TenantStatus;
 import com.ticho.upms.infrastructure.core.enums.UserStatus;
+import com.ticho.upms.infrastructure.entity.Role;
 import com.ticho.upms.infrastructure.entity.Tenant;
 import com.ticho.upms.infrastructure.entity.User;
+import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.assembler.UserAssembler;
 import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +27,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -41,6 +47,12 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
 
     @Autowired(required = false)
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public SecurityUser load(String account) {
@@ -82,8 +94,11 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         if (userUpdDto == null) {
             return;
         }
-        // TODO
-        userUpdDto.setRoleIds(Collections.singletonList("admin"));
+        List<UserRole> userRoles = userRoleRepository.listByUserId(userUpdDto.getId());
+        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<Role> roles = roleRepository.listByIds(roleIds);
+        List<String> codes = roles.stream().map(Role::getCode).collect(Collectors.toList());
+        userUpdDto.setRoleIds(codes);
     }
 
 }

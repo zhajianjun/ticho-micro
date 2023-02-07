@@ -34,6 +34,7 @@ public class SecurityConfig {
     }
 
     @Bean(BaseSecurityConst.PM)
+    @ConditionalOnMissingBean(BaseOauthProperty.class)
     public PermissionService permissionService(RoleProvider roleProvider) {
         return new CommonPermissionServiceImpl(roleProvider);
     }

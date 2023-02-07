@@ -2,6 +2,7 @@ package com.ticho.upms.interfaces.facade;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
+import com.ticho.boot.security.annotation.IgnoreJwtCheck;
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.RoleService;
@@ -96,7 +97,7 @@ public class RoleController implements RoleProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:listByCodes')")
+    @IgnoreJwtCheck
     @ApiOperation(value = "根据角色code查询角色菜单信息")
     @ApiOperationSupport(order = 70)
     @PostMapping("listByCodes")
@@ -104,7 +105,7 @@ public class RoleController implements RoleProvider {
         return Result.ok(roleService.listByCodes(roleDtlQuery));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:listByIds')")
+    @IgnoreJwtCheck
     @ApiOperation(value = "根据角色id查询角色菜单信息")
     @ApiOperationSupport(order = 80)
     @PostMapping("listByIds")

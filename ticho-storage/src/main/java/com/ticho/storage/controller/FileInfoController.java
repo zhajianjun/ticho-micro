@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class FileInfoController {
     @Autowired
     private FileInfoService fileInfoService;
 
+    @PreAuthorize("@pm.hasPerms('storage:file:upload')")
     @ApiOperation(value = "文件上传")
     @ApiOperationSupport(order = 10)
     @PostMapping("upload")
@@ -44,6 +46,7 @@ public class FileInfoController {
         return fileInfoService.upload(fileInfoReqDTO);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:file:download')")
     @ApiOperation(value = "文件下载", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ApiOperationSupport(order = 20)
     @ApiImplicitParams({
@@ -55,6 +58,7 @@ public class FileInfoController {
         fileInfoService.download(bucketName,storageId);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:file:delete')")
     @ApiOperation(value = "根据id删除文件")
     @ApiOperationSupport(order = 30)
     @ApiImplicitParams({
@@ -66,6 +70,7 @@ public class FileInfoController {
         fileInfoService.delete(bucketName,storageId);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:file:getUrl')")
     @ApiOperation(value = "根据资源id获取下载链接")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParams({

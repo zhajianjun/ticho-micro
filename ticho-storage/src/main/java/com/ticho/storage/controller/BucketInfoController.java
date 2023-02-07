@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class BucketInfoController {
     @Autowired
     private BucketInfoService bucketInfoService;
 
+    @PreAuthorize("@pm.hasPerms('storage:bucket:createBucket')")
     @ApiOperation(value = "创建文件桶", notes = "创建文件桶")
     @ApiOperationSupport(order = 10)
     @ApiImplicitParam(value = "存储桶名称", name = "bucketName", required = true)
@@ -46,6 +48,7 @@ public class BucketInfoController {
         bucketInfoService.createBucket(bucketName);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:bucket:remove')")
     @ApiOperation(value = "删除文件桶", notes = "删除文件桶")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParams({
@@ -53,18 +56,20 @@ public class BucketInfoController {
         @ApiImplicitParam(value = "是否删除所有文件，true-默认删除所有文件和桶，false-桶中有文件不可删除", name = "delAllFile", required = true)
     })
     @DeleteMapping
-    public void removeBucket(String bucketName, @RequestParam(defaultValue = "false") boolean delAllFile) {
+    public void remove(String bucketName, @RequestParam(defaultValue = "false") boolean delAllFile) {
         bucketInfoService.removeBucket(bucketName, delAllFile);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:bucket:bucketExists')")
     @ApiOperation(value = "查询文件桶是否存在", notes = "查询文件桶是否存在")
     @ApiOperationSupport(order = 30)
     @ApiImplicitParam(value = "存储桶名称", name = "bucketName", required = true)
     @GetMapping
-    public boolean listBuckets(String bucketName) {
+    public boolean bucketExists(String bucketName) {
         return bucketInfoService.bucketExists(bucketName);
     }
 
+    @PreAuthorize("@pm.hasPerms('storage:bucket:list')")
     @ApiOperation(value = "查询所有文件桶", notes = "获取所有文件桶")
     @ApiOperationSupport(order = 40)
     @GetMapping("list")

@@ -4,6 +4,7 @@ import com.ticho.boot.view.core.Result;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -21,6 +22,7 @@ public interface RoleProvider {
      * @param roleDtlQuery 角色菜单查询条件
      * @return {@link Result}<{@link RoleMenuDtlDTO}>
      */
+    @PostMapping("listByCodes")
     Result<RoleMenuDtlDTO> listByCodes(@RequestBody RoleDtlQuery roleDtlQuery);
 
     /**
@@ -29,6 +31,7 @@ public interface RoleProvider {
      * @param roleDtlQuery 角色菜单查询条件
      * @return {@link Result}<{@link RoleMenuDtlDTO}>
      */
+    @PostMapping("listByIds")
     Result<RoleMenuDtlDTO> listByIds(@RequestBody RoleDtlQuery roleDtlQuery);
 
 }

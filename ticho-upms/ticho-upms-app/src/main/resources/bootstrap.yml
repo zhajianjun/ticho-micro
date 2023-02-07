@@ -18,6 +18,10 @@ spring:
         group: @nacos.group@
         file-extension: yaml
         prefix: ${spring.application.name}
+        shared-configs:
+          - data-id: ticho-common.yaml
+            group: @nacos.group@
+            refresh: true
       discovery:
         namespace: ${spring.cloud.nacos.config.namespace}
         group: ${spring.cloud.nacos.config.group}

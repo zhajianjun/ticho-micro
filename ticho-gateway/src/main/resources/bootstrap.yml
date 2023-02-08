@@ -22,6 +22,7 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
-
-tlog:
-  enable-invoke-time-print: true
+ticho:
+  gateway:
+    open-log: true
+    print: true

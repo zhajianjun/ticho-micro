@@ -10,67 +10,11 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ticho-storage</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <!-- web依赖 -->
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-cloud</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-minio</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-swagger</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-log</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ticho</groupId>
-            <artifactId>ticho-common-security</artifactId>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <modules>
+        <module>ticho-storage-app</module>
+        <module>ticho-storage-api</module>
+    </modules>
 
 </project>

@@ -60,7 +60,7 @@ public interface RoleService {
      * @param roleIds 角色id
      * @return {@link RoleMenuDtlDTO}
      */
-    RoleMenuDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll);
+    RoleMenuDtlDTO mergeRoleByIds(List<Long> roleIds, boolean showAll);
 
     /**
      * 绑定菜单

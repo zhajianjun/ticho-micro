@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
     <!--日志根目录-->
-    <property name="log.path" value="./logs/@artifactId@"/>
+    <property name="log.path" value="./logs/@parent.artifactId@"/>
     <include optional="true" resource="ticho-logback-common.xml"/>
 
     <springProfile name="local,dev,test,st">
@@ -11,7 +11,7 @@
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.baomidou.mybatisplus" level="ERROR"/>
-        <logger name="com.ticho.storage" level="DEBUG"/>
+        <logger name="com.ticho.email" level="DEBUG"/>
     </springProfile>
 
     <springProfile name="uat,prod">
@@ -21,7 +21,7 @@
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.baomidou.mybatisplus" level="ERROR"/>
-        <logger name="com.ticho.storage" level="INFO"/>
+        <logger name="com.ticho.email" level="INFO"/>
     </springProfile>
 
 </configuration>

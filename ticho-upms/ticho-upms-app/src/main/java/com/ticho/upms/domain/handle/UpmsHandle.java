@@ -66,7 +66,7 @@ public class UpmsHandle {
         }
         List<UserRole> userRoles = userRoleRepository.listByUserId(user.getId());
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        RoleMenuDtlDTO roleMenuFuncDtl = mergeMenuByRoleIds(roleIds, false);
+        RoleMenuDtlDTO roleMenuFuncDtl = mergeRoleByIds(roleIds, false);
         if (roleMenuFuncDtl == null) {
             return null;
         }
@@ -86,7 +86,7 @@ public class UpmsHandle {
      * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
      * @return {@link RoleMenuDtlDTO}
      */
-    public RoleMenuDtlDTO mergeMenuByRoleCodes(List<String> roleCodes, boolean showAll) {
+    public RoleMenuDtlDTO mergeRoleByCodes(List<String> roleCodes, boolean showAll) {
         if (CollUtil.isEmpty(roleCodes)) {
             return null;
         }
@@ -102,7 +102,7 @@ public class UpmsHandle {
      * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
      * @return {@link RoleMenuDtlDTO}
      */
-    public RoleMenuDtlDTO mergeMenuByRoleIds(List<Long> roleIds, boolean showAll) {
+    public RoleMenuDtlDTO mergeRoleByIds(List<Long> roleIds, boolean showAll) {
         if (CollUtil.isEmpty(roleIds)) {
             return null;
         }
@@ -138,7 +138,10 @@ public class UpmsHandle {
         // 菜单信息过滤规则
         Predicate<MenuDtlDTO> menuFilter = null;
         // 菜单信息操作
-        Consumer<MenuDtlDTO> menuPeek = x-> perms.addAll(x.getPerms());
+        Consumer<MenuDtlDTO> menuPeek = x-> {
+            x.setCheckbox(true);
+            perms.addAll(x.getPerms());
+        };
         // 如果展示全部字段，匹配的数据进行填充checkbox=true
         if (showAll) {
             menuFilter = x -> menuIds.contains(x.getId());

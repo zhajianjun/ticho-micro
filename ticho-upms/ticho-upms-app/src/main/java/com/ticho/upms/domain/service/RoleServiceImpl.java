@@ -118,12 +118,12 @@ public class RoleServiceImpl extends UpmsHandle implements RoleService {
 
     @Override
     public RoleMenuDtlDTO listByCodes(RoleDtlQuery roleDtlQuery) {
-        return mergeMenuByRoleCodes(roleDtlQuery.getRoleCodes(), roleDtlQuery.getShowAll());
+        return mergeRoleByCodes(roleDtlQuery.getRoleCodes(), roleDtlQuery.getShowAll());
     }
 
     @Override
     public RoleMenuDtlDTO listByIds(RoleDtlQuery roleDtlQuery) {
-        return mergeMenuByRoleIds(roleDtlQuery.getRoleIds(), roleDtlQuery.getShowAll());
+        return mergeRoleByIds(roleDtlQuery.getRoleIds(), roleDtlQuery.getShowAll());
     }
 
     private RoleMenu convertToRoleMenu(Long roleId, Long x) {

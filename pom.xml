@@ -21,6 +21,8 @@
         <module>ticho-gateway</module>
         <module>ticho-email</module>
         <module>ticho-common</module>
+        <module>ticho-email/ticho-email-app</module>
+        <module>ticho-email/ticho-email-api</module>
     </modules>
     <name>ticho-micro</name>
 

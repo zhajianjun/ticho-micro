@@ -3,7 +3,6 @@ package com.ticho.upms.domain.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.ticho.boot.security.auth.PermissionService;
-import com.ticho.boot.security.constant.BaseSecurityConst;
 import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
 import com.ticho.common.security.util.SecurityUtil;
@@ -11,7 +10,6 @@ import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.infrastructure.core.constant.CommConst;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +44,7 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
         if (roleCodes.contains(SecurityConst.ADMIN_USERNAME)) {
             return true;
         }
-        RoleMenuDtlDTO roleMenuDtlDTO = mergeMenuByRoleCodes(roleCodes, false);
+        RoleMenuDtlDTO roleMenuDtlDTO = mergeRoleByCodes(roleCodes, false);
         List<String> perms = roleMenuDtlDTO.getPerms();
         if (CollUtil.isEmpty(perms)) {
             return false;

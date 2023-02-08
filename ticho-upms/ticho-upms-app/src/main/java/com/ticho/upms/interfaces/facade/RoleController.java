@@ -97,7 +97,7 @@ public class RoleController implements RoleProvider {
         return Result.ok();
     }
 
-    @IgnoreJwtCheck
+    @IgnoreJwtCheck(inner = true)
     @ApiOperation(value = "根据角色code查询角色菜单信息")
     @ApiOperationSupport(order = 70)
     @PostMapping("listByCodes")
@@ -105,7 +105,7 @@ public class RoleController implements RoleProvider {
         return Result.ok(roleService.listByCodes(roleDtlQuery));
     }
 
-    @IgnoreJwtCheck
+    @IgnoreJwtCheck(inner = true)
     @ApiOperation(value = "根据角色id查询角色菜单信息")
     @ApiOperationSupport(order = 80)
     @PostMapping("listByIds")

@@ -1,12 +1,12 @@
 server:
-  port: 8020
+  port: 8040
 spring:
   profiles:
     active: @spring.active@
   main:
     allow-bean-definition-overriding: true
   application:
-    name: @artifactId@
+    name: @parent.artifactId@
   cloud:
     nacos:
       server-addr: @nacos.server-addr@

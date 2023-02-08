@@ -8,6 +8,7 @@ import com.ticho.boot.web.annotation.View;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class EmailController {
     @Autowired
     private MailTemplate mailTemplate;
 
+    @PreAuthorize("@pm.hasPerms('email:email:send')")
     @ApiOperation(value = "邮件发送")
     @ApiOperationSupport(order = 10)
     @PostMapping("send")

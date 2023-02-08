@@ -7,6 +7,7 @@ import com.ticho.boot.security.constant.BaseOAuth2Const;
 import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
 import com.ticho.boot.view.core.Result;
+import com.ticho.boot.web.annotation.View;
 import com.ticho.boot.web.util.valid.ValidUtil;
 import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.OauthProvider;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +73,15 @@ public class OauthController implements OauthProvider {
     public Result<Oauth2AccessToken> token(UserLoginDTO userLoginDTO) {
         ValidUtil.valid(userLoginDTO);
         return Result.ok(loginUserHandle.token(userLoginDTO));
+    }
+
+    @IgnoreJwtCheck
+    @View(ignore = true)
+    @ApiOperation(value = "登录验证码", notes = "登录验证码", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ApiOperationSupport(order = 80)
+    @GetMapping("imgcode")
+    public void setCode() {
+        userService.verifyByCode();
     }
 
     @IgnoreJwtCheck

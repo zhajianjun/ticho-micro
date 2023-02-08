@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
-import com.ticho.common.security.util.SecurityUtil;
+import com.ticho.common.security.util.UserUtil;
 import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.infrastructure.core.constant.CommConst;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
@@ -33,7 +33,7 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
         if (ArrayUtil.isEmpty(permissions)) {
             return false;
         }
-        SecurityUser currentUser = SecurityUtil.getCurrentUser();
+        SecurityUser currentUser = UserUtil.getCurrentUser();
         if (Objects.isNull(currentUser)) {
             return false;
         }
@@ -41,7 +41,7 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
         if (CollUtil.isEmpty(roleCodes)) {
             return false;
         }
-        if (roleCodes.contains(SecurityConst.ADMIN_USERNAME)) {
+        if (roleCodes.contains(SecurityConst.ADMIN)) {
             return true;
         }
         RoleMenuDtlDTO roleMenuDtlDTO = mergeRoleByCodes(roleCodes, false);

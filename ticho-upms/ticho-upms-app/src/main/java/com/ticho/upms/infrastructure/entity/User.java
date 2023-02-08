@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ticho.common.security.dto.UserHelper;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "用户信息")
 @TableName("sys_user")
-public class User extends Model<User> implements Serializable {
+public class User extends Model<User> implements Serializable, UserHelper {
     private static final long serialVersionUID = 1L;
 
     /** 主键编号; */

@@ -7,6 +7,7 @@ import com.ticho.boot.view.core.Result;
 import com.ticho.upms.application.service.UserService;
 import com.ticho.upms.interfaces.api.UserProvider;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserPasswordDTO;
 import com.ticho.upms.interfaces.dto.UserRoleDTO;
 import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.UserQuery;
@@ -64,6 +65,15 @@ public class UserController implements UserProvider {
     @PutMapping
     public Result<Void> update(@RequestBody UserDTO userDTO) {
         userService.updateById(userDTO);
+        return Result.ok();
+    }
+
+    @PreAuthorize("@perm.hasPerms('upms:user:modifyPassword')")
+    @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
+    @ApiOperationSupport(order = 50)
+    @PutMapping("modifyPassword")
+    public Result<Void> modifyPassword(@RequestBody UserPasswordDTO userDetailDto) {
+        userService.modifyPassword(userDetailDto);
         return Result.ok();
     }
 

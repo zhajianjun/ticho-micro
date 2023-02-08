@@ -2,6 +2,7 @@ package com.ticho.upms.application.service;
 
 import com.ticho.boot.view.core.PageResult;
 import com.ticho.upms.interfaces.dto.UserDTO;
+import com.ticho.upms.interfaces.dto.UserPasswordDTO;
 import com.ticho.upms.interfaces.dto.UserRoleDTO;
 import com.ticho.upms.interfaces.dto.UserRoleMenuDtlDTO;
 import com.ticho.upms.interfaces.dto.UserSignUpDTO;
@@ -81,5 +82,18 @@ public interface UserService {
      * @param userRoleDTO 用户角色dto
      */
     void bindRole(UserRoleDTO userRoleDTO);
+
+    /**
+     * 更改用户密码
+     *
+     * @param userPasswordDTO 用户信息
+     */
+    void modifyPassword(UserPasswordDTO userPasswordDTO);
+
+    /**
+     * 验证码
+     */
+    void verifyByCode();
+
 }
 

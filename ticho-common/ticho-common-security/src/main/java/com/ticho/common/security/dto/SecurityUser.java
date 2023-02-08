@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SecurityUser extends BaseSecurityUser {
+public class SecurityUser extends BaseSecurityUser implements UserHelper {
 
     @ApiModelProperty(value = "租户ID", position = 20)
     private String tenantId;

@@ -6,12 +6,11 @@ import com.ticho.boot.security.auth.PermissionService;
 import com.ticho.boot.view.core.Result;
 import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
-import com.ticho.common.security.util.SecurityUtil;
+import com.ticho.common.security.util.UserUtil;
 import com.ticho.upms.interfaces.api.RoleProvider;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 import java.util.Arrays;
@@ -39,7 +38,7 @@ public class CommonPermissionServiceImpl implements PermissionService {
         if (ArrayUtil.isEmpty(permissions)) {
             return false;
         }
-        SecurityUser currentUser = SecurityUtil.getCurrentUser();
+        SecurityUser currentUser = UserUtil.getCurrentUser();
         if (Objects.isNull(currentUser)) {
             return false;
         }
@@ -47,7 +46,7 @@ public class CommonPermissionServiceImpl implements PermissionService {
         if (CollUtil.isEmpty(roleCodes)) {
             return false;
         }
-        if (roleCodes.contains(SecurityConst.ADMIN_USERNAME)) {
+        if (roleCodes.contains(SecurityConst.ADMIN)) {
             return true;
         }
         return hasPerms(roleCodes, permissions);

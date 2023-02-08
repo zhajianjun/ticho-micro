@@ -14,6 +14,6 @@ public class SecurityConst {
 
     public static final String MICRO_REDIS_ALL_PERMS = "micro-all-perms";
 
-    public static final String ADMIN_USERNAME = "admin";
+    public static final String ADMIN = "admin";
 
 }

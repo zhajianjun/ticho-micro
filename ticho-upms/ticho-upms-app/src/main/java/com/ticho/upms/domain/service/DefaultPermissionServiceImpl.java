@@ -10,6 +10,7 @@ import com.ticho.common.security.util.SecurityUtil;
 import com.ticho.upms.domain.handle.UpmsHandle;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Service(BaseSecurityConst.PM)
+@Order(1)
 public class DefaultPermissionServiceImpl extends UpmsHandle implements PermissionService {
 
     public boolean hasPerms(String... permissions) {

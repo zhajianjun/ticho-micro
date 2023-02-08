@@ -11,8 +11,6 @@ import com.ticho.common.security.component.PermRedisCacheEvent;
 import com.ticho.common.security.handle.CacheHandle;
 import com.ticho.upms.interfaces.api.OauthProvider;
 import com.ticho.upms.interfaces.api.RoleProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +32,7 @@ public class SecurityConfig {
     }
 
     @Bean(BaseSecurityConst.PM)
-    @ConditionalOnMissingBean(BaseOauthProperty.class)
+    @ConditionalOnMissingBean(PermissionService.class)
     public PermissionService permissionService(RoleProvider roleProvider) {
         return new CommonPermissionServiceImpl(roleProvider);
     }

@@ -23,4 +23,6 @@ public class CommConst {
     public static final String SCOPE = "all";
 
     public static final String RESULT_VIEW = "com.ticho.commons.interceptor.ResultViewInterceptor";
+
+    public static final String PERM_KEY = "perm";
 }

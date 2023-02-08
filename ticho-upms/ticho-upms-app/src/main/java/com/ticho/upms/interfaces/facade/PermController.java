@@ -30,7 +30,7 @@ public class PermController {
     @Autowired
     private CacheHandle cacheHandle;
 
-    @PreAuthorize("@pm.hasPerms('upms:perm:list')")
+    @PreAuthorize("@perm.hasPerms('upms:perm:list')")
     @ApiOperation(value = "查询所有权限标识信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("list")

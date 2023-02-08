@@ -37,7 +37,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @PreAuthorize("@pm.hasPerms('upms:menu:save')")
+    @PreAuthorize("@perm.hasPerms('upms:menu:save')")
     @ApiOperation(value = "保存菜单信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -46,7 +46,7 @@ public class MenuController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:menu:remove')")
+    @PreAuthorize("@perm.hasPerms('upms:menu:remove')")
     @ApiOperation(value = "删除菜单信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -56,7 +56,7 @@ public class MenuController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:menu:update')")
+    @PreAuthorize("@perm.hasPerms('upms:menu:update')")
     @ApiOperation(value = "修改菜单信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -65,7 +65,7 @@ public class MenuController {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:menu:get')")
+    @PreAuthorize("@perm.hasPerms('upms:menu:get')")
     @ApiOperation(value = "主键查询菜单信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -74,7 +74,7 @@ public class MenuController {
         return Result.ok(menuService.getById(id));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:menu:list')")
+    @PreAuthorize("@perm.hasPerms('upms:menu:list')")
     @ApiOperation(value = "查询所有菜单信息")
     @ApiOperationSupport(order = 80)
     @GetMapping("list")

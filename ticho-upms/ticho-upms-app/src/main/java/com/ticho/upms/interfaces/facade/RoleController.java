@@ -43,7 +43,7 @@ public class RoleController implements RoleProvider {
     @Autowired
     private RoleService roleService;
 
-    @PreAuthorize("@pm.hasPerms('upms:role:save')")
+    @PreAuthorize("@perm.hasPerms('upms:role:save')")
     @ApiOperation(value = "保存角色信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -52,7 +52,7 @@ public class RoleController implements RoleProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:remove')")
+    @PreAuthorize("@perm.hasPerms('upms:role:remove')")
     @ApiOperation(value = "删除角色信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -62,7 +62,7 @@ public class RoleController implements RoleProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:update')")
+    @PreAuthorize("@perm.hasPerms('upms:role:update')")
     @ApiOperation(value = "修改角色信息")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -71,7 +71,7 @@ public class RoleController implements RoleProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:get')")
+    @PreAuthorize("@perm.hasPerms('upms:role:get')")
     @ApiOperation(value = "主键查询角色信息")
     @ApiOperationSupport(order = 40)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -80,7 +80,7 @@ public class RoleController implements RoleProvider {
         return Result.ok(roleService.getById(id));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:page')")
+    @PreAuthorize("@perm.hasPerms('upms:role:page')")
     @ApiOperation(value = "分页查询角色信息")
     @ApiOperationSupport(order = 50)
     @GetMapping("page")
@@ -88,7 +88,7 @@ public class RoleController implements RoleProvider {
         return Result.ok(roleService.page(query));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:role:bindMenu')")
+    @PreAuthorize("@perm.hasPerms('upms:role:bindMenu')")
     @ApiOperation(value = "角色绑定菜单信息")
     @ApiOperationSupport(order = 60)
     @PostMapping("bindMenu")

@@ -11,7 +11,8 @@ import com.ticho.upms.interfaces.api.RoleProvider;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import com.ticho.upms.interfaces.query.RoleDtlQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +25,12 @@ import java.util.Objects;
  * @date 2022-09-26 17:31:58
  */
 @Slf4j
+@Order(100)
 public class CommonPermissionServiceImpl implements PermissionService {
 
     private final RoleProvider roleProvider;
 
-    public CommonPermissionServiceImpl(RoleProvider roleProvider){
+    public CommonPermissionServiceImpl(RoleProvider roleProvider) {
         this.roleProvider = roleProvider;
     }
 

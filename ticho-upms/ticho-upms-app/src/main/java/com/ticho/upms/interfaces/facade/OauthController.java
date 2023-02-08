@@ -54,7 +54,7 @@ public class OauthController implements OauthProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:oauth:confirm')")
+    @PreAuthorize("@perm.hasPerms('upms:oauth:confirm')")
     @ApiOperation(value = "用户注册确认", notes = "租户隔离")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "账户", name = "username", required = true)
@@ -88,7 +88,7 @@ public class OauthController implements OauthProvider {
         return Result.ok(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    @IgnoreJwtCheck
+    @IgnoreJwtCheck(inner = true)
     @ApiOperation("获取公钥")
     @ApiOperationSupport(order = 60)
     @GetMapping("publicKey")

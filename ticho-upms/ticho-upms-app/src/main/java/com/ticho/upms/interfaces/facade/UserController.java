@@ -39,7 +39,7 @@ public class UserController implements UserProvider {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("@pm.hasPerms('upms:user:save')")
+    @PreAuthorize("@perm.hasPerms('upms:user:save')")
     @ApiOperation(value = "保存用户信息")
     @ApiOperationSupport(order = 10)
     @PostMapping
@@ -48,7 +48,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:remove')")
+    @PreAuthorize("@perm.hasPerms('upms:user:remove')")
     @ApiOperation(value = "删除用户信息")
     @ApiOperationSupport(order = 20)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -58,7 +58,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:update')")
+    @PreAuthorize("@perm.hasPerms('upms:user:update')")
     @ApiOperation(value = "修改用户信息", notes = "无法修改密码")
     @ApiOperationSupport(order = 30)
     @PutMapping
@@ -67,7 +67,7 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:getById')")
+    @PreAuthorize("@perm.hasPerms('upms:user:getById')")
     @ApiOperation(value = "主键查询用户信息")
     @ApiOperationSupport(order = 50)
     @ApiImplicitParam(value = "编号", name = "id", required = true)
@@ -76,7 +76,7 @@ public class UserController implements UserProvider {
         return Result.ok(userService.getById(id));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:page')")
+    @PreAuthorize("@perm.hasPerms('upms:user:page')")
     @ApiOperation(value = "分页查询用户信息")
     @ApiOperationSupport(order = 60)
     @GetMapping("page")
@@ -84,7 +84,7 @@ public class UserController implements UserProvider {
         return Result.ok(userService.page(query));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:getUserDtl')")
+    @PreAuthorize("@perm.hasPerms('upms:user:getUserDtl')")
     @ApiOperation(value = "查询用户角色菜单权限标识信息")
     @ApiOperationSupport(order = 70)
     @GetMapping("getUserDtl")
@@ -92,7 +92,7 @@ public class UserController implements UserProvider {
         return Result.ok(userService.getUserDtl(tenantId, username));
     }
 
-    @PreAuthorize("@pm.hasPerms('upms:user:bindRole')")
+    @PreAuthorize("@perm.hasPerms('upms:user:bindRole')")
     @ApiOperation(value = "用户绑定角色信息")
     @ApiOperationSupport(order = 80)
     @PostMapping("bindRole")

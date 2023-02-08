@@ -8,8 +8,10 @@ import com.ticho.common.security.constant.SecurityConst;
 import com.ticho.common.security.dto.SecurityUser;
 import com.ticho.common.security.util.SecurityUtil;
 import com.ticho.upms.domain.handle.UpmsHandle;
+import com.ticho.upms.infrastructure.core.constant.CommConst;
 import com.ticho.upms.interfaces.dto.RoleMenuDtlDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ import java.util.Objects;
  * @date 2022-09-26 17:31:58
  */
 @Slf4j
-@Service(BaseSecurityConst.PM)
+@Service(CommConst.PERM_KEY)
 @Order(1)
 public class DefaultPermissionServiceImpl extends UpmsHandle implements PermissionService {
 

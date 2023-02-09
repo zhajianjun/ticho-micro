@@ -89,7 +89,7 @@ public class MenuRepositoryImpl extends RootServiceImpl<MenuMapper, Menu> implem
         wrapper.eq(Objects.nonNull(query.getExtFlag()), Menu::getExtFlag, query.getExtFlag());
         wrapper.eq(Objects.nonNull(query.getCacheAble()), Menu::getCacheAble, query.getCacheAble());
         wrapper.eq(Objects.nonNull(query.getInvisible()), Menu::getInvisible, query.getInvisible());
-        wrapper.eq(StrUtil.isNotBlank(query.getClosable()), Menu::getClosable, query.getClosable());
+        wrapper.eq(Objects.nonNull(query.getClosable()), Menu::getClosable, query.getClosable());
         wrapper.eq(StrUtil.isNotBlank(query.getIcon()), Menu::getIcon, query.getIcon());
         wrapper.eq(Objects.nonNull(query.getSort()), Menu::getSort, query.getSort());
         wrapper.eq(Objects.nonNull(query.getStatus()), Menu::getStatus, query.getStatus());

@@ -67,7 +67,7 @@ public class MenuDtlDTO extends TreeNode<MenuDtlDTO> implements Serializable {
 
     /** 菜单是否可关闭;1-是,0-否 */
     @ApiModelProperty(value = "菜单是否可关闭;1-是,0-否", position = 120)
-    private String closable;
+    private Integer closable;
 
     /** 图标 */
     @ApiModelProperty(value = "图标", position = 130)

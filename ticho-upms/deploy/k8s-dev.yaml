@@ -52,7 +52,7 @@ spec:
       containers:
         - name: ticho-upms-dev
           # 设置Docker镜像（同Jenkinsfile脚本中的环境变量）
-          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$MODULE-$PROFILE:SNAPSHOT-$BUILD_NUMBER
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$MODULE-$PROFILE-dev
           imagePullPolicy: Always
           # 资源限制
           resources:

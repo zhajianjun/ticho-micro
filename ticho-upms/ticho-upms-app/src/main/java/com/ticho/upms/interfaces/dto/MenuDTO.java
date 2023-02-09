@@ -64,19 +64,23 @@ public class MenuDTO implements Serializable {
 
     /** 是否外链菜单;1-是,0-否 */
     @ApiModelProperty(value = "是否外链菜单;1-是,0-否", position = 90)
+    @NotNull(message = "是否外链菜单不能为空", groups = {ValidGroup.Add.class})
     private Integer extFlag;
 
     /** 是否缓存;1-是,0-否 */
     @ApiModelProperty(value = "是否缓存;1-是,0-否", position = 100)
+    @NotNull(message = "是否缓存不能为空", groups = {ValidGroup.Add.class})
     private Integer cacheAble;
 
     /** 菜单和目录是否可见;1-是,0-否 */
     @ApiModelProperty(value = "菜单和目录是否可见;1-是,0-否", position = 110)
+    @NotNull(message = "菜单和目录是否可见不能为空", groups = {ValidGroup.Add.class})
     private Integer invisible;
 
     /** 菜单是否可关闭;1-是,0-否 */
     @ApiModelProperty(value = "菜单是否可关闭;1-是,0-否", position = 120)
-    private String closable;
+    @NotNull(message = "菜单是否可关闭不能为空", groups = {ValidGroup.Add.class})
+    private Integer closable;
 
     /** 图标 */
     @ApiModelProperty(value = "图标", position = 130)
@@ -94,5 +98,13 @@ public class MenuDTO implements Serializable {
     /** 备注信息 */
     @ApiModelProperty(value = "备注信息", position = 160)
     private String remark;
+
+
+    public interface Drectory {
+    }
+
+    public interface Menu {
+    }
+
 
 }

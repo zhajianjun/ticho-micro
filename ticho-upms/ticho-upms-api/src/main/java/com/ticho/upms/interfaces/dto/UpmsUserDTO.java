@@ -36,7 +36,7 @@ public class UpmsUserDTO implements Serializable {
     private Integer status;
 
     @ApiModelProperty(value = "角色", position = 60)
-    private List<String> roleIds;
+    private List<String> roleCodes;
 
     @ApiModelProperty(value = "部门", position = 70)
     private List<String> deptIds;

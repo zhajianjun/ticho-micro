@@ -16,8 +16,6 @@ import com.ticho.upms.infrastructure.entity.Role;
 import com.ticho.upms.infrastructure.entity.Tenant;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.infrastructure.entity.UserRole;
-import com.ticho.upms.interfaces.assembler.UserAssembler;
-import com.ticho.upms.interfaces.dto.UpmsUserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -26,7 +24,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -78,27 +75,22 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         message = UserStatus.getByCode(status);
         normal = Objects.equals(status, UserStatus.NORMAL.code());
         Assert.isTrue(normal, HttpErrCode.NOT_LOGIN, String.format("用户%s", message));
-        UpmsUserDTO upmsUserDTO = UserAssembler.INSTANCE.userToUmpsUsrDto(user);
-        setAuthorities(upmsUserDTO);
-        SecurityUser securityUser = new SecurityUser();
-        securityUser.setTenantId(upmsUserDTO.getTenantId());
-        securityUser.setUsername(upmsUserDTO.getUsername());
-        securityUser.setPassword(upmsUserDTO.getPassword());
-        securityUser.setRoleCodes(upmsUserDTO.getRoleIds());
-        securityUser.setStatus(upmsUserDTO.getStatus());
-        return securityUser;
+        return getSecurityUser(user);
         // @formatter:on
     }
 
-    private void setAuthorities(UpmsUserDTO userUpdDto) {
-        if (userUpdDto == null) {
-            return;
-        }
-        List<UserRole> userRoles = userRoleRepository.listByUserId(userUpdDto.getId());
+    private SecurityUser getSecurityUser(User user) {
+        List<UserRole> userRoles = userRoleRepository.listByUserId(user.getId());
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         List<Role> roles = roleRepository.listByIds(roleIds);
         List<String> codes = roles.stream().map(Role::getCode).collect(Collectors.toList());
-        userUpdDto.setRoleIds(codes);
+        SecurityUser securityUser = new SecurityUser();
+        securityUser.setTenantId(user.getTenantId());
+        securityUser.setUsername(user.getUsername());
+        securityUser.setPassword(user.getPassword());
+        securityUser.setRoleCodes(codes);
+        securityUser.setStatus(user.getStatus());
+        return securityUser;
     }
 
 }

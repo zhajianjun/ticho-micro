@@ -4,7 +4,6 @@ import com.ticho.boot.security.dto.LoginRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 
@@ -14,10 +13,9 @@ import javax.validation.constraints.NotBlank;
  * @author zhajianjun
  * @date 2022-10-14 10:30
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "登录DTO")
-public class UserLoginDTO extends LoginRequest {
+public class UserLoginDTO implements LoginRequest {
 
     /** 租户编号 */
     @NotBlank(message = "租户编号不能为空")

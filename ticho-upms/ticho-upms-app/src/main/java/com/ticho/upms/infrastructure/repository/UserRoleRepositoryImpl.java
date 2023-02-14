@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,15 @@ public class UserRoleRepositoryImpl extends RootServiceImpl<UserRoleMapper, User
     @Autowired
     private RedisUtil<String, String> redisUtil;
 
+    @PostConstruct
+    public void init() {
+        if (redisUtil.exists(RedisConst.USER_ROLE_LIST_KEY)) {
+            return;
+        }
+        List<UserRole> list = list();
+        saveCache(list);
+    }
+
     @Override
     public boolean saveBatch(Collection<UserRole> entityList) {
         // @formatter:off
@@ -41,6 +51,12 @@ public class UserRoleRepositoryImpl extends RootServiceImpl<UserRoleMapper, User
         if (!saveBatch) {
             return false;
         }
+        saveCache(entityList);
+        return true;
+        // @formatter:on
+    }
+
+    private void saveCache(Collection<UserRole> entityList) {
         Map<String, List<UserRole>> collect = entityList
             .stream()
             .collect(Collectors.groupingBy(x-> x.getUserId().toString(), Collectors.toList()));
@@ -49,8 +65,6 @@ public class UserRoleRepositoryImpl extends RootServiceImpl<UserRoleMapper, User
             .stream()
             .collect(Collectors.toMap(Map.Entry::getKey, x -> JsonUtil.toJsonString(x.getValue())));
         redisUtil.hPutAll(RedisConst.USER_ROLE_LIST_KEY, result);
-        return true;
-        // @formatter:on
     }
 
     @Override

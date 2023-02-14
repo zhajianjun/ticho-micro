@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,15 @@ public class RoleMenuRepositoryImpl extends RootServiceImpl<RoleMenuMapper, Role
 
     @Autowired
     private RedisUtil<String, String> redisUtil;
+
+    @PostConstruct
+    public void init() {
+        if (redisUtil.exists(RedisConst.ROLE_MENU_LIST_KEY)) {
+            return;
+        }
+        List<RoleMenu> list = list();
+        saveCache(list);
+    }
 
     @Override
     public boolean saveBatch(Collection<RoleMenu> entityList) {

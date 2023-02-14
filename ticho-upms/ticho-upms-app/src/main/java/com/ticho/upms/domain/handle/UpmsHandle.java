@@ -82,16 +82,17 @@ public class UpmsHandle {
     /**
      * 合并菜单按角色code列表
      *
+     * @param tenantId 租户id
      * @param roleCodes 角色code列表
      * @param showAll 显示所有信息，匹配到的信息，设置匹配字段checkbox=true
      * @return {@link RoleMenuDtlDTO}
      */
-    public RoleMenuDtlDTO mergeRoleByCodes(List<String> roleCodes, boolean showAll) {
+    public RoleMenuDtlDTO mergeRoleByCodes(String tenantId, List<String> roleCodes, boolean showAll) {
         if (CollUtil.isEmpty(roleCodes)) {
             return null;
         }
         // 根据角色id列表 查询角色信息
-        List<Role> roles = roleRepository.listByCodes(roleCodes);
+        List<Role> roles = roleRepository.listByCodes(tenantId, roleCodes);
         return getRoleMenuDtl(roles, showAll);
     }
 

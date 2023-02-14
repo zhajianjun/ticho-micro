@@ -91,12 +91,15 @@ public class RoleRepositoryImpl extends RootServiceImpl<RoleMapper, Role> implem
     }
 
     @Override
-    public List<Role> listByCodes(List<String> codes) {
+    public List<Role> listByCodes(String tenantId, List<String> codes) {
         if (CollUtil.isEmpty(codes)) {
             return Collections.emptyList();
         }
         List<Role> list = list();
-        list.removeIf(x -> !codes.contains(x.getCode()));
+        list.removeIf(x -> {
+            boolean contains = codes.contains(x.getCode()) && Objects.equals(tenantId, x.getTenantId());
+            return !contains;
+        });
         return list;
     }
 

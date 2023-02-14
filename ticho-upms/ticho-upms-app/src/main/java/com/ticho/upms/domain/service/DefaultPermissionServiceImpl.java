@@ -38,13 +38,14 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
             return false;
         }
         List<String> roleCodes = currentUser.getRoleCodes();
+        String tenantId = currentUser.getTenantId();
         if (CollUtil.isEmpty(roleCodes)) {
             return false;
         }
         if (roleCodes.contains(SecurityConst.ADMIN)) {
             return true;
         }
-        RoleMenuDtlDTO roleMenuDtlDTO = mergeRoleByCodes(roleCodes, false);
+        RoleMenuDtlDTO roleMenuDtlDTO = mergeRoleByCodes(tenantId, roleCodes, false);
         List<String> perms = roleMenuDtlDTO.getPerms();
         if (CollUtil.isEmpty(perms)) {
             return false;

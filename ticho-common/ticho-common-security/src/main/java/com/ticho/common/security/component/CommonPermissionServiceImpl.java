@@ -42,6 +42,7 @@ public class CommonPermissionServiceImpl implements PermissionService {
         if (Objects.isNull(currentUser)) {
             return false;
         }
+        String tenantId = currentUser.getTenantId();
         List<String> roleCodes = currentUser.getRoleCodes();
         if (CollUtil.isEmpty(roleCodes)) {
             return false;
@@ -49,11 +50,12 @@ public class CommonPermissionServiceImpl implements PermissionService {
         if (roleCodes.contains(SecurityConst.ADMIN)) {
             return true;
         }
-        return hasPerms(roleCodes, permissions);
+        return hasPerms(tenantId, roleCodes, permissions);
     }
 
-    protected boolean hasPerms(List<String> roleCodes, String[] permissions) {
+    protected boolean hasPerms(String tenantId, List<String> roleCodes, String[] permissions) {
         RoleDtlQuery roleDtlQuery = new RoleDtlQuery();
+        roleDtlQuery.setTenantId(tenantId);
         roleDtlQuery.setRoleCodes(roleCodes);
         Result<RoleMenuDtlDTO> result = roleProvider.listByCodes(roleDtlQuery);
         RoleMenuDtlDTO roleMenuDtlDTO = result.getData();

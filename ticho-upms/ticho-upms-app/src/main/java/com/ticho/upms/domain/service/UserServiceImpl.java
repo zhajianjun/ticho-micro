@@ -2,6 +2,7 @@ package com.ticho.upms.domain.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.ticho.boot.log.util.IpUtil;
 import com.ticho.boot.redis.util.RedisUtil;
 import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.PageResult;
@@ -18,7 +19,6 @@ import com.ticho.upms.domain.repository.UserRoleRepository;
 import com.ticho.upms.infrastructure.core.enums.TenantStatus;
 import com.ticho.upms.infrastructure.core.enums.UserStatus;
 import com.ticho.upms.infrastructure.core.util.CaptchaUtil;
-import com.ticho.upms.infrastructure.core.util.IpUtil;
 import com.ticho.upms.infrastructure.entity.User;
 import com.ticho.upms.infrastructure.entity.UserRole;
 import com.ticho.upms.interfaces.assembler.UserAssembler;

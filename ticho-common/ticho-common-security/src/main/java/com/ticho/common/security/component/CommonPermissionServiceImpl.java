@@ -43,7 +43,7 @@ public class CommonPermissionServiceImpl implements PermissionService {
             return false;
         }
         String tenantId = currentUser.getTenantId();
-        List<String> roleCodes = currentUser.getRoleCodes();
+        List<String> roleCodes = currentUser.getRoles();
         if (CollUtil.isEmpty(roleCodes)) {
             return false;
         }

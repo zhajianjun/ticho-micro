@@ -29,7 +29,7 @@ public class DefaultAuthenticationTokenFilter extends AbstractAuthTokenFilter<Se
         String tenantId = Optional.ofNullable(decodeAndVerify.get("tenantId")).map(Object::toString).orElse(null);
         SecurityUser user = new SecurityUser();
         user.setUsername(username);
-        user.setRoleCodes(authorities);
+        user.setRoles(authorities);
         user.setTenantId(tenantId);
         user.setStatus(status);
         return user;

@@ -88,7 +88,7 @@ public class DefaultUsernameLoadUserService implements LoadUserService {
         securityUser.setTenantId(user.getTenantId());
         securityUser.setUsername(user.getUsername());
         securityUser.setPassword(user.getPassword());
-        securityUser.setRoleCodes(codes);
+        securityUser.setRoles(codes);
         securityUser.setStatus(user.getStatus());
         return securityUser;
     }

@@ -37,7 +37,7 @@ public class DefaultPermissionServiceImpl extends UpmsHandle implements Permissi
         if (Objects.isNull(currentUser)) {
             return false;
         }
-        List<String> roleCodes = currentUser.getRoleCodes();
+        List<String> roleCodes = currentUser.getRoles();
         String tenantId = currentUser.getTenantId();
         if (CollUtil.isEmpty(roleCodes)) {
             return false;

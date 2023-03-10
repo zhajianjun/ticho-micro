@@ -137,7 +137,7 @@ public class UpmsHandle {
         }
         List<String> perms = new ArrayList<>();
         // 菜单信息过滤规则
-        Predicate<MenuDtlDTO> menuFilter = null;
+        Predicate<MenuDtlDTO> menuFilter = x -> menuIds.contains(x.getId());
         // 菜单信息操作
         Consumer<MenuDtlDTO> menuPeek = x-> {
             x.setCheckbox(true);
@@ -145,7 +145,7 @@ public class UpmsHandle {
         };
         // 如果展示全部字段，匹配的数据进行填充checkbox=true
         if (showAll) {
-            menuFilter = x -> menuIds.contains(x.getId());
+            menuFilter = null;
             menuPeek = x -> {
                 perms.addAll(x.getPerms());
                 x.setCheckbox(menuIds.contains(x.getId()));

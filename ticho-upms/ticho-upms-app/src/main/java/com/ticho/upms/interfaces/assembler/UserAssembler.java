@@ -36,16 +36,6 @@ public interface UserAssembler {
     UserDTO entityToDto(User entity);
 
     /**
-     * 权限用户信息DTO
-     *
-     * @param user 用户
-     * @return {@link UpmsUserDTO}
-     */
-    @Mapping(target = "roleIds", ignore = true)
-    @Mapping(target = "deptIds", ignore = true)
-    UpmsUserDTO userToUmpsUsrDto(User user);
-
-    /**
      * 用户转用户登录账号信息
      *
      * @param user 用户

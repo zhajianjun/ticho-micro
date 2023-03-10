@@ -81,9 +81,6 @@ public class DictServiceImpl implements DictService {
             .filter(x-> !Objects.equals(dict.getId(), x.getId()))
             .noneMatch(brother-> Objects.equals(selectDict.getCode(), brother.getCode()));
         Assert.isTrue(notRepeat, BizErrCode.FAIL, "该数据字典编码重复");
-        selectDict.setCode(dict.getCode());
-        selectDict.setName(dict.getName());
-        selectDict.setRemark(dict.getRemark());
         Assert.isTrue(dictRepository.updateById(dict), BizErrCode.FAIL, "修改失败");
         // @formatter:on
     }

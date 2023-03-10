@@ -31,9 +31,4 @@ public class UserLoginDTO implements LoginRequest {
     @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码", position = 30)
     private String password;
-
-    /** 登录类型 */
-    @ApiModelProperty(value = "登录类型", position = 40)
-    private String type;
-
 }

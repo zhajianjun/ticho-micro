@@ -55,7 +55,7 @@
             <id>local</id>
             <properties>
                 <spring.active>local</spring.active>
-                <nacos.server-addr>122.112.164.156:10070</nacos.server-addr>
+                <nacos.server-addr>www.ticho.top:10070</nacos.server-addr>
                 <nacos.namespace>1568256815093776383</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
                 <nacos.username>ticho</nacos.username>

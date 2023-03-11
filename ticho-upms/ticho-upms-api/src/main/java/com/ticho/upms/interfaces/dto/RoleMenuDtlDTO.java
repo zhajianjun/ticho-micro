@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "用户角色菜单功能号详情")
+@ApiModel(value = "角色菜单详情")
 public class RoleMenuDtlDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

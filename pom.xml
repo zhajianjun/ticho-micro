@@ -55,11 +55,11 @@
             <id>local</id>
             <properties>
                 <spring.active>local</spring.active>
-                <nacos.server-addr>www.ticho.top:10070</nacos.server-addr>
+                <nacos.server-addr>ENC(MsfUMdD45E62P8aQGA1I2vCL22hY5S5MZXz5pAwIJSw=)</nacos.server-addr>
                 <nacos.namespace>1568256815093776383</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ticho</nacos.username>
-                <nacos.password>ticho1511ticho.</nacos.password>
+                <nacos.username>ENC(MkWB4Tw7AZlaFi1p5OlerA==)</nacos.username>
+                <nacos.password>ENC(GowbBjtMQPMvNDzJkv3mSG4XmkgbUb2b)</nacos.password>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -72,8 +72,8 @@
                 <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
                 <nacos.namespace>1568256815093776384</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ticho</nacos.username>
-                <nacos.password>ticho1511ticho.</nacos.password>
+                <nacos.username>ENC(2bY/YAsfGq+8S5anw6wFrw==)</nacos.username>
+                <nacos.password>ENC(xj9iMcXG1OvGai/Dby95VX3yC+qsv+j/)</nacos.password>
             </properties>
         </profile>
         <profile>
@@ -83,8 +83,8 @@
                 <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
                 <nacos.namespace>1568256975823699968</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ticho</nacos.username>
-                <nacos.password>ticho1511ticho.</nacos.password>
+                <nacos.username>ENC(2bY/YAsfGq+8S5anw6wFrw==)</nacos.username>
+                <nacos.password>ENC(xj9iMcXG1OvGai/Dby95VX3yC+qsv+j/)</nacos.password>
             </properties>
         </profile>
     </profiles>

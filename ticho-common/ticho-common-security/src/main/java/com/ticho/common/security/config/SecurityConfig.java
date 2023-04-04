@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  *
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022-09-24 15:16:52
  */
 @Configuration
+@PropertySource(value = "classpath:JasyptConfig.properties")
 public class SecurityConfig {
 
     @Value("${ticho.common.security.publicKey}")

@@ -24,5 +24,10 @@ spring:
           enabled: false
 ticho:
   gateway:
-    open-log: true
-    print: true
+    log:
+      print: true
+
+jasypt:
+  encryptor:
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    algorithm: PBEWithMD5AndTripleDES

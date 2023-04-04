@@ -6,12 +6,13 @@
 
     <springProfile name="local,dev,test,st">
         <logger name="com.alibaba.nacos.client" level="ERROR"/>
-        <logger name="com.alibaba.cloud.nacos" level="ERROR"/>
+        <logger name="com.alibaba.cloud.nacos" level="INFO"/>
         <logger name="io.undertow" level="ERROR"/>
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.baomidou.mybatisplus" level="ERROR"/>
-        <logger name="com.ticho.upms" level="DEBUG"/>
+        <logger name="com.ulisesbocchio" level="ERROR"/>
+        <logger name="com.ticho" level="DEBUG"/>
     </springProfile>
 
     <springProfile name="uat,prod">
@@ -21,7 +22,8 @@
         <logger name="org.springframework" level="ERROR"/>
         <logger name="springfox.documentation" level="ERROR"/>
         <logger name="com.baomidou.mybatisplus" level="ERROR"/>
-        <logger name="com.ticho.upms" level="INFO"/>
+        <logger name="com.ulisesbocchio" level="ERROR"/>
+        <logger name="com.ticho" level="INFO"/>
     </springProfile>
 
 </configuration>

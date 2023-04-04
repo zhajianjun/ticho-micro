@@ -24,8 +24,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ticho.boot</groupId>
-            <artifactId>ticho-starter-log</artifactId>
+            <groupId>top.ticho.trace</groupId>
+            <artifactId>ticho-trace-gateway</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

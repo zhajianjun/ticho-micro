@@ -27,3 +27,8 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
+
+jasypt:
+  encryptor:
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    algorithm: PBEWithMD5AndTripleDES

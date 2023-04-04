@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication springApplication = new SpringApplication(GatewayApplication.class);
+        springApplication.setAllowBeanDefinitionOverriding(true);
+        springApplication.run(args);
     }
 }

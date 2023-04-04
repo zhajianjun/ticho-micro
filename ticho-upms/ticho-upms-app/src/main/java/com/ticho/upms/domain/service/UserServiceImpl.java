@@ -2,7 +2,6 @@ package com.ticho.upms.domain.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ticho.boot.log.util.IpUtil;
 import com.ticho.boot.redis.util.RedisUtil;
 import com.ticho.boot.view.core.BizErrCode;
 import com.ticho.boot.view.core.PageResult;
@@ -34,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.ticho.trace.spring.util.IpUtil;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -202,7 +202,7 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
 
     @Override
     public void verifyByCode() {
-        String ip = IpUtil.getIp(request);
+        String ip = IpUtil.preIp(request);
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);

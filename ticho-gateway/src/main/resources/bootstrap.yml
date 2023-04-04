@@ -22,10 +22,6 @@ spring:
         group: ${spring.cloud.nacos.config.group}
         watch:
           enabled: false
-ticho:
-  gateway:
-    log:
-      print: true
 
 jasypt:
   encryptor:

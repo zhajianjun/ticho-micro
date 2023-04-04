@@ -72,8 +72,8 @@
                 <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
                 <nacos.namespace>1568256815093776384</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ENC(2bY/YAsfGq+8S5anw6wFrw==)</nacos.username>
-                <nacos.password>ENC(xj9iMcXG1OvGai/Dby95VX3yC+qsv+j/)</nacos.password>
+                <nacos.username>ENC(u3JV88IRyXjzux/dat/scA==)</nacos.username>
+                <nacos.password>ENC(QzgKfanwTXrzPEExlXz/VyjlzVyZWxsG)</nacos.password>
             </properties>
         </profile>
         <profile>
@@ -83,8 +83,8 @@
                 <nacos.server-addr>192.168.243.138:10070</nacos.server-addr>
                 <nacos.namespace>1568256975823699968</nacos.namespace>
                 <nacos.group>DEFAULT_GROUP</nacos.group>
-                <nacos.username>ENC(2bY/YAsfGq+8S5anw6wFrw==)</nacos.username>
-                <nacos.password>ENC(xj9iMcXG1OvGai/Dby95VX3yC+qsv+j/)</nacos.password>
+                <nacos.username>ENC(vmpq206jDxcEK16S/b4nSA==)</nacos.username>
+                <nacos.password>ENC(Afc0BCDMhscVALEqszyY7LQXRvfUER60)</nacos.password>
             </properties>
         </profile>
     </profiles>

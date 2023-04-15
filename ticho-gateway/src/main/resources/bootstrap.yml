@@ -23,6 +23,9 @@ spring:
         watch:
           enabled: false
 
+logging:
+  config: classpath:logback-spring.xml
+
 jasypt:
   encryptor:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator

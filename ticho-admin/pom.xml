@@ -24,6 +24,11 @@
             <artifactId>ticho-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ticho.boot</groupId>
+            <artifactId>ticho-starter-log</artifactId>
+        </dependency>
+
         <!-- admin 管理服务端 -->
         <dependency>
             <groupId>de.codecentric</groupId>

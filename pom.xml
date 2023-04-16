@@ -6,14 +6,14 @@
     <parent>
         <groupId>com.ticho.boot</groupId>
         <artifactId>ticho-boot</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <groupId>com.ticho</groupId>
     <artifactId>ticho-micro</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>ticho-upms</module>
         <module>ticho-storage</module>
@@ -38,13 +38,13 @@
             <dependency>
                 <groupId>com.ticho</groupId>
                 <artifactId>ticho-upms-api</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ticho</groupId>
                 <artifactId>ticho-common-security</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
 
         </dependencies>

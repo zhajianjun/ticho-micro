@@ -1,4 +1,4 @@
-package com.ticho.upms.infrastructure.core.component;
+package com.ticho.upms.domain.service.login;
 
 import com.ticho.boot.security.constant.BaseSecurityConst;
 import com.ticho.boot.security.handle.load.LoadUserService;

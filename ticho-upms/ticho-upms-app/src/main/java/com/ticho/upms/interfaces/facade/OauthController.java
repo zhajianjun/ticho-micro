@@ -3,6 +3,7 @@ package com.ticho.upms.interfaces.facade;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.ticho.boot.security.annotation.IgnoreJwtCheck;
+import com.ticho.boot.security.annotation.IgnoreType;
 import com.ticho.boot.security.constant.BaseOAuth2Const;
 import com.ticho.boot.security.dto.Oauth2AccessToken;
 import com.ticho.boot.security.handle.LoginUserHandle;
@@ -99,7 +100,7 @@ public class OauthController implements OauthProvider {
         return Result.ok(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    @IgnoreJwtCheck(inner = true)
+    @IgnoreJwtCheck(IgnoreType.INNER)
     @ApiOperation("获取公钥")
     @ApiOperationSupport(order = 60)
     @GetMapping("publicKey")

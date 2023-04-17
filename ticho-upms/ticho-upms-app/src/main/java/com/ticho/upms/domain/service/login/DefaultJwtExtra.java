@@ -1,4 +1,4 @@
-package com.ticho.upms.infrastructure.core.component;
+package com.ticho.upms.domain.service.login;
 
 import com.ticho.boot.security.handle.jwt.JwtExtra;
 import com.ticho.common.security.dto.SecurityUser;

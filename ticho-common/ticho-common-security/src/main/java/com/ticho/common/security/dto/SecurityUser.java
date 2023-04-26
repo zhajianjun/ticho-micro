@@ -15,13 +15,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class SecurityUser extends BaseSecurityUser implements UserHelper {
 
-    @ApiModelProperty(value = "租户ID", position = 20)
+    @ApiModelProperty(value = "租户ID", position = 10)
     private String tenantId;
 
-    @ApiModelProperty(value = "账户", position = 10)
+    @ApiModelProperty(value = "账户", position = 20)
     private String username;
 
-    @ApiModelProperty(value = "用户状态;1-正常,2-未激活,3-已锁定,4-已注销", position = 40)
+    @ApiModelProperty(value = "用户状态;1-正常,2-未激活,3-已锁定,4-已注销", position = 30)
     private Integer status = 2;
 
     @Override

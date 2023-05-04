@@ -88,7 +88,7 @@ public interface UserService {
      *
      * @param userPasswordDTO 用户信息
      */
-    void modifyPassword(UserPasswordDTO userPasswordDTO);
+    void updatePassword(UserPasswordDTO userPasswordDTO);
 
     /**
      * 验证码

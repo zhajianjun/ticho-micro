@@ -68,12 +68,12 @@ public class UserController implements UserProvider {
         return Result.ok();
     }
 
-    @PreAuthorize("@perm.hasPerms('upms:user:modifyPassword')")
+    @PreAuthorize("@perm.hasPerms('upms:user:updatePassword')")
     @ApiOperation(value = "修改用户密码", notes = "修改用户密码")
     @ApiOperationSupport(order = 50)
-    @PutMapping("modifyPassword")
-    public Result<Void> modifyPassword(@RequestBody UserPasswordDTO userDetailDto) {
-        userService.modifyPassword(userDetailDto);
+    @PutMapping("updatePassword")
+    public Result<Void> updatePassword(@RequestBody UserPasswordDTO userDetailDto) {
+        userService.updatePassword(userDetailDto);
         return Result.ok();
     }
 

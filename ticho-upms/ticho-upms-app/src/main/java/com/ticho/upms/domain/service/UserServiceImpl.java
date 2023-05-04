@@ -175,7 +175,7 @@ public class UserServiceImpl extends UpmsHandle implements UserService {
     }
 
     @Override
-    public void modifyPassword(UserPasswordDTO userPasswordDTO) {
+    public void updatePassword(UserPasswordDTO userPasswordDTO) {
         // @formatter:off
         ValidUtil.valid(userPasswordDTO);
         Long id = userPasswordDTO.getId();

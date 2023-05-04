@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 /**
  * 用户密码修改
  *
- * @author AdoroTutto
+ * @author zhajianjun
  * @date 2021-05-29 9:25
  */
 @Data

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 通用静态变量
- * @author AdoroTutto
+ * @author zhajianjun
  * @date 2020-08-26 21:59
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
